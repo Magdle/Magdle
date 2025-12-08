@@ -24,7 +24,7 @@ const getRankValue = (rankStr) => {
   if (rank.includes('joue pas') || rank.includes('unrank')) return 0;
 
   const tiers = [
-    'iron', 'bronze', 'silver', 'gold', 'platinum', 'emerald', 'diamond', 
+    'iron', 'bronze', 'silver', 'gold', 'plat', 'emerald', 'diamond', 
     'master', 'grandmaster', 'challenger'
   ];
 
