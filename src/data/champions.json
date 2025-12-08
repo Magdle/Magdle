@@ -13,7 +13,7 @@
     "BoissonPref": "Redbull"
     },
     {
-    "id": "Theau",
+    "id": "TheauPauwels",
     "name": "Théau Pauwels",
     "age": "21",
     "cheveux": ["Brun"],
@@ -82,7 +82,7 @@
     "cheveux": ["Roux"],
     "JeuPref": ["Disney Dreamlight Valley"],
     "RelationFamille": "Trkl",
-    "PcPref": ["Mag-7"],
+    "PcPref": ["Mag-8"],
     "régio": ["Carolo"],
     "neuillitude": "7",
     "RankLol": "iron", 
@@ -270,5 +270,18 @@
     "neuillitude": "5",
     "RankLol": "joue pas", 
     "BoissonPref": "Café"
+  },
+  {
+    "id": "Melike",
+    "name": "Melike Albain",
+    "age": "20",
+    "cheveux": ["Noir"],
+    "JeuPref": ["Jeu d'aventure"],
+    "RelationFamille": "Trkl",
+    "PcPref": ["Mag-7"],
+    "régio": ["Carolo"],
+    "neuillitude": "4",
+    "RankLol": "iron", 
+    "BoissonPref": "Eau"
   }
 ]
