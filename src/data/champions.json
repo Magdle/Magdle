@@ -283,5 +283,17 @@
     "neuillitude": "4",
     "RankLol": "iron", 
     "BoissonPref": "Eau"
+  },{
+    "id":"Andrea",
+    "name": "Andréa Paciorkowski",
+    "age": "21",
+    "cheveux": ["Blanc"],
+    "JeuPref": ["MOBA"],
+    "RelationFamille": "Trkl",
+    "PcPref": ["Mag-3"],
+    "régio": ["Centrale"],
+    "neuillitude": "3",
+    "RankLol": "Master", 
+    "BoissonPref": "Eau"
   }
 ]

@@ -16,6 +16,24 @@ const STATUS_STYLES = {
   DEFAULT: 'bg-slate-800/80 border-slate-600',
 };
 
+// --- LOGIQUE SÉLECTION QUOTIDIENNE ---
+// Cette fonction génère un index "aléatoire" mais fixe pour une date donnée
+const getDailyTarget = () => {
+  // On récupère la date locale sous format "JJ/MM/AAAA"
+  const today = new Date().toLocaleDateString('fr-FR');
+  
+  // On transforme la date en un nombre (hash simple)
+  let hash = 0;
+  for (let i = 0; i < today.length; i++) {
+    hash = today.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  
+  // On utilise ce hash pour choisir un index dans la liste
+  // Math.abs pour éviter les négatifs
+  const index = Math.abs(hash) % championsData.length;
+  return championsData[index];
+};
+
 // --- LOGIQUE DES RANGS LOL ---
 const getRankValue = (rankStr) => {
   if (!rankStr) return 0;
@@ -73,31 +91,26 @@ const ArrowIcon = ({ direction }) => (
   </svg>
 );
 
-// Composant intelligent pour gérer PNG -> JPG -> Fallback
+const CloseIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
 const AdminImage = ({ id, name, className }) => {
   const [imgSrc, setImgSrc] = useState(`/images/${id}.png`);
   
   const handleError = () => {
-    // Si le PNG échoue, on tente le JPG
     if (imgSrc.endsWith('.png')) {
       setImgSrc(`/images/${id}.jpg`);
     } else {
-      // Si le JPG échoue aussi, image par défaut
       setImgSrc('https://placehold.co/100x100?text=?');
     }
   };
 
-  return (
-    <img 
-      src={imgSrc} 
-      alt={name} 
-      className={className}
-      onError={handleError}
-    />
-  );
+  return <img src={imgSrc} alt={name} className={className} onError={handleError} />;
 };
 
-// Cellule responsive (prend toute la largeur disponible dans sa colonne)
 const Cell = ({ children, status, delay = 0 }) => {
   return (
     <div 
@@ -120,15 +133,50 @@ const Cell = ({ children, status, delay = 0 }) => {
 // --- MAIN COMPONENT ---
 
 export default function Game() {
-  const [target, setTarget] = useState(null);
+  // 1. La cible est calculée une fois pour toutes (pas de useState pour target car fixe par jour)
+  const target = useMemo(() => getDailyTarget(), []);
+  
   const [guesses, setGuesses] = useState([]);
   const [input, setInput] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // Pour gérer la croix
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // 2. Chargement du LocalStorage au démarrage
   useEffect(() => {
-    setTarget(championsData[Math.floor(Math.random() * championsData.length)]);
+    const today = new Date().toLocaleDateString('fr-FR');
+    const storedData = localStorage.getItem('magde-daily-state');
+
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      
+      // Si c'est la même date, on restaure la partie
+      if (parsedData.date === today) {
+        setGuesses(parsedData.guesses);
+        setIsGameOver(parsedData.isGameOver);
+        // On n'affiche la modale au chargement que si le jeu est fini
+        if (parsedData.isGameOver) {
+            setShowSuccessModal(true); 
+        }
+      } else {
+        // Nouvelle journée : on nettoie
+        localStorage.removeItem('magde-daily-state');
+      }
+    }
   }, []);
+
+  // 3. Sauvegarde dans le LocalStorage à chaque changement d'état important
+  useEffect(() => {
+    if (guesses.length > 0 || isGameOver) {
+      const today = new Date().toLocaleDateString('fr-FR');
+      const stateToSave = {
+        date: today,
+        guesses,
+        isGameOver
+      };
+      localStorage.setItem('magde-daily-state', JSON.stringify(stateToSave));
+    }
+  }, [guesses, isGameOver]);
 
   const filteredChampions = useMemo(() => {
     if (input.length < 1) return [];
@@ -148,9 +196,14 @@ export default function Game() {
     const champion = championsData.find(c => c.name.toLowerCase() === championName.toLowerCase());
     
     if (champion && !guesses.some(g => g.name === champion.name)) {
-      setGuesses([champion, ...guesses]);
+      const newGuesses = [champion, ...guesses];
+      setGuesses(newGuesses);
       setInput('');
-      if (champion.name === target.name) setIsGameOver(true);
+      
+      if (champion.name === target.name) {
+        setIsGameOver(true);
+        setTimeout(() => setShowSuccessModal(true), 1500); // Petit délai pour le suspense
+      }
     }
   };
 
@@ -168,9 +221,8 @@ export default function Game() {
     }
   };
 
-  if (!target) return <div className="text-white text-center mt-10">Chargement...</div>;
+  if (!target) return <div className="text-white text-center mt-10">Chargement de la mission du jour...</div>;
 
-  // Configuration des colonnes (11 colonnes au total)
   const gridColsClass = "grid grid-cols-11 gap-1 md:gap-2 w-full";
 
   return (
@@ -185,7 +237,7 @@ export default function Game() {
            <input
              type="text"
              className="w-full bg-transparent p-4 text-white placeholder-slate-400 focus:outline-none font-medium tracking-wide uppercase"
-             placeholder={isGameOver ? "Victoire !" : "Tapez un nom..."}
+             placeholder={isGameOver ? "Reviens demain !" : "Tapez un nom..."}
              value={input}
              onChange={(e) => setInput(e.target.value)}
              onKeyDown={handleKeyDown}
@@ -203,11 +255,7 @@ export default function Game() {
                 onClick={() => handleGuess(c.name)}
                 onMouseEnter={() => setSelectedIndex(idx)}
               >
-                <AdminImage 
-                  id={c.id} 
-                  name={c.name} 
-                  className="w-10 h-10 rounded border border-slate-500 object-cover" 
-                />
+                <AdminImage id={c.id} name={c.name} className="w-10 h-10 rounded border border-slate-500 object-cover" />
                 <span className="font-bold">{c.name}</span>
               </div>
             ))}
@@ -215,44 +263,25 @@ export default function Game() {
         )}
       </div>
 
-      {/* GRILLE DE RÉSULTATS (FULL WIDTH, NO SCROLL) */}
+      {/* GRILLE DE RÉSULTATS */}
       <div className="w-full flex flex-col gap-2">
-        
         {guesses.length > 0 && (
           <div className={`${gridColsClass} px-1 mb-1`}>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Admin</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Nom</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Âge</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Cheveux</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Jeu</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Famille</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">PC</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Région</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Neuille</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Rank</div>
-             <div className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">Boisson</div>
+             {['Admin', 'Nom', 'Âge', 'Cheveux', 'Jeu', 'Famille', 'PC', 'Région', 'Neuille', 'Rank', 'Boisson'].map(h => (
+                 <div key={h} className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">{h}</div>
+             ))}
           </div>
         )}
 
         {guesses.map((guess) => (
           <div key={guess.id} className={`${gridColsClass} animate-slide-up`}>
-            
             {/* 1. L'IMAGE */}
             <div className="w-full aspect-square border-2 border-slate-600 rounded overflow-hidden relative shadow-lg z-10 bg-slate-900">
-              <AdminImage 
-                id={guess.id} 
-                name={guess.name}
-                className="w-full h-full object-cover"
-              />
+              <AdminImage id={guess.id} name={guess.name} className="w-full h-full object-cover" />
               {guess.name !== target.name && <div className="absolute inset-0 bg-red-500/20 backdrop-grayscale-[0.5]"></div>}
             </div>
-
-            {/* 2. NOM */}
-            <Cell status={getComparisonStatus(guess.name, target.name)} delay={50}>
-                {guess.name}
-            </Cell>
-
-            {/* 3. Âge */}
+            {/* 2-11. Cellules Attributs */}
+            <Cell status={getComparisonStatus(guess.name, target.name)} delay={50}>{guess.name}</Cell>
             <Cell status={guess.age === target.age ? STATUS.CORRECT : STATUS.INCORRECT} delay={100}>
                 <div className="flex items-center gap-1">
                 {guess.age}
@@ -260,38 +289,12 @@ export default function Game() {
                 {Number(guess.age) > Number(target.age) && <ArrowIcon direction="down" />}
                 </div>
             </Cell>
-
-            {/* 4. Cheveux */}
-            <Cell status={getComparisonStatus(guess.cheveux, target.cheveux)} delay={200}>
-                {Array.isArray(guess.cheveux) ? guess.cheveux.join(', ') : guess.cheveux}
-            </Cell>
-
-            {/* 5. Jeu */}
-            <Cell status={getComparisonStatus(guess.JeuPref, target.JeuPref)} delay={300}>
-                {Array.isArray(guess.JeuPref) ? guess.JeuPref.join(', ') : guess.JeuPref}
-            </Cell>
-
-            {/* 6. Famille */}
-            <Cell status={getComparisonStatus(guess.RelationFamille, target.RelationFamille)} delay={400}>
-                {guess.RelationFamille}
-            </Cell>
-
-            {/* 7. PC */}
-            <Cell status={getComparisonStatus(guess.PcPref, target.PcPref)} delay={500}>
-                {Array.isArray(guess.PcPref) ? guess.PcPref.join(', ') : guess.PcPref}
-            </Cell>
-
-            {/* 8. Région */}
-            <Cell status={getComparisonStatus(guess.régio, target.régio)} delay={600}>
-                {Array.isArray(guess.régio) ? guess.régio.join(',\n') : guess.régio}
-            </Cell>
-            
-            {/* 9. Neuillitude */}
-            <Cell status={getComparisonStatus(guess.neuillitude, target.neuillitude)} delay={700}>
-                {guess.neuillitude}
-            </Cell>
-
-            {/* 10. Rank LOL */}
+            <Cell status={getComparisonStatus(guess.cheveux, target.cheveux)} delay={200}>{Array.isArray(guess.cheveux) ? guess.cheveux.join(', ') : guess.cheveux}</Cell>
+            <Cell status={getComparisonStatus(guess.JeuPref, target.JeuPref)} delay={300}>{Array.isArray(guess.JeuPref) ? guess.JeuPref.join(', ') : guess.JeuPref}</Cell>
+            <Cell status={getComparisonStatus(guess.RelationFamille, target.RelationFamille)} delay={400}>{guess.RelationFamille}</Cell>
+            <Cell status={getComparisonStatus(guess.PcPref, target.PcPref)} delay={500}>{Array.isArray(guess.PcPref) ? guess.PcPref.join(', ') : guess.PcPref}</Cell>
+            <Cell status={getComparisonStatus(guess.régio, target.régio)} delay={600}>{Array.isArray(guess.régio) ? guess.régio.join(',\n') : guess.régio}</Cell>
+            <Cell status={getComparisonStatus(guess.neuillitude, target.neuillitude)} delay={700}>{guess.neuillitude}</Cell>
             <Cell status={getRankValue(guess.RankLol) === getRankValue(target.RankLol) ? STATUS.CORRECT : STATUS.INCORRECT} delay={800}>
                 <div className="flex flex-col items-center">
                 <span>{guess.RankLol}</span>
@@ -301,33 +304,39 @@ export default function Game() {
                 </div>
                 </div>
             </Cell>
-
-            {/* 11. Boisson */}
-            <Cell status={getComparisonStatus(guess.BoissonPref, target.BoissonPref)} delay={900}>
-                {Array.isArray(guess.BoissonPref) ? guess.BoissonPref.join(', ') : guess.BoissonPref}
-            </Cell>
-
+            <Cell status={getComparisonStatus(guess.BoissonPref, target.BoissonPref)} delay={900}>{Array.isArray(guess.BoissonPref) ? guess.BoissonPref.join(', ') : guess.BoissonPref}</Cell>
           </div>
         ))}
       </div>
 
-      {/* MODALE VICTOIRE */}
-      {isGameOver && (
-         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
-            <div className="bg-slate-900 border-2 border-amber-500 p-8 rounded-xl text-center shadow-[0_0_50px_rgba(245,158,11,0.5)] max-w-sm mx-4">
+      {/* MODALE VICTOIRE (AVEC CROIX) */}
+      {showSuccessModal && (
+         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in p-4">
+            <div className="relative bg-slate-900 border-2 border-amber-500 p-8 rounded-xl text-center shadow-[0_0_50px_rgba(245,158,11,0.5)] max-w-sm w-full mx-auto">
+              
+              {/* Bouton Fermer (Croix) */}
+              <button 
+                onClick={() => setShowSuccessModal(false)}
+                className="absolute top-2 right-2 text-slate-400 hover:text-white transition-colors p-2"
+                title="Fermer et voir les résultats"
+              >
+                <CloseIcon />
+              </button>
+
               <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-t from-amber-600 to-yellow-300 mb-4 uppercase">
                 Victoire !
               </h2>
               <div className="w-32 h-32 mx-auto mb-4 rounded-full p-1 bg-gradient-to-b from-amber-400 to-amber-700">
                  <AdminImage id={target.id} name={target.name} className="w-full h-full rounded-full object-cover border-4 border-slate-900" />
               </div>
-              <p className="text-slate-300 mb-6">C'était bien <span className="text-white font-bold text-xl">{target.name}</span></p>
-              <button 
-                onClick={() => window.location.reload()} 
-                className="bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 px-8 rounded shadow-lg transition-transform transform hover:scale-105"
-              >
-                Rejouer
-              </button>
+              <p className="text-slate-300 mb-6">
+                Bravo ! L'admin du jour était <span className="text-white font-bold text-xl block mt-1">{target.name}</span>
+              </p>
+              
+              <div className="text-sm text-slate-500 mt-4 border-t border-slate-700 pt-4">
+                Prochain admin dans : <br/>
+                <CountdownToMidnight />
+              </div>
             </div>
          </div>
       )}
@@ -339,13 +348,35 @@ export default function Game() {
           100% { transform: rotateX(0); opacity: 1; }
         }
         .animate-flip-in { animation: flip-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards; }
-        
-        @keyframes slide-up {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
         .animate-slide-up { animation: slide-up 0.4s ease-out; }
+        @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
     </div>
   );
 }
+
+// Petit composant pour le compte à rebours
+const CountdownToMidnight = () => {
+  const [timeLeft, setTimeLeft] = useState('');
+
+  useEffect(() => {
+    const updateTimer = () => {
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setHours(24, 0, 0, 0); // Minuit prochaine
+      const diff = tomorrow - now;
+
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      
+      setTimeLeft(`${h}h ${m}m ${s}s`);
+    };
+
+    updateTimer();
+    const timer = setInterval(updateTimer, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return <span className="font-mono text-amber-500 font-bold text-lg">{timeLeft}</span>;
+};
