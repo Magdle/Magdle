@@ -263,7 +263,7 @@
     "name": "Maylis Marcipont ",
     "age": "21",
     "cheveux": ["Brun"],
-    "JeuPref": ["Joue pas"],
+    "JeuPref": ["Révit"],
     "RelationFamille": "Compliquée",
     "PcPref": ["Mag-4"],
     "régio": ["Carolo"],
@@ -295,5 +295,53 @@
     "neuillitude": "3",
     "RankLol": "Master", 
     "BoissonPref": "Eau"
+  },{
+    "id":"TheoLebrun",
+    "name": "Théo Lebrun",
+    "age": "21",
+    "cheveux": ["Brun"],
+    "JeuPref": ["Jeu d'aventure"],
+    "RelationFamille": "Compliquée",
+    "PcPref": ["Mag-9"],
+    "régio": ["Centrale"],
+    "neuillitude": "4",
+    "RankLol": "joue pas", 
+    "BoissonPref": "Orangeade"
+  },{
+    "id":"MartinVle",
+    "name": "Martin Vleminck",
+    "age": "21",
+    "cheveux": ["Chatain"],
+    "JeuPref": ["Jeu d'aventure"],
+    "RelationFamille": "Compliquée",
+    "PcPref": ["Mag-3"],
+    "régio": ["Centrale"],
+    "neuillitude": "5",
+    "RankLol": "joue pas", 
+    "BoissonPref": "Ice Tea Pêche"
+  },{
+    "id":"LeonLahaye",
+    "name": "Leon Lahaye",
+    "age": "19",
+    "cheveux": ["Blond"],
+    "JeuPref": ["FPS"],
+    "RelationFamille": "Trkl",
+    "PcPref": ["Mag-1"],
+    "régio": ["Centrale"],
+    "neuillitude": "8",
+    "RankLol": "joue pas", 
+    "BoissonPref": "Redbull"
+  },{
+    "id":"Yaya",
+    "name": "Yannick Basesayabo",
+    "age": "25",
+    "cheveux": ["Noir"],
+    "JeuPref": ["MMO"],
+    "RelationFamille": "Compliquée",
+    "PcPref": ["Mag-4"],
+    "régio": ["Carolo"],
+    "neuillitude": "3",
+    "RankLol": "diamond", 
+    "BoissonPref": "Bière"
   }
 ]
