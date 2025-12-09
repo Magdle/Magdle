@@ -16,14 +16,25 @@ const STATUS_STYLES = {
   DEFAULT: 'bg-slate-800/80 border-slate-600',
 };
 
-// --- FONCTION DE DATE ROBUSTE ---
+// --- FONCTION DE DATE ROBUSTE V2 (INCASSABLE) ---
 const getParisDateString = () => {
-  return new Intl.DateTimeFormat('fr-CA', {
-    timeZone: 'Europe/Paris',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }).format(new Date());
+  const options = { 
+    timeZone: 'Europe/Paris', 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit' 
+  };
+  
+  // On utilise 'en-US' car c'est le format le plus stable pour extraire les parts
+  const formatter = new Intl.DateTimeFormat('en-US', options);
+  const parts = formatter.formatToParts(new Date());
+
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+
+  // On renvoie toujours YYYY-MM-DD manuellement
+  return `${year}-${month}-${day}`;
 };
 
 // --- SÉLECTION QUOTIDIENNE ---
@@ -165,7 +176,7 @@ const CountdownToMidnight = () => {
       const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const m = Math.floor((diff / (1000 * 60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
-      setTimeLeft(`${h}h ${m}m ${s}s`);
+      setTimeLeft(`${h}h ${m}m ${s}s (Paris)`);
     };
     updateTimer();
     const timer = setInterval(updateTimer, 1000);
