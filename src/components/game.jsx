@@ -176,7 +176,7 @@ const CountdownToMidnight = () => {
       const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const m = Math.floor((diff / (1000 * 60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
-      setTimeLeft(`${h}h ${m}m ${s}s (Paris)`);
+      setTimeLeft(`${h}h ${m}m ${s}s`);
     };
     updateTimer();
     const timer = setInterval(updateTimer, 1000);
