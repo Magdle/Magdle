@@ -274,80 +274,85 @@ export default function Game() {
         )}
       </div>
 
-      {/* GRILLE DE RÉSULTATS */}
-      <div className="w-full flex flex-col gap-2">
-        {guesses.length > 0 && (
-          <div className={`${gridColsClass} px-1 mb-1`}>
-             {['Admin', 'Nom', 'Âge', 'Cheveux', 'Jeu', 'Famille', 'PC', 'Région', 'Neuille', 'Rank', 'Boisson'].map(h => (
-                 <div key={h} className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">{h}</div>
-             ))}
-          </div>
-        )}
-
-        {guesses.map((guess) => (
-          <div key={guess.id} className={`${gridColsClass} animate-slide-up`}>
-            {/* 1. L'IMAGE */}
-            <div className="w-full aspect-square border-2 border-slate-600 rounded overflow-hidden relative shadow-lg z-10 bg-slate-900">
-              <AdminImage id={guess.id} name={guess.name} className="w-full h-full object-cover" />
-              {guess.name !== target.name && <div className="absolute inset-0 bg-red-500/20 backdrop-grayscale-[0.5]"></div>}
+{/* GRILLE DE RÉSULTATS */}
+      {/* 1. On ajoute overflow-x-auto ici pour permettre le scroll sur mobile */}
+      <div className="w-full overflow-x-auto pb-4"> 
+        
+        {/* 2. On force une largeur min de 900px (ou plus) pour que les 11 colonnes ne soient pas écrasées */}
+        <div className="min-w-[900px] flex flex-col gap-2">
+          
+          {guesses.length > 0 && (
+            <div className={`${gridColsClass} px-1 mb-1`}>
+                {['Admin', 'Nom', 'Âge', 'Cheveux', 'Jeu', 'Famille', 'PC', 'Région', 'Neuille', 'Rank', 'Boisson'].map(h => (
+                  <div key={h} className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">{h}</div>
+                ))}
             </div>
-            {/* 2. Nom */}
-            <Cell status={getComparisonStatus(guess.name, target.name)} delay={50}>{guess.name}</Cell>
-            {/* 3. Âge */}
-            <Cell status={guess.age === target.age ? STATUS.CORRECT : STATUS.INCORRECT} delay={100}>
-                <div className="flex items-center gap-1">
-                {guess.age}
-                {Number(guess.age) < Number(target.age) && <ArrowIcon direction="up" />}
-                {Number(guess.age) > Number(target.age) && <ArrowIcon direction="down" />}
-                </div>
-            </Cell>
-            {/* 4. Cheveux */}
-            <Cell status={getComparisonStatus(guess.cheveux, target.cheveux)} delay={200}>{Array.isArray(guess.cheveux) ? guess.cheveux.join(', ') : guess.cheveux}</Cell>
-            {/* 5. Jeu */}
-            <Cell status={getComparisonStatus(guess.JeuPref, target.JeuPref)} delay={300}>{Array.isArray(guess.JeuPref) ? guess.JeuPref.join(', ') : guess.JeuPref}</Cell>
-            {/* 6. Famille */}
-            <Cell status={getComparisonStatus(guess.RelationFamille, target.RelationFamille)} delay={400}>{guess.RelationFamille}</Cell>
-            
-            {/* 7. PC Préféré (Avec Flèches) */}
-            <Cell status={getPcValue(guess.PcPref) === getPcValue(target.PcPref) ? STATUS.CORRECT : STATUS.INCORRECT} delay={500}>
-                <div className="flex flex-col items-center">
-                    <span>{Array.isArray(guess.PcPref) ? guess.PcPref.join(', ') : guess.PcPref}</span>
-                    <div className="flex items-center mt-1 h-3">
-                        {getPcValue(guess.PcPref) < getPcValue(target.PcPref) && <ArrowIcon direction="up" />}
-                        {getPcValue(guess.PcPref) > getPcValue(target.PcPref) && <ArrowIcon direction="down" />}
-                    </div>
-                </div>
-            </Cell>
+          )}
 
-            {/* 8. Région */}
-            <Cell status={getComparisonStatus(guess.régio, target.régio)} delay={600}>{Array.isArray(guess.régio) ? guess.régio.join(',\n') : guess.régio}</Cell>
-            
-            {/* 9. Neuillitude (Avec Flèches) */}
-            <Cell status={getNeuillitudeValue(guess.neuillitude) === getNeuillitudeValue(target.neuillitude) ? STATUS.CORRECT : STATUS.INCORRECT} delay={700}>
-                <div className="flex flex-col items-center">
-                    <span>{guess.neuillitude}</span>
-                    <div className="flex items-center mt-1 h-3">
-                        {getNeuillitudeValue(guess.neuillitude) < getNeuillitudeValue(target.neuillitude) && <ArrowIcon direction="up" />}
-                        {getNeuillitudeValue(guess.neuillitude) > getNeuillitudeValue(target.neuillitude) && <ArrowIcon direction="down" />}
-                    </div>
-                </div>
-            </Cell>
+          {guesses.map((guess) => (
+            <div key={guess.id} className={`${gridColsClass} animate-slide-up`}>
+              {/* ASTUCE UX : J'ai ajouté 'sticky left-0' à l'image. 
+                  Comme ça, quand on scroll vers la droite pour voir le Rank, 
+                  la photo de l'admin reste visible à gauche !
+              */}
+              <div className="sticky left-0 z-20 w-full aspect-square border-2 border-slate-600 rounded overflow-hidden relative shadow-lg bg-slate-900">
+                <AdminImage id={guess.id} name={guess.name} className="w-full h-full object-cover" />
+                {guess.name !== target.name && <div className="absolute inset-0 bg-red-500/20 backdrop-grayscale-[0.5]"></div>}
+              </div>
 
-            {/* 10. Rank LOL */}
-            <Cell status={getRankValue(guess.RankLol) === getRankValue(target.RankLol) ? STATUS.CORRECT : STATUS.INCORRECT} delay={800}>
-                <div className="flex flex-col items-center">
-                <span>{guess.RankLol}</span>
-                <div className="flex items-center mt-1 h-3">
-                    {getRankValue(guess.RankLol) < getRankValue(target.RankLol) && <ArrowIcon direction="up" />}
-                    {getRankValue(guess.RankLol) > getRankValue(target.RankLol) && <ArrowIcon direction="down" />}
-                </div>
-                </div>
-            </Cell>
+              {/* Les autres cellules restent identiques */}
+              <Cell status={getComparisonStatus(guess.name, target.name)} delay={50}>{guess.name}</Cell>
+              
+              <Cell status={guess.age === target.age ? STATUS.CORRECT : STATUS.INCORRECT} delay={100}>
+                  <div className="flex items-center gap-1">
+                  {guess.age}
+                  {Number(guess.age) < Number(target.age) && <ArrowIcon direction="up" />}
+                  {Number(guess.age) > Number(target.age) && <ArrowIcon direction="down" />}
+                  </div>
+              </Cell>
+              
+              <Cell status={getComparisonStatus(guess.cheveux, target.cheveux)} delay={200}>{Array.isArray(guess.cheveux) ? guess.cheveux.join(', ') : guess.cheveux}</Cell>
+              
+              <Cell status={getComparisonStatus(guess.JeuPref, target.JeuPref)} delay={300}>{Array.isArray(guess.JeuPref) ? guess.JeuPref.join(', ') : guess.JeuPref}</Cell>
+              
+              <Cell status={getComparisonStatus(guess.RelationFamille, target.RelationFamille)} delay={400}>{guess.RelationFamille}</Cell>
+              
+              <Cell status={getPcValue(guess.PcPref) === getPcValue(target.PcPref) ? STATUS.CORRECT : STATUS.INCORRECT} delay={500}>
+                  <div className="flex flex-col items-center">
+                      <span>{Array.isArray(guess.PcPref) ? guess.PcPref.join(', ') : guess.PcPref}</span>
+                      <div className="flex items-center mt-1 h-3">
+                          {getPcValue(guess.PcPref) < getPcValue(target.PcPref) && <ArrowIcon direction="up" />}
+                          {getPcValue(guess.PcPref) > getPcValue(target.PcPref) && <ArrowIcon direction="down" />}
+                      </div>
+                  </div>
+              </Cell>
 
-            {/* 11. Boisson */}
-            <Cell status={getComparisonStatus(guess.BoissonPref, target.BoissonPref)} delay={900}>{Array.isArray(guess.BoissonPref) ? guess.BoissonPref.join(', ') : guess.BoissonPref}</Cell>
-          </div>
-        ))}
+              <Cell status={getComparisonStatus(guess.régio, target.régio)} delay={600}>{Array.isArray(guess.régio) ? guess.régio.join(',\n') : guess.régio}</Cell>
+              
+              <Cell status={getNeuillitudeValue(guess.neuillitude) === getNeuillitudeValue(target.neuillitude) ? STATUS.CORRECT : STATUS.INCORRECT} delay={700}>
+                  <div className="flex flex-col items-center">
+                      <span>{guess.neuillitude}</span>
+                      <div className="flex items-center mt-1 h-3">
+                          {getNeuillitudeValue(guess.neuillitude) < getNeuillitudeValue(target.neuillitude) && <ArrowIcon direction="up" />}
+                          {getNeuillitudeValue(guess.neuillitude) > getNeuillitudeValue(target.neuillitude) && <ArrowIcon direction="down" />}
+                      </div>
+                  </div>
+              </Cell>
+
+              <Cell status={getRankValue(guess.RankLol) === getRankValue(target.RankLol) ? STATUS.CORRECT : STATUS.INCORRECT} delay={800}>
+                  <div className="flex flex-col items-center">
+                  <span>{guess.RankLol}</span>
+                  <div className="flex items-center mt-1 h-3">
+                      {getRankValue(guess.RankLol) < getRankValue(target.RankLol) && <ArrowIcon direction="up" />}
+                      {getRankValue(guess.RankLol) > getRankValue(target.RankLol) && <ArrowIcon direction="down" />}
+                  </div>
+                  </div>
+              </Cell>
+
+              <Cell status={getComparisonStatus(guess.BoissonPref, target.BoissonPref)} delay={900}>{Array.isArray(guess.BoissonPref) ? guess.BoissonPref.join(', ') : guess.BoissonPref}</Cell>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* MODALE VICTOIRE */}
