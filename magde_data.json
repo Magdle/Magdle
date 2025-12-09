@@ -1,0 +1,546 @@
+[
+  {
+    "id": "jorishindryckx",
+    "name": "Joris Hindryckx",
+    "age": "21",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "La question de fdp ca peut changer tout le temps mais je dirais LoL"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "3",
+    "régio": "Boraine",
+    "neuillitude": "3",
+    "RankLol": "Silver",
+    "BoissonPref": "Ice tea green"
+  },
+  {
+    "id": "theaupauwels",
+    "name": "Théau Pauwels",
+    "age": "21",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Je ne joue pas aux jeux videos/Zelda BOTW"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "5",
+    "régio": "Boraine",
+    "neuillitude": "8",
+    "RankLol": "Non",
+    "BoissonPref": "Redbull"
+  },
+  {
+    "id": "callewaertdamien",
+    "name": "Callewaert Damien",
+    "age": "19",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Path of exile"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "3",
+    "régio": "Carolo",
+    "neuillitude": "6",
+    "RankLol": "Plat (bientôt émeraude tqt)",
+    "BoissonPref": "Ice tea pèche"
+  },
+  {
+    "id": "arthurjanssens",
+    "name": "Arthur Janssens",
+    "age": "19",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Hadès/Stardew valley"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "6",
+    "régio": "Frontalière",
+    "neuillitude": "2",
+    "RankLol": "J'ai arrêté, Fer II",
+    "BoissonPref": "Ice tea green"
+  },
+  {
+    "id": "antoninmeunier",
+    "name": "Antonin Meunier",
+    "age": "20",
+    "cheveux": [
+      "Blond"
+    ],
+    "JeuPref": [
+      "Portal"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "4",
+    "régio": "Boraine",
+    "neuillitude": "6",
+    "RankLol": "Non",
+    "BoissonPref": "Rodéo"
+  },
+  {
+    "id": "bogaertlucy",
+    "name": "Bogaert Lucy",
+    "age": "21",
+    "cheveux": [
+      "Roux"
+    ],
+    "JeuPref": [
+      "Disney dreamlight valley"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "8",
+    "régio": "Carolo",
+    "neuillitude": "4",
+    "RankLol": "Oui, mais je fais pas de ranked",
+    "BoissonPref": "Redbull"
+  },
+  {
+    "id": "celinerudodo",
+    "name": "Céline Rudodo",
+    "age": "22",
+    "cheveux": [
+      "Noire mais pour le coup ça peut vraiment être tout"
+    ],
+    "JeuPref": [
+      "MovieStarPlanet"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "3",
+    "régio": "Carolo",
+    "neuillitude": "1",
+    "RankLol": "À l'époque fer...",
+    "BoissonPref": "Orangeade"
+  },
+  {
+    "id": "mathysroggelegoataufinal",
+    "name": "Mathys Rogge/Le goat au final",
+    "age": "21",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Hollow Knight/silksong ou Roguelite ou outer wilds"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "2",
+    "régio": "Frontalière",
+    "neuillitude": "3",
+    "RankLol": "Oui, bronze",
+    "BoissonPref": "Coca"
+  },
+  {
+    "id": "florianmercier",
+    "name": "Florian Mercier",
+    "age": "25",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "Valorant"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "5",
+    "régio": "Techniquement fossile mais sinon fronta",
+    "neuillitude": "5",
+    "RankLol": "Bronze 1",
+    "BoissonPref": "Ice tea green"
+  },
+  {
+    "id": "tombouton",
+    "name": "Tom Bouton",
+    "age": "21",
+    "cheveux": [
+      "Roux"
+    ],
+    "JeuPref": [
+      "Outer Wilds"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "2",
+    "régio": "Carolo",
+    "neuillitude": "6",
+    "RankLol": "Oui, Silver 4",
+    "BoissonPref": "Ice tea green"
+  },
+  {
+    "id": "alandenys",
+    "name": "Alan Denys",
+    "age": "27",
+    "cheveux": [
+      "Chauve"
+    ],
+    "JeuPref": [
+      "Minecraft"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "6",
+    "régio": "Frontalière",
+    "neuillitude": "1",
+    "RankLol": "Oui, Émeraude",
+    "BoissonPref": "Coca"
+  },
+  {
+    "id": "quentindecroon",
+    "name": "Quentin De Croon",
+    "age": "18",
+    "cheveux": [
+      "Chatain"
+    ],
+    "JeuPref": [
+      "Zelda wind waker"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "6",
+    "régio": "Centrale",
+    "neuillitude": "6",
+    "RankLol": "Non",
+    "BoissonPref": "eau"
+  },
+  {
+    "id": "arnopanarisi",
+    "name": "Arno Panarisi",
+    "age": "22",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "skyrim"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "3",
+    "régio": "Centrale",
+    "neuillitude": "4",
+    "RankLol": "oui, plastique 2",
+    "BoissonPref": "Ice tea pèche"
+  },
+  {
+    "id": "valentinvandevelde",
+    "name": "Valentin Vande Velde",
+    "age": "21",
+    "cheveux": [
+      "Moi je pense brun foncé mais les gens disent noir comme pour ma peau"
+    ],
+    "JeuPref": [
+      "Valorant"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "9",
+    "régio": "Carolo",
+    "neuillitude": "7",
+    "RankLol": "Iron 4 (peak 3 mais y a le reset)",
+    "BoissonPref": "Ice tea pèche"
+  },
+  {
+    "id": "augustecordier",
+    "name": "Auguste Cordier",
+    "age": "20",
+    "cheveux": [
+      "Chatain"
+    ],
+    "JeuPref": [
+      "Sea of thieves"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "8",
+    "régio": "Centrale",
+    "neuillitude": "7",
+    "RankLol": "Non  je suis pas puceau",
+    "BoissonPref": "eau"
+  },
+  {
+    "id": "cyrilguiot",
+    "name": "Cyril guiot",
+    "age": "24",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "cs"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "5",
+    "régio": "Carolo",
+    "neuillitude": "1",
+    "RankLol": "je jouais silver",
+    "BoissonPref": "Coca"
+  },
+  {
+    "id": "lucaslebrun",
+    "name": "Lucas Lebrun",
+    "age": "24",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "Mobile je n'ai plus le temps pour le reste"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "3",
+    "régio": "Centrale",
+    "neuillitude": "1",
+    "RankLol": "Oui, pick elo silver 4 mdrr",
+    "BoissonPref": "Ice tea pèche"
+  },
+  {
+    "id": "victorclais",
+    "name": "Victor Clais",
+    "age": "18",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Elden ring"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "7",
+    "régio": "Frontalière",
+    "neuillitude": "7",
+    "RankLol": "Gold",
+    "BoissonPref": "Ice tea green"
+  },
+  {
+    "id": "kevindubrulle",
+    "name": "Kévin Dubrulle",
+    "age": "Trop vieux (25 ans)",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "Pokémon"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "4",
+    "régio": "Frontalière",
+    "neuillitude": "4",
+    "RankLol": "Diamant",
+    "BoissonPref": "eau"
+  },
+  {
+    "id": "raphaelplatteauholvoet",
+    "name": "Raphaël Platteau Holvoet",
+    "age": "20ans",
+    "cheveux": [
+      "Roux"
+    ],
+    "JeuPref": [
+      "J’en ai pas (souls like, Chess.com, clair obscur, deep rock, Hollow Knight) [si ça peut aider ]"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "9",
+    "régio": "Frontalière",
+    "neuillitude": "7",
+    "RankLol": "Non",
+    "BoissonPref": "Ice tea green"
+  },
+  {
+    "id": "maylismarcipont",
+    "name": "Maylis Marcipont",
+    "age": "21",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Aucun"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "3",
+    "régio": "Carolo",
+    "neuillitude": "5",
+    "RankLol": "Je ne joue pas",
+    "BoissonPref": "Café"
+  },
+  {
+    "id": "melikealbain",
+    "name": "Melike Albain",
+    "age": "20",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "Jeu d’aventure"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "7",
+    "régio": "Carolo",
+    "neuillitude": "4",
+    "RankLol": "Oui pas encore classé",
+    "BoissonPref": "eau"
+  },
+  {
+    "id": "florianlefebvre",
+    "name": "Florian Lefebvre",
+    "age": "23",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "Factory game"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "1",
+    "régio": "Carolo",
+    "neuillitude": "1",
+    "RankLol": "Silver",
+    "BoissonPref": "Redbull"
+  },
+  {
+    "id": "andreapaciorkowski",
+    "name": "Andréa Paciorkowski",
+    "age": "21",
+    "cheveux": [
+      "Malheureusement j'ai des colos donc blanc avec une mèche rose ( sinon chatain)"
+    ],
+    "JeuPref": [
+      "MOBA / stratégie"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "3",
+    "régio": "Centrale",
+    "neuillitude": "3",
+    "RankLol": "Oui, Master",
+    "BoissonPref": "eau"
+  },
+  {
+    "id": "theolebrun",
+    "name": "Théo Lebrun",
+    "age": "21",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Aventure"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "9",
+    "régio": "Centrale",
+    "neuillitude": "4",
+    "RankLol": "Non",
+    "BoissonPref": "Orangeade"
+  },
+  {
+    "id": "martinvleminck",
+    "name": "Martin Vleminck",
+    "age": "21",
+    "cheveux": [
+      "Chatain"
+    ],
+    "JeuPref": [
+      "FPS"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "3",
+    "régio": "Centrale",
+    "neuillitude": "5",
+    "RankLol": "Je joue pas",
+    "BoissonPref": "Ice tea pèche"
+  },
+  {
+    "id": "lahayeleon",
+    "name": "Lahaye Léon",
+    "age": "19",
+    "cheveux": [
+      "Blond"
+    ],
+    "JeuPref": [
+      "Fps"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "1",
+    "régio": "Centrale",
+    "neuillitude": "8",
+    "RankLol": "Non",
+    "BoissonPref": "Redbull"
+  },
+  {
+    "id": "yannickbasesayabo",
+    "name": "Yannick Basesayabo",
+    "age": "25",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "MMO"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "4",
+    "régio": "Carolo",
+    "neuillitude": "3",
+    "RankLol": "Diamant",
+    "BoissonPref": "Bière"
+  },
+  {
+    "id": "raphaeldelens",
+    "name": "Raphaël Delens",
+    "age": "25",
+    "cheveux": [
+      "Chatain"
+    ],
+    "JeuPref": [
+      "RPG"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": "4",
+    "régio": "Carolo",
+    "neuillitude": "3",
+    "RankLol": "Non",
+    "BoissonPref": "Café"
+  },
+  {
+    "id": "aminelameti",
+    "name": "Amine Lameti",
+    "age": "22",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "indie"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "9",
+    "régio": "Sahara",
+    "neuillitude": "7",
+    "RankLol": "NON JAMAIS",
+    "BoissonPref": "Coca 0"
+  },
+  {
+    "id": "samyennahou",
+    "name": "Samy ennahou",
+    "age": "24",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "RPG"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "1",
+    "régio": "Carolo",
+    "neuillitude": "1",
+    "RankLol": "Jsp",
+    "BoissonPref": "Rodéo"
+  },
+  {
+    "id": "hugolorenzoni",
+    "name": "Hugo Lorenzoni",
+    "age": "24",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "pfsense"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "9",
+    "régio": "Carolo",
+    "neuillitude": "1",
+    "RankLol": "N/A",
+    "BoissonPref": "Bière"
+  }
+]

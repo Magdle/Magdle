@@ -355,5 +355,56 @@
     "neuillitude": "3",
     "RankLol": "joue pas", 
     "BoissonPref": "Café"
+  },{
+    "id": "aminelameti",
+    "name": "Amine Lameti",
+    "age": "22",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "indie"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-9",
+    "régio": "Maroc",
+    "neuillitude": "7",
+    "RankLol": "joue pas",
+    "BoissonPref": "Coca 0"
+  },{
+    "id": "samyennahou",
+    "name": "Samy Ennahou",
+    "age": "24",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "RPG"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-1",
+    "régio": "Carolo",
+    "neuillitude": "1",
+    "RankLol": "joue pas",
+    "BoissonPref": "Rodéo"
+  },
+  {
+    "id": "hugolorenzoni",
+    "name": "Hugo Lorenzoni",
+    "age": "24",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "pfsense"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Pc-200",
+    "régio": "Carolo",
+    "neuillitude": "1",
+    "RankLol": "joue pas",
+    "BoissonPref": "Bière"
   }
 ]
+
+
