@@ -37,6 +37,14 @@ const getDailyTarget = () => {
   return championsData[index];
 };
 
+// Fonction pour réduire la police si le texte est long
+const getDynamicFontSize = (text) => {
+  const str = String(text);
+  if (str.length > 15) return "text-[8px] leading-[0.9] break-words"; // Très long (ex: Paciorkowski)
+  if (str.length > 10) return "text-[9px] leading-3 break-words";      // Long
+  return ""; // Par défaut (hérite de la taille du Cell)
+};
+
 // --- LOGIQUE DES VALEURS (POUR LES FLÈCHES) ---
 
 // 1. RANG LOL
@@ -301,7 +309,13 @@ export default function Game() {
               </div>
 
               {/* Les autres cellules restent identiques */}
-              <Cell status={getComparisonStatus(guess.name, target.name)} delay={50}>{guess.name}</Cell>
+              {/* 2. Nom */}
+              <Cell status={getComparisonStatus(guess.name, target.name)} delay={50}>
+                {/* On applique la taille dynamique ici */}
+                <span className={`w-full ${getDynamicFontSize(guess.name)}`}>
+                  {guess.name}
+                </span>
+              </Cell>
               
               <Cell status={guess.age === target.age ? STATUS.CORRECT : STATUS.INCORRECT} delay={100}>
                   <div className="flex items-center gap-1">
