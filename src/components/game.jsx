@@ -203,27 +203,43 @@ export default function Game() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+// Remplacer tout le premier useEffect par celui-ci :
   useEffect(() => {
     const todayISO = getParisDateString();
     const storedData = localStorage.getItem('magde-daily-state');
+
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      if (parsedData.date === todayISO) {
+
+      // --- LE CHANGEMENT EST ICI ---
+      // On ajoute : && parsedData.solutionId === target.id
+      // Ça vérifie : "Est-ce que la sauvegarde correspond bien à l'admin qu'on cherche aujourd'hui ?"
+      if (parsedData.date === todayISO && parsedData.solutionId === target.id) {
         setGuesses(parsedData.guesses);
         setIsGameOver(parsedData.isGameOver);
-        if (parsedData.isGameOver) setShowSuccessModal(true); 
+        if (parsedData.isGameOver) setShowSuccessModal(true);
       } else {
+        // Si c'est pas le bon admin (ou pas la bonne date), on efface tout pour recommencer
         localStorage.removeItem('magde-daily-state');
+        setGuesses([]);        // Important : on vide l'état local aussi
+        setIsGameOver(false);  // Important : on remet le jeu en cours
+        setShowSuccessModal(false);
       }
     }
-  }, []);
+  }, [target]); // <-- Important : on ajoute 'target' ici pour que ça réagisse au changement
 
+// Remplacer tout le deuxième useEffect par celui-ci :
   useEffect(() => {
     if (guesses.length > 0 || isGameOver) {
       const todayISO = getParisDateString();
-      localStorage.setItem('magde-daily-state', JSON.stringify({ date: todayISO, guesses, isGameOver }));
+      localStorage.setItem('magde-daily-state', JSON.stringify({
+        date: todayISO,
+        solutionId: target.id, // --- LE CHANGEMENT EST ICI : on stocke l'ID de la cible ---
+        guesses,
+        isGameOver
+      }));
     }
-  }, [guesses, isGameOver]);
+  }, [guesses, isGameOver, target]); // <-- On ajoute 'target' ici aussi
 
   const filteredChampions = useMemo(() => {
     if (input.length < 1) return [];
