@@ -386,7 +386,7 @@
     "RelationFamille": "Compliquée",
     "PcPref": "1",
     "régio": "Carolo",
-    "neuillitude": "1",
+    "neuillitude": "0",
     "RankLol": "Silver",
     "BoissonPref": "Redbull"
   },
@@ -542,5 +542,73 @@
     "neuillitude": "1",
     "RankLol": "N/A",
     "BoissonPref": "Bière"
+  },
+  {
+    "id": "romainmestre",
+    "name": "Romain Mestré",
+    "age": "20",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Moba"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "6",
+    "régio": "Carolo",
+    "neuillitude": "9",
+    "RankLol": "Oui, Émeraude",
+    "BoissonPref": "Ice tea pèche"
+  },
+  {
+    "id": "lisacardillo",
+    "name": "Lisa Cardillo",
+    "age": "18",
+    "cheveux": [
+      "Chatain"
+    ],
+    "JeuPref": [
+      "PVP"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "5",
+    "régio": "Centrale",
+    "neuillitude": "8",
+    "RankLol": "Non, je me lave",
+    "BoissonPref": "Café"
+  },
+  {
+    "id": "justinbataille",
+    "name": "Justin Bataille",
+    "age": "24",
+    "cheveux": [
+      "Blond"
+    ],
+    "JeuPref": [
+      "RPG"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "6",
+    "régio": "Frontalière",
+    "neuillitude": "2",
+    "RankLol": "Non, je prends des douches",
+    "BoissonPref": "Bière"
+  },
+  {
+    "id": "remylefevre",
+    "name": "Rémy Lefèvre",
+    "age": "26",
+    "cheveux": [
+      "Chatain"
+    ],
+    "JeuPref": [
+      "Factory game"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "3",
+    "régio": "Centrale",
+    "neuillitude": "1",
+    "RankLol": "Silver",
+    "BoissonPref": "Redbull"
   }
 ]

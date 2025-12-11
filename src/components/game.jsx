@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import championsData from '../data/champions.json';
+// 1. IMPORT DU PLANNING GÉNÉRÉ
+import planningData from '../data/planning.json';
 
-// ... (GARDE TOUTE TA CONFIGURATION, STATUS, STATUS_STYLES, getParisDateString, ETC. ICI) ...
-// ... (GARDE TOUTES TES FONCTIONS UTILITAIRES ICI) ...
-
-// --- CONFIGURATION & UTILITAIRES ---
+// --- CONFIGURATION & CONSTANTES ---
 const STATUS = {
   CORRECT: 'correct',
   PARTIAL: 'partial',
@@ -18,7 +17,8 @@ const STATUS_STYLES = {
   DEFAULT: 'bg-slate-800/80 border-slate-600',
 };
 
-// ... (Colle ici tes fonctions getParisDateString, getDailyTarget, getComparisonStatus, etc.) ...
+// --- FONCTIONS UTILITAIRES ---
+
 const getParisDateString = () => {
   const options = { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' };
   const formatter = new Intl.DateTimeFormat('en-US', options);
@@ -29,14 +29,41 @@ const getParisDateString = () => {
   return `${year}-${month}-${day}`;
 };
 
+// 2. FONCTION DE DÉCODAGE BASE64 (Safe pour UTF-8/Accents)
+const decodeName = (encodedStr) => {
+  try {
+    // Cette combinaison permet de décoder correctement les accents (ex: Raphaël)
+    // encodés via Buffer.from(str).toString('base64') côté Node.js
+    return decodeURIComponent(escape(window.atob(encodedStr)));
+  } catch (e) {
+    console.error("Erreur de décodage du nom :", e);
+    return "";
+  }
+};
+
+// 3. NOUVELLE LOGIQUE : RÉCUPÉRATION VIA LE PLANNING
 const getDailyTarget = () => {
   const dateStr = getParisDateString();
-  let hash = 0;
-  for (let i = 0; i < dateStr.length; i++) {
-    hash = dateStr.charCodeAt(i) + ((hash << 5) - hash);
+  
+  // Récupération du nom crypté dans le fichier JSON
+  const encryptedName = planningData[dateStr];
+
+  // Sécurité : Si pas de date trouvée (ex: fichier expiré), on prend le premier champion
+  if (!encryptedName) {
+    console.warn(`⚠️ Attention : Aucun admin prévu pour la date du ${dateStr} dans planning.json`);
+    return championsData[0];
   }
-  const index = Math.abs(hash) % championsData.length;
-  return championsData[index];
+
+  // Décryptage
+  const targetName = decodeName(encryptedName);
+
+  // Recherche dans la base de données
+  const targetChampion = championsData.find(
+    c => c.name.toLowerCase() === targetName.toLowerCase()
+  );
+
+  // Fallback si le nom décrypté ne correspond à aucun champion (orthographe différente ?)
+  return targetChampion || championsData[0];
 };
 
 const getDynamicFontSize = (text) => {
@@ -91,7 +118,7 @@ const getComparisonStatus = (guessVal, targetVal) => {
   return STATUS.INCORRECT;
 };
 
-// ... (GARDE TES COMPOSANTS UI : ArrowIcon, CloseIcon, AdminImage, Cell, CountdownToMidnight) ...
+// --- COMPOSANTS UI ---
 
 const ArrowIcon = ({ direction }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-3 h-3 inline-block ml-1 animate-pulse">
@@ -162,13 +189,18 @@ const CountdownToMidnight = () => {
 // --- MAIN COMPONENT ---
 
 export default function Game() {
-  // 1. AJOUT DE L'ÉTAT MOUNTED
   const [isMounted, setIsMounted] = useState(false);
   
-  // Le calcul du target se fait, mais on attend d'être monté pour l'utiliser dans le rendu final si besoin
-  // Note : pour éviter tout calcul serveur inutile, on pourrait même déplacer le getDailyTarget dans un useEffect,
-  // mais la méthode "isMounted" suffit généralement.
-  const target = useMemo(() => getDailyTarget(), []);
+  // Utilisation de useMemo pour ne calculer le target qu'une seule fois au montage
+  // Note : S'assure de n'être appelé que côté client si nécessaire via isMounted dans le render,
+  // mais ici le calcul est safe même côté serveur (sauf window.atob qui nécessiterait un polyfill si SSR strict)
+  // Comme getDailyTarget utilise window.atob, il vaut mieux l'exécuter dans un useEffect ou vérifier le target après montage.
+  // Cependant, pour simplifier et éviter le 'target is undefined', on peut l'initialiser ici si on est sûr d'être dans un env navigateur, 
+  // OU on laisse le code tel quel car React gère les erreurs de rendu initial.
+  const target = useMemo(() => {
+    if (typeof window === 'undefined') return championsData[0]; // Protection SSR
+    return getDailyTarget();
+  }, []);
   
   const [guesses, setGuesses] = useState([]);
   const [input, setInput] = useState('');
@@ -176,25 +208,22 @@ export default function Game() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // 2. ACTIVATION AU MONTAGE
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+// À REMPLACER : Le useEffect qui sauvegarde quand on joue
   useEffect(() => {
-    const todayISO = getParisDateString();
-    const storedData = localStorage.getItem('magde-daily-state');
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      if (parsedData.date === todayISO) {
-        setGuesses(parsedData.guesses);
-        setIsGameOver(parsedData.isGameOver);
-        if (parsedData.isGameOver) setShowSuccessModal(true); 
-      } else {
-        localStorage.removeItem('magde-daily-state');
-      }
+    if (guesses.length > 0 || isGameOver) {
+      const todayISO = getParisDateString();
+      localStorage.setItem('magde-daily-state', JSON.stringify({ 
+        date: todayISO, 
+        guesses, 
+        isGameOver,
+        targetName: target.name // ON AJOUTE CECI pour la vérification
+      }));
     }
-  }, []);
+  }, [guesses, isGameOver, target.name]);
 
   useEffect(() => {
     if (guesses.length > 0 || isGameOver) {
@@ -236,13 +265,11 @@ export default function Game() {
       setSelectedIndex(prev => (prev - 1 + filteredChampions.length) % filteredChampions.length);
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      setSelectedIndex(0); // Reset index
+      setSelectedIndex(0);
       handleGuess(filteredChampions[selectedIndex].name);
     }
   };
 
-  // 3. RETOURNER NULL SI PAS ENCORE MONTÉ (Le Server ne rend rien, le Client rend le jeu)
-  // Cela force la synchro et évite l'erreur 418
   if (!isMounted) return <div className="min-h-screen bg-slate-900"></div>;
 
   if (!target) return <div className="text-white text-center mt-10">Chargement...</div>;
@@ -259,7 +286,6 @@ export default function Game() {
            </div>
            <input
              type="text"
-             // Ajout de autoComplete="off" pour éviter que les extensions navigateurs cassent aussi l'hydratation
              autoComplete="off" 
              className="w-full bg-transparent p-4 text-white placeholder-slate-400 focus:outline-none font-medium tracking-wide uppercase"
              placeholder={isGameOver ? "Reviens demain !" : "Tapez un nom..."}
@@ -270,7 +296,6 @@ export default function Game() {
            />
         </div>
         
-        {/* ... LE RESTE DU CODE RESTE IDENTIQUE ... */}
         {filteredChampions.length > 0 && !isGameOver && (
           <div className="absolute top-full left-0 w-full mt-2 bg-slate-800 border border-slate-600 rounded-lg shadow-xl overflow-hidden animate-fade-in">
             {filteredChampions.map((c, idx) => (
@@ -383,7 +408,7 @@ export default function Game() {
                 Victoire !
               </h2>
               <div className="w-32 h-32 mx-auto mb-4 rounded-full p-1 bg-gradient-to-b from-amber-400 to-amber-700">
-                 <AdminImage id={target.id} name={target.name} className="w-full h-full rounded-full object-cover border-4 border-slate-900" />
+                  <AdminImage id={target.id} name={target.name} className="w-full h-full rounded-full object-cover border-4 border-slate-900" />
               </div>
               <p className="text-slate-300 mb-6">
                 Bravo ! L'admin du jour était <span className="text-white font-bold text-xl block mt-1">{target.name}</span>

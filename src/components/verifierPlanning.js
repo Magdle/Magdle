@@ -20,7 +20,7 @@ try {
 
 // 2. La date précise que tu veux vérifier (Format YYYY-MM-DD)
 // Le code génère des dates au format ISO (2025-12-10)
-const dateCible = "2025-12-10";
+const dateCible = "2025-12-11";
 
 console.log(`🔍 Vérification pour le : ${dateCible}`);
 
