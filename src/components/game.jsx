@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import championsData from '../data/champions.json';
 
-// --- CONFIGURATION & UTILITAIRES ---
+// ... (GARDE TOUTE TA CONFIGURATION, STATUS, STATUS_STYLES, getParisDateString, ETC. ICI) ...
+// ... (GARDE TOUTES TES FONCTIONS UTILITAIRES ICI) ...
 
+// --- CONFIGURATION & UTILITAIRES ---
 const STATUS = {
   CORRECT: 'correct',
   PARTIAL: 'partial',
@@ -16,28 +18,17 @@ const STATUS_STYLES = {
   DEFAULT: 'bg-slate-800/80 border-slate-600',
 };
 
-// --- FONCTION DE DATE ROBUSTE V2 (INCASSABLE) ---
+// ... (Colle ici tes fonctions getParisDateString, getDailyTarget, getComparisonStatus, etc.) ...
 const getParisDateString = () => {
-  const options = { 
-    timeZone: 'Europe/Paris', 
-    year: 'numeric', 
-    month: '2-digit', 
-    day: '2-digit' 
-  };
-  
-  // On utilise 'en-US' car c'est le format le plus stable pour extraire les parts
+  const options = { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' };
   const formatter = new Intl.DateTimeFormat('en-US', options);
   const parts = formatter.formatToParts(new Date());
-
   const year = parts.find(p => p.type === 'year').value;
   const month = parts.find(p => p.type === 'month').value;
   const day = parts.find(p => p.type === 'day').value;
-
-  // On renvoie toujours YYYY-MM-DD manuellement
   return `${year}-${month}-${day}`;
 };
 
-// --- SÉLECTION QUOTIDIENNE ---
 const getDailyTarget = () => {
   const dateStr = getParisDateString();
   let hash = 0;
@@ -48,62 +39,44 @@ const getDailyTarget = () => {
   return championsData[index];
 };
 
-// Fonction pour réduire la police si le texte est long
 const getDynamicFontSize = (text) => {
   const str = String(text);
-  if (str.length > 15) return "text-[8px] leading-[0.9] break-words"; // Très long (ex: Paciorkowski)
-  if (str.length > 10) return "text-[9px] leading-3 break-words";      // Long
-  return ""; // Par défaut (hérite de la taille du Cell)
+  if (str.length > 15) return "text-[8px] leading-[0.9] break-words";
+  if (str.length > 10) return "text-[9px] leading-3 break-words";
+  return "";
 };
 
-// --- LOGIQUE DES VALEURS (POUR LES FLÈCHES) ---
-
-// 1. RANG LOL
 const getRankValue = (rankStr) => {
   if (!rankStr) return 0;
   const rank = rankStr.toLowerCase();
   if (rank.includes('joue pas') || rank.includes('unrank')) return 0;
-
   const tiers = ['iron', 'bronze', 'silver', 'gold', 'plat', 'emerald', 'diamond', 'master', 'grandmaster', 'challenger'];
   let score = 0;
   const tierIndex = tiers.findIndex(t => rank.includes(t));
   if (tierIndex !== -1) score = (tierIndex + 1) * 100;
-
   const divisionMatch = rank.match(/(\d)/);
   if (divisionMatch) score += (5 - parseInt(divisionMatch[0], 10)) * 10;
-
   return score;
 };
 
-// 2. PC PRÉFÉRÉ (Extrait le numéro "Mag-5" -> 5)
 const getPcValue = (pcInput) => {
-  // Gère si c'est un tableau ou une string
   const str = Array.isArray(pcInput) ? pcInput[0] : pcInput;
   if (!str) return 0;
-  
-  // Trouve le premier nombre dans la chaîne (Mag-5 -> 5)
   const match = String(str).match(/(\d+)/);
   return match ? parseInt(match[0], 10) : 0;
 };
 
-// 3. NEUILLITUDE (Échelle 1 à 9)
 const getNeuillitudeValue = (val) => {
   const v = String(val).toLowerCase().trim();
-  
-  // Si c'est un nombre direct (ex: "5")
   const num = parseInt(v);
   if (!isNaN(num)) return num;
-
-  // Mapping des textes vers l'échelle 1-9
   if (v.includes('pas') || v === '0') return 1;
   if (v.includes('semi')) return 4;
   if (v === 'neuille') return 7;
   if (v.includes('elev') || v.includes('élev')) return 9;
-  
-  return 1; // Valeur par défaut
+  return 1;
 };
 
-// Fonction de comparaison générique
 const getComparisonStatus = (guessVal, targetVal) => {
   if (!Array.isArray(targetVal)) {
     const cleanGuess = String(guessVal).trim().toLowerCase();
@@ -118,7 +91,7 @@ const getComparisonStatus = (guessVal, targetVal) => {
   return STATUS.INCORRECT;
 };
 
-// --- COMPOSANTS UI ---
+// ... (GARDE TES COMPOSANTS UI : ArrowIcon, CloseIcon, AdminImage, Cell, CountdownToMidnight) ...
 
 const ArrowIcon = ({ direction }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-3 h-3 inline-block ml-1 animate-pulse">
@@ -185,15 +158,28 @@ const CountdownToMidnight = () => {
   return <span className="font-mono text-amber-500 font-bold text-lg">{timeLeft}</span>;
 };
 
+
 // --- MAIN COMPONENT ---
 
 export default function Game() {
+  // 1. AJOUT DE L'ÉTAT MOUNTED
+  const [isMounted, setIsMounted] = useState(false);
+  
+  // Le calcul du target se fait, mais on attend d'être monté pour l'utiliser dans le rendu final si besoin
+  // Note : pour éviter tout calcul serveur inutile, on pourrait même déplacer le getDailyTarget dans un useEffect,
+  // mais la méthode "isMounted" suffit généralement.
   const target = useMemo(() => getDailyTarget(), []);
+  
   const [guesses, setGuesses] = useState([]);
   const [input, setInput] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // 2. ACTIVATION AU MONTAGE
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const todayISO = getParisDateString();
@@ -250,9 +236,14 @@ export default function Game() {
       setSelectedIndex(prev => (prev - 1 + filteredChampions.length) % filteredChampions.length);
     } else if (e.key === 'Enter') {
       e.preventDefault();
+      setSelectedIndex(0); // Reset index
       handleGuess(filteredChampions[selectedIndex].name);
     }
   };
+
+  // 3. RETOURNER NULL SI PAS ENCORE MONTÉ (Le Server ne rend rien, le Client rend le jeu)
+  // Cela force la synchro et évite l'erreur 418
+  if (!isMounted) return <div className="min-h-screen bg-slate-900"></div>;
 
   if (!target) return <div className="text-white text-center mt-10">Chargement...</div>;
 
@@ -268,6 +259,8 @@ export default function Game() {
            </div>
            <input
              type="text"
+             // Ajout de autoComplete="off" pour éviter que les extensions navigateurs cassent aussi l'hydratation
+             autoComplete="off" 
              className="w-full bg-transparent p-4 text-white placeholder-slate-400 focus:outline-none font-medium tracking-wide uppercase"
              placeholder={isGameOver ? "Reviens demain !" : "Tapez un nom..."}
              value={input}
@@ -276,6 +269,8 @@ export default function Game() {
              disabled={isGameOver}
            />
         </div>
+        
+        {/* ... LE RESTE DU CODE RESTE IDENTIQUE ... */}
         {filteredChampions.length > 0 && !isGameOver && (
           <div className="absolute top-full left-0 w-full mt-2 bg-slate-800 border border-slate-600 rounded-lg shadow-xl overflow-hidden animate-fade-in">
             {filteredChampions.map((c, idx) => (
@@ -293,13 +288,9 @@ export default function Game() {
         )}
       </div>
 
-{/* GRILLE DE RÉSULTATS */}
-      {/* 1. On ajoute overflow-x-auto ici pour permettre le scroll sur mobile */}
+      {/* GRILLE DE RÉSULTATS */}
       <div className="w-full overflow-x-auto pb-4"> 
-        
-        {/* 2. On force une largeur min de 900px (ou plus) pour que les 11 colonnes ne soient pas écrasées */}
         <div className="min-w-[900px] flex flex-col gap-2">
-          
           {guesses.length > 0 && (
             <div className={`${gridColsClass} px-1 mb-1`}>
                 {['Admin', 'Nom', 'Âge', 'Cheveux', 'Jeu', 'Famille', 'PC', 'Région', 'Neuille', 'Rank', 'Boisson'].map(h => (
@@ -310,19 +301,14 @@ export default function Game() {
 
           {guesses.map((guess) => (
             <div key={guess.id} className={`${gridColsClass} animate-slide-up`}>
-              {/* ASTUCE UX : J'ai ajouté 'sticky left-0' à l'image. 
-                  Comme ça, quand on scroll vers la droite pour voir le Rank, 
-                  la photo de l'admin reste visible à gauche !
-              */}
+              {/* Image Sticky */}
               <div className="sticky left-0 z-20 w-full aspect-square border-2 border-slate-600 rounded overflow-hidden relative shadow-lg bg-slate-900">
                 <AdminImage id={guess.id} name={guess.name} className="w-full h-full object-cover" />
                 {guess.name !== target.name && <div className="absolute inset-0 bg-red-500/20 backdrop-grayscale-[0.5]"></div>}
               </div>
 
-              {/* Les autres cellules restent identiques */}
-              {/* 2. Nom */}
+              {/* Cellules */}
               <Cell status={getComparisonStatus(guess.name, target.name)} delay={50}>
-                {/* On applique la taille dynamique ici */}
                 <span className={`w-full ${getDynamicFontSize(guess.name)}`}>
                   {guess.name}
                 </span>
