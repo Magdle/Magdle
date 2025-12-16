@@ -21,7 +21,7 @@
     "RelationFamille": "Compliquée",
     "PcPref": ["Mag-5"],
     "régio": ["Boraine"],
-    "neuillitude": "10",
+    "neuillitude": "9",
     "RankLol": "joue pas",
     "BoissonPref": "Redbull"
   },
@@ -110,7 +110,7 @@
     "RelationFamille": "Compliquée",
     "PcPref": ["Mag-2"],
     "régio": ["Frontalière"],
-    "neuillitude": "3",
+    "neuillitude": "7",
     "RankLol": "bronze", 
     "BoissonPref": "Coca"
   },
@@ -225,13 +225,13 @@
   },{
     "id": "VictorClais",
     "name": "Victor Clais",
-    "age": "18",
+    "age": "19",
     "cheveux": ["Brun"],
     "JeuPref": ["Elden Ring"],
     "RelationFamille": "Compliquée",
     "PcPref": ["Mag-7"],
     "régio": ["Frontalière"],
-    "neuillitude": "7",
+    "neuillitude": "8",
     "RankLol": "gold", 
     "BoissonPref": "Ice Tea Green"
   },{
