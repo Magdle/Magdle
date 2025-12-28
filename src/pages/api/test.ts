@@ -1,0 +1,8 @@
+import type { APIRoute } from "astro";
+
+export const GET: APIRoute = async () => {
+  return new Response(
+    JSON.stringify({ message: "🎉 Le serveur Astro fonctionne !" }),
+    { headers: { "Content-Type": "application/json" } }
+  );
+};

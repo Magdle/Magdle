@@ -21,7 +21,7 @@
     "RelationFamille": "Compliquée",
     "PcPref": ["Mag-5"],
     "régio": ["Boraine"],
-    "neuillitude": "10",
+    "neuillitude": "9",
     "RankLol": "joue pas",
     "BoissonPref": "Redbull"
   },
@@ -110,7 +110,7 @@
     "RelationFamille": "Compliquée",
     "PcPref": ["Mag-2"],
     "régio": ["Frontalière"],
-    "neuillitude": "3",
+    "neuillitude": "7",
     "RankLol": "bronze", 
     "BoissonPref": "Coca"
   },
@@ -225,13 +225,13 @@
   },{
     "id": "VictorClais",
     "name": "Victor Clais",
-    "age": "18",
+    "age": "19",
     "cheveux": ["Brun"],
     "JeuPref": ["Elden Ring"],
     "RelationFamille": "Compliquée",
     "PcPref": ["Mag-7"],
     "régio": ["Frontalière"],
-    "neuillitude": "7",
+    "neuillitude": "8",
     "RankLol": "gold", 
     "BoissonPref": "Ice Tea Green"
   },{
@@ -469,8 +469,110 @@
     "PcPref": "Mag-3",
     "régio": "Centrale",
     "neuillitude": "1",
-    "RankLol": "Silver",
+    "RankLol": "silver",
     "BoissonPref": "Redbull"
+  },
+  {
+    "id": "achilletonthat",
+    "name": "Achille Ton-That",
+    "age": "19",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "FPS"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-2",
+    "régio": "Centrale",
+    "neuillitude": "6",
+    "RankLol": "joue pas",
+    "BoissonPref": "Redbull"
+  },
+  {
+    "id": "alexpluquet",
+    "name": "Alex Pluquet",
+    "age": "19",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Souls"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-2",
+    "régio": "Frontalière",
+    "neuillitude": "5",
+    "RankLol": "joue pas",
+    "BoissonPref": "Ice tea pèche"
+  },
+  {
+    "id": "liampenninckx",
+    "name": "Liam Penninckx",
+    "age": "25",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Stratégie"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-5",
+    "régio": "Centrale",
+    "neuillitude": "1",
+    "RankLol": "emerald",
+    "BoissonPref": "Ice tea green"
+  },
+  {
+    "id": "noahchiacchia",
+    "name": "Noah Chiacchia",
+    "age": "20",
+    "cheveux": [
+      "Noir"
+    ],
+    "JeuPref": [
+      "Fps"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-2",
+    "régio": "Boraine",
+    "neuillitude": "5",
+    "RankLol": "joue pas",
+    "BoissonPref": "Rodéo"
+  },
+  {
+    "id": "mayviesanches",
+    "name": "Mayvie Sanches",
+    "age": "19",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Fps"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-1",
+    "régio": "Frontalière",
+    "neuillitude": "10",
+    "RankLol": "silver",
+    "BoissonPref": "Rodéo"
+  },
+  {
+    "id": "gaultiersaussez",
+    "name": "Gaultier Saussez",
+    "age": "19",
+    "cheveux": [
+      "Brun"
+    ],
+    "JeuPref": [
+      "Minecraft"
+    ],
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-5",
+    "régio": "Centrale",
+    "neuillitude": "7",
+    "RankLol": "joue pas",
+    "BoissonPref": "Café"
   }
 ]
 

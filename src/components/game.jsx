@@ -2,6 +2,13 @@ import React, { useState, useEffect, useMemo } from 'react';
 import championsData from '../data/champions.json';
 // 1. IMPORT DU PLANNING GÉNÉRÉ
 import planningData from '../data/planning.json';
+import PlayerSearch from "./PlayerSearch";
+import PlayerSearchModal from "./PlayerSearchModal";
+import ScoreBoardModal from './ScoreboardModal';
+import WinModal from "./WinModal";
+
+
+
 
 // --- CONFIGURATION & CONSTANTES ---
 const STATUS = {
@@ -129,12 +136,6 @@ const ArrowIcon = ({ direction }) => (
   </svg>
 );
 
-const CloseIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-  </svg>
-);
-
 const AdminImage = ({ id, name, className }) => {
   const [imgSrc, setImgSrc] = useState(`/images/${id}.png`);
   const handleError = () => {
@@ -163,27 +164,7 @@ const Cell = ({ children, status, delay = 0 }) => {
   );
 };
 
-const CountdownToMidnight = () => {
-  const [timeLeft, setTimeLeft] = useState('');
-  useEffect(() => {
-    const updateTimer = () => {
-      const now = new Date();
-      const parisTimeStr = now.toLocaleString("en-US", {timeZone: "Europe/Paris"});
-      const parisDate = new Date(parisTimeStr);
-      const tomorrow = new Date(parisDate);
-      tomorrow.setHours(24, 0, 0, 0);
-      const diff = tomorrow - parisDate;
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
-      setTimeLeft(`${h}h ${m}m ${s}s`);
-    };
-    updateTimer();
-    const timer = setInterval(updateTimer, 1000);
-    return () => clearInterval(timer);
-  }, []);
-  return <span className="font-mono text-amber-500 font-bold text-lg">{timeLeft}</span>;
-};
+
 
 
 // --- MAIN COMPONENT ---
@@ -206,11 +187,29 @@ export default function Game() {
   const [input, setInput] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showDashboardModal, setShowDashboardModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [showPlayerModal, setShowPlayerModal] = useState(true);
+  
+
+
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem("magde-player");
+
+    if (stored) {
+      setCurrentPlayer(stored);
+    } else {
+      setShowPlayerModal(true); // 👈 OUVERTURE EXPLICITE
+    }
+  }
+}, []);
+
 
 // À REMPLACER : Le useEffect qui sauvegarde quand on joue
   useEffect(() => {
@@ -240,20 +239,49 @@ export default function Game() {
   }, [input, guesses]);
 
   useEffect(() => setSelectedIndex(0), [filteredChampions]);
+  const [scores, setScores] = useState([]);
+  
+  const [currentPlayer, setCurrentPlayer] = useState(null);
 
-  const handleGuess = (championName) => {
-    if (isGameOver || !target) return;
-    const champion = championsData.find(c => c.name.toLowerCase() === championName.toLowerCase());
-    if (champion && !guesses.some(g => g.name === champion.name)) {
-      const newGuesses = [champion, ...guesses];
-      setGuesses(newGuesses);
-      setInput('');
-      if (champion.name === target.name) {
-        setIsGameOver(true);
-        setTimeout(() => setShowSuccessModal(true), 1500);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("magde-player");
+      if (stored) {
+        setCurrentPlayer(stored);
       }
     }
-  };
+  }, []);
+
+  const loadScores = async () => {
+  const res = await fetch("/api/leaderboard");
+  const data = await res.json();
+  setScores(data);
+};
+
+
+const handleGuess = (championName) => {
+  if (isGameOver || !target) return;
+
+  const champion = championsData.find(
+    c => c.name.toLowerCase() === championName.toLowerCase()
+  );
+
+  if (!champion || guesses.some(g => g.name === champion.name)) return;
+
+  const newGuesses = [champion, ...guesses];
+  setGuesses(newGuesses);
+  setInput('');
+
+  if (champion.name === target.name) {
+    const attempts = newGuesses.length; // ✅ BON NOMBRE
+
+    setIsGameOver(true);
+    sendScore(attempts);               // ✅ BON JOUEUR + BON SCORE
+
+    setTimeout(() => setShowSuccessModal(true), 1500);
+  }
+};
+
 
   const handleKeyDown = (e) => {
     if (filteredChampions.length === 0) return;
@@ -270,6 +298,32 @@ export default function Game() {
     }
   };
 
+
+
+const sendScore = async (attempts) => {
+  if (!currentPlayer) {
+    console.error("❌ Aucun joueur défini");
+    return;
+  }
+
+  console.log("📤 SEND SCORE", {
+    playerName: currentPlayer,
+    attempts,
+  });
+
+  const res = await fetch("/api/score", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      playerName: currentPlayer,
+      attempts,
+    }),
+  });
+};
+
+
+
+
   if (!isMounted) return <div className="min-h-screen bg-slate-900"></div>;
 
   if (!target) return <div className="text-white text-center mt-10">Chargement...</div>;
@@ -277,6 +331,7 @@ export default function Game() {
   const gridColsClass = "grid grid-cols-11 gap-1 md:gap-2 w-full";
 
   return (
+    <>
     <div className="w-full max-w-[1600px] mx-auto p-2 md:p-4 flex flex-col items-center">
       {/* BARRE DE RECHERCHE */}
       <div className="relative w-full max-w-md mb-6 md:mb-10 z-50">
@@ -288,7 +343,7 @@ export default function Game() {
              type="text"
              autoComplete="off" 
              className="w-full bg-transparent p-4 text-white placeholder-slate-400 focus:outline-none font-medium tracking-wide uppercase"
-             placeholder={isGameOver ? "Reviens demain !" : "Tapez un nom..."}
+             placeholder={"Tapez un nom..."}
              value={input}
              onChange={(e) => setInput(e.target.value)}
              onKeyDown={handleKeyDown}
@@ -391,37 +446,7 @@ export default function Game() {
         </div>
       </div>
 
-      {/* MODALE VICTOIRE */}
-      {showSuccessModal && (
-         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in p-4">
-            <div className="relative bg-slate-900 border-2 border-amber-500 p-8 rounded-xl text-center shadow-[0_0_50px_rgba(245,158,11,0.5)] max-w-sm w-full mx-auto">
-              
-              <button 
-                onClick={() => setShowSuccessModal(false)}
-                className="absolute top-2 right-2 text-slate-400 hover:text-white transition-colors p-2"
-                title="Fermer"
-              >
-                <CloseIcon />
-              </button>
-
-              <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-t from-amber-600 to-yellow-300 mb-4 uppercase">
-                Victoire !
-              </h2>
-              <div className="w-32 h-32 mx-auto mb-4 rounded-full p-1 bg-gradient-to-b from-amber-400 to-amber-700">
-                  <AdminImage id={target.id} name={target.name} className="w-full h-full rounded-full object-cover border-4 border-slate-900" />
-              </div>
-              <p className="text-slate-300 mb-6">
-                Bravo ! L'admin du jour était <span className="text-white font-bold text-xl block mt-1">{target.name}</span>
-              </p>
-              
-              <div className="text-sm text-slate-500 mt-4 border-t border-slate-700 pt-4">
-                Prochain admin dans : <br/>
-                <CountdownToMidnight />
-              </div>
-            </div>
-         </div>
-      )}
-
+      
       <style>{`
         @keyframes flip-in {
           0% { transform: rotateX(-90deg); opacity: 0; }
@@ -432,5 +457,36 @@ export default function Game() {
         @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
     </div>
+
+    {showDashboardModal && (
+      <ScoreBoardModal
+        onClose={() => setShowDashboardModal(false)}
+      />
+    )}
+
+        
+    {showSuccessModal && (
+      <WinModal
+        target={target}
+        onClose={() => setShowSuccessModal(false)}
+        onShowLeaderboard={() => {
+          loadScores();            // 👈 RECHARGE
+          setShowSuccessModal(false);
+          setShowDashboardModal(true);
+        }}
+      />
+
+    )}
+
+    {showPlayerModal && (
+      <PlayerSearchModal
+      onConfirm={(player) => {
+        setCurrentPlayer(player);
+        localStorage.setItem("magde-player", player);
+        setShowPlayerModal(false);
+      }}
+      />
+    )}
+    </>
   );
 }
