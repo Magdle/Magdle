@@ -305,20 +305,28 @@ const sendScore = async (attempts) => {
     return;
   }
 
-  console.log("📤 SEND SCORE", {
+  const payload = {
     playerName: currentPlayer,
-    attempts,
-  });
+    score: attempts, // 👈 IMPORTANT : clé "score"
+  };
+
+  console.log("📤 SEND SCORE", payload);
 
   const res = await fetch("/api/score", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      playerName: currentPlayer,
-      attempts,
-    }),
+    body: JSON.stringify(payload),
   });
+
+  const text = await res.text();
+
+  if (!res.ok) {
+    console.error("❌ Score non enregistré :", text);
+  } else {
+    console.log("✅ Score enregistré :", text);
+  }
 };
+
 
 
 
