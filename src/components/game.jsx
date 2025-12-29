@@ -329,7 +329,27 @@ const sendScore = async (attempts) => {
 
   return (
     <>
-    <div className="w-full max-w-[1600px] mx-auto p-2 md:p-4 flex flex-col items-center">
+    <div className="w-full max-w-[1600px] mx-auto px-2 md:px-4  pb-2 flex flex-col items-center">
+
+          {isGameOver && (
+            <button
+              onClick={() => {
+                loadScores();
+                setShowDashboardModal(true);
+              }}
+              className="
+                mb-4 px-4 py-2
+                rounded-lg
+                bg-slate-700 hover:bg-slate-600
+                text-white font-bold
+                shadow-lg
+                transition
+              "
+            >
+              🏆 Voir le classement
+            </button>
+          )}
+
       {/* BARRE DE RECHERCHE */}
       <div className="relative w-full max-w-md mb-6 md:mb-10 z-50">
         <div className={`relative flex items-center bg-slate-800 border-2 ${isGameOver ? 'border-green-500 opacity-50' : 'border-amber-500'} rounded-lg shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all`}>
