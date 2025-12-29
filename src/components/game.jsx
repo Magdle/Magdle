@@ -3,7 +3,7 @@ import championsData from '../data/champions.json';
 import PlayerSearchModal from "./PlayerSearchModal";
 import ScoreBoardModal from './ScoreboardModal';
 import WinModal from "./WinModal";
-
+import { normalize, getParisDateString } from "../utils";
 // --- CONFIGURATION & CONSTANTES ---
 const STATUS = {
   CORRECT: 'correct',
@@ -20,15 +20,7 @@ const STATUS_STYLES = {
 
 // --- FONCTIONS UTILITAIRES ---
 
-const getParisDateString = () => {
-  const options = { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' };
-  const formatter = new Intl.DateTimeFormat('en-US', options);
-  const parts = formatter.formatToParts(new Date());
-  const year = parts.find(p => p.type === 'year').value;
-  const month = parts.find(p => p.type === 'month').value;
-  const day = parts.find(p => p.type === 'day').value;
-  return `${year}-${month}-${day}`;
-};
+
 
 const getDynamicFontSize = (text) => {
   const str = String(text);
@@ -201,14 +193,6 @@ useEffect(() => {
     );
   }
 }, [guesses, isGameOver, target]);
-
-  const normalize = (str) =>
-  str
-    .toLowerCase()
-    .normalize("NFD")                 // sépare accents
-    .replace(/[\u0300-\u036f]/g, "")  // supprime accents
-    .replace(/[^a-z0-9]/g, "");       // supprime espaces, -, ', etc.
-
 
 const filteredChampions = useMemo(() => {
   if (input.length < 1) return [];

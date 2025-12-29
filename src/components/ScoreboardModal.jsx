@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
+import { normalize, getParisDateString } from "../utils";
+
 
 /* ---------------- Utils ---------------- */
 
-const getParisToday = () => {
-  const now = new Date();
-  const paris = new Date(
-    now.toLocaleString("en-US", { timeZone: "Europe/Paris" })
-  );
-  return paris.toISOString().slice(0, 10); // YYYY-MM-DD
-};
+
 
 /* ---------------- Component ---------------- */
 
 export default function ScoreBoardModal({ onClose }) {
-  const [date, setDate] = useState(getParisToday());
+  const [date, setDate] = useState(getParisDateString());
   const [scores, setScores] = useState([]);
   const [target, setTarget] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -66,7 +62,7 @@ export default function ScoreBoardModal({ onClose }) {
               type="date"
               value={date}
               min="2025-12-17"
-              max={getParisToday()}
+              max={getParisDateString()}
               onChange={(e) => setDate(e.target.value)}
               className="
                 bg-slate-800 border border-slate-600
