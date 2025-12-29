@@ -202,13 +202,30 @@ useEffect(() => {
   }
 }, [guesses, isGameOver, target]);
 
+  const normalize = (str) =>
+  str
+    .toLowerCase()
+    .normalize("NFD")              // sépare les lettres et les accents
+    .replace(/[\u0300-\u036f]/g, ""); // supprime les accents
+
 
   const filteredChampions = useMemo(() => {
     if (input.length < 1) return [];
-    return championsData.filter(c => 
-      c.name.toLowerCase().includes(input.toLowerCase()) && !guesses.some(g => g.name === c.name)
-    ).slice(0, 5);
+  
+    const normalizedInput = normalize(input);
+  
+    return championsData
+      .filter(c => {
+        const normalizedName = normalize(c.name);
+      
+        return (
+          normalizedName.includes(normalizedInput) &&
+          !guesses.some(g => g.name === c.name)
+        );
+      })
+      .slice(0, 5);
   }, [input, guesses]);
+
 
   useEffect(() => setSelectedIndex(0), [filteredChampions]);
   const [scores, setScores] = useState([]);
