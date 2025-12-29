@@ -210,22 +210,30 @@ useEffect(() => {
     .replace(/[^a-z0-9]/g, "");       // supprime espaces, -, ', etc.
 
 
-  const filteredChampions = useMemo(() => {
-    if (input.length < 1) return [];
-  
-    const normalizedInput = normalize(input);
-  
-    return championsData
-      .filter(c => {
-        const normalizedName = normalize(c.name);
-      
-        return (
-          normalizedName.includes(normalizedInput) &&
-          !guesses.some(g => g.name === c.name)
-        );
-      })
-      .slice(0, 5);
-  }, [input, guesses]);
+const filteredChampions = useMemo(() => {
+  if (input.length < 1) return [];
+
+  const normalizedInput = normalize(input);
+
+  return championsData
+    .filter(c => {
+      const normalizedName = normalize(c.name);
+
+      console.log(
+        "Comparing:",
+        normalizedName,
+        "with input:",
+        normalizedInput
+      );
+
+      return (
+        normalizedName.includes(normalizedInput) &&
+        !guesses.some(g => g.name === c.name)
+      );
+    })
+    .slice(0, 5);
+}, [input, guesses]);
+
 
 
   useEffect(() => setSelectedIndex(0), [filteredChampions]);

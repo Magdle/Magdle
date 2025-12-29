@@ -12,10 +12,18 @@ export default function PlayerSearch({ onConfirm }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
+  const normalize = (str) =>
+    str
+      .toLowerCase()
+      .normalize("NFD")                 // sépare accents
+      .replace(/[\u0300-\u036f]/g, "")  // supprime accents
+      .replace(/[^a-z0-9]/g, "");       // supprime espaces, -, ', etc.
+    
+
   const filteredChampions = useMemo(() => {
     if (!input) return [];
     return championsData
-      .filter(c => c.name.toLowerCase().includes(input.toLowerCase()))
+      .filter(c => normalize(c.name).includes(input.toLowerCase()))
       .slice(0, 5);
   }, [input]);
 
