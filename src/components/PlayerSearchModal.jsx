@@ -138,6 +138,19 @@ export default function PlayerSearch({ onConfirm }) {
           Commencer la partie
         </button>
 
+        <a
+          href="https://forms.gle/3FL8GizLU7uquk4W6"
+          target="_blank"
+          rel="noreferrer"
+          className="
+            block mt-4 text-sm text-amber-300
+            hover:text-amber-200 underline underline-offset-4
+            transition-colors
+          "
+        >
+          Pas dans la liste ? Inscris-toi !
+        </a>
+
       </div>
     </div>
   );
