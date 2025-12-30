@@ -47,11 +47,8 @@ export const GET: APIRoute = async () => {
   const dailyHashKey = "daily:targets";
 
   // 1️⃣ Déjà calculé ?
-  const existingHash = await redis.hGetAll(dailyHashKey);
-  const existingEntry = Object.entries(existingHash)
-    .find(([, date]) => date === today);
-  if (existingEntry) {
-    const [existingTarget] = existingEntry;
+  const existingTarget = await redis.hGet(dailyHashKey, today);
+  if (existingTarget) {
     const existingId = Number(existingTarget);
     const isNumericId = Number.isFinite(existingId) && String(existingId) === existingTarget;
     return new Response(
@@ -60,9 +57,23 @@ export const GET: APIRoute = async () => {
     );
   }
 
+  const legacyHash = await redis.hGetAll(dailyHashKey);
+  const legacyEntry = Object.entries(legacyHash)
+    .find(([, date]) => date === today);
+  if (legacyEntry) {
+    const [legacyTarget] = legacyEntry;
+    await redis.hSet(dailyHashKey, today, legacyTarget);
+    const legacyId = Number(legacyTarget);
+    const isNumericId = Number.isFinite(legacyId) && String(legacyId) === legacyTarget;
+    return new Response(
+      JSON.stringify(isNumericId ? { id: legacyId } : { name: legacyTarget }),
+      { headers: { "Content-Type": "application/json" } }
+    );
+  }
+
   const legacyTarget = await redis.get(`daily:target:${today}`);
   if (legacyTarget) {
-    await redis.hSet(dailyHashKey, legacyTarget, today);
+    await redis.hSet(dailyHashKey, today, legacyTarget);
     const legacyId = Number(legacyTarget);
     const isNumericId = Number.isFinite(legacyId) && String(legacyId) === legacyTarget;
     return new Response(

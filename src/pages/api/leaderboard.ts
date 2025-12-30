@@ -26,25 +26,36 @@ export const GET: APIRoute = async ({ request }) => {
 
   // 🎯 ADMIN DU JOUR (depuis Redis)
   const dailyHashKey = "daily:targets";
-  const targetsById = await redis.hGetAll(dailyHashKey);
-  const targetEntry = Object.entries(targetsById)
-    .find(([, storedDate]) => storedDate === date);
+  const targetRef = await redis.hGet(dailyHashKey, date);
   let target = null;
-  if (targetEntry) {
-    const [targetRef] = targetEntry;
+  if (targetRef) {
     const targetId = Number(targetRef);
     const isNumericId = Number.isFinite(targetId) && String(targetId) === targetRef;
     target = isNumericId
       ? championsData.find(c => c.id === targetId) ?? null
       : championsData.find(c => c.name === targetRef) ?? null;
   } else {
-    const legacyRef = await redis.get(`daily:target:${date}`);
-    if (legacyRef) {
-      const targetId = Number(legacyRef);
-      const isNumericId = Number.isFinite(targetId) && String(targetId) === legacyRef;
+    const legacyHash = await redis.hGetAll(dailyHashKey);
+    const legacyEntry = Object.entries(legacyHash)
+      .find(([, storedDate]) => storedDate === date);
+    if (legacyEntry) {
+      const [legacyTarget] = legacyEntry;
+      await redis.hSet(dailyHashKey, date, legacyTarget);
+      const targetId = Number(legacyTarget);
+      const isNumericId = Number.isFinite(targetId) && String(targetId) === legacyTarget;
       target = isNumericId
         ? championsData.find(c => c.id === targetId) ?? null
-        : championsData.find(c => c.name === legacyRef) ?? null;
+        : championsData.find(c => c.name === legacyTarget) ?? null;
+    } else {
+      const legacyRef = await redis.get(`daily:target:${date}`);
+      if (legacyRef) {
+        await redis.hSet(dailyHashKey, date, legacyRef);
+        const targetId = Number(legacyRef);
+        const isNumericId = Number.isFinite(targetId) && String(targetId) === legacyRef;
+        target = isNumericId
+          ? championsData.find(c => c.id === targetId) ?? null
+          : championsData.find(c => c.name === legacyRef) ?? null;
+      }
     }
   }
   // 🏆 SCORES
