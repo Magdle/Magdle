@@ -25,17 +25,29 @@ export const GET: APIRoute = async ({ request }) => {
   const date = url.searchParams.get("date") ?? getParisDateString();
 
   // 🎯 ADMIN DU JOUR (depuis Redis)
-  const targetRef = await redis.get(`daily:target:${date}`);
+  const dailyHashKey = "daily:targets";
+  const targetsById = await redis.hGetAll(dailyHashKey);
+  const targetEntry = Object.entries(targetsById)
+    .find(([, storedDate]) => storedDate === date);
   let target = null;
-  if (targetRef) {
+  if (targetEntry) {
+    const [targetRef] = targetEntry;
     const targetId = Number(targetRef);
     const isNumericId = Number.isFinite(targetId) && String(targetId) === targetRef;
     target = isNumericId
       ? championsData.find(c => c.id === targetId) ?? null
       : championsData.find(c => c.name === targetRef) ?? null;
+  } else {
+    const legacyRef = await redis.get(`daily:target:${date}`);
+    if (legacyRef) {
+      const targetId = Number(legacyRef);
+      const isNumericId = Number.isFinite(targetId) && String(targetId) === legacyRef;
+      target = isNumericId
+        ? championsData.find(c => c.id === targetId) ?? null
+        : championsData.find(c => c.name === legacyRef) ?? null;
+    }
   }
-
-  // 🏆 SCORES
+// 🏆 SCORES
   const scores = await redis.zRangeWithScores(
     `scores:${date}`,
     0,
