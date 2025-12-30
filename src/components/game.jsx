@@ -276,7 +276,6 @@ const handleGuess = (championName) => {
 
     setIsGameOver(true);
     sendScore(attempts, guessIds);               // ✅ BON JOUEUR + BON SCORE
-
     setTimeout(() => setShowSuccessModal(true), 1500);
   }
 };
