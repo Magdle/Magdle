@@ -74,6 +74,34 @@ const getComparisonStatus = (guessVal, targetVal) => {
   return STATUS.INCORRECT;
 };
 
+const getCookieValue = (name) => {
+  if (typeof document === "undefined") return null;
+  const cookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${name}=`));
+  if (!cookie) return null;
+  return decodeURIComponent(cookie.split("=").slice(1).join("="));
+};
+
+const resolveCookiePlayerId = () => {
+  const stored = getCookieValue("magde-player");
+  if (!stored) return null;
+  const numericId = Number(stored);
+  if (!Number.isInteger(numericId)) return null;
+  const matchById = championsData.find((c) => c.id === numericId);
+  return matchById ? matchById.id : null;
+};
+
+const clearPlayerCookie = () => {
+  if (typeof document === "undefined") return;
+  document.cookie = "magde-player=; Max-Age=0; Path=/; SameSite=Lax";
+};
+
+const getPlayerNameById = (playerId) => {
+  const match = championsData.find((c) => c.id === playerId);
+  return match ? match.name : "quelqu'un";
+};
+
 // --- COMPOSANTS UI ---
 
 const ArrowIcon = ({ direction }) => (
@@ -214,6 +242,17 @@ const filteredChampions = useMemo(() => {
   
   const [currentPlayer, setCurrentPlayer] = useState(null);
 
+  useEffect(() => {
+    const playerId = resolveCookiePlayerId();
+    if (playerId != null) {
+      setCurrentPlayer(playerId);
+      setShowPlayerModal(false);
+    } else {
+      setCurrentPlayer(null);
+      setShowPlayerModal(true);
+    }
+  }, []);
+
   const loadScores = async () => {
   const res = await fetch("/api/leaderboard");
   const data = await res.json();
@@ -308,6 +347,24 @@ const sendScore = async (attempts, guessIds) => {
   return (
     <>
     <div className="w-full max-w-[1600px] mx-auto px-2 md:px-4  pb-2 flex flex-col items-center">
+
+      {currentPlayer && (
+        <button
+          type="button"
+          onClick={() => {
+            clearPlayerCookie();
+            setCurrentPlayer(null);
+            setShowPlayerModal(true);
+          }}
+          className="
+            mb-4 text-sm text-amber-300
+            hover:text-amber-200 underline underline-offset-4
+            transition-colors
+          "
+        >
+          Tu n'es pas {getPlayerNameById(currentPlayer)} ?
+        </button>
+      )}
 
           {isGameOver && (
             <button
@@ -477,7 +534,6 @@ const sendScore = async (attempts, guessIds) => {
       <PlayerSearchModal
       onConfirm={(playerId) => {
         setCurrentPlayer(playerId);
-        localStorage.setItem("magde-player", String(playerId));
         setShowPlayerModal(false);
       }}
       />

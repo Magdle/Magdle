@@ -11,6 +11,7 @@ export default function PlayerSearch({ onConfirm }) {
   const [input, setInput] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedPlayerId, setSelectedPlayerId] = useState(null);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const normalize = (str) =>
     str
@@ -38,7 +39,14 @@ export default function PlayerSearch({ onConfirm }) {
 
   const handleConfirm = () => {
     if (!selectedPlayerId) return;
-    localStorage.setItem("magde-player", String(selectedPlayerId));
+    const maxAge = 60 * 60 * 24 * 180;
+    if (rememberMe && typeof document !== "undefined") {
+      document.cookie = `magde-player=${encodeURIComponent(
+        String(selectedPlayerId)
+      )}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
+    } else if (typeof document !== "undefined") {
+      document.cookie = "magde-player=; Max-Age=0; Path=/; SameSite=Lax";
+    }
     onConfirm(selectedPlayerId);
   };
 
@@ -137,6 +145,29 @@ export default function PlayerSearch({ onConfirm }) {
         >
           Commencer la partie
         </button>
+
+        <label className="mt-4 flex items-center justify-center gap-2 text-sm text-slate-300">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="accent-amber-500"
+          />
+          Se souvenir de moi
+        </label>
+
+        <a
+          href="https://forms.gle/3FL8GizLU7uquk4W6"
+          target="_blank"
+          rel="noreferrer"
+          className="
+            block mt-4 text-sm text-amber-300
+            hover:text-amber-200 underline underline-offset-4
+            transition-colors
+          "
+        >
+          Pas dans la liste ? Inscris-toi !
+        </a>
 
       </div>
     </div>
