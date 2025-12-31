@@ -73,8 +73,8 @@ def generate_json_data(input_csv_file, output_json_file, delimiter):
                 # Cheveux (peut contenir des virgules, ex: "Noir, avec mèche rose")
                 cheveux = [c.strip().capitalize() for c in cheveux_raw.split(',') if c.strip()]
                 
-                # Jeu préféré est une liste (même s'il n'y a qu'un élément)
-                jeu_pref = [jeu_pref_raw]
+                # Type de jeu préféré (champ texte direct)
+                jeu_pref_type = jeu_pref_raw
 
                 # --- Création de l'Objet Final ---
                 
@@ -83,7 +83,7 @@ def generate_json_data(input_csv_file, output_json_file, delimiter):
                     "name": name,
                     "age": age,
                     "cheveux": cheveux,
-                    "JeuPref": jeu_pref,
+                    "JeuPrefType": jeu_pref_type,
                     # Normalisation des valeurs de RelationFamille
                     "RelationFamille": "Compliquée" if "compliqué" in relation_famille.lower() or "non" in relation_famille.lower() else "Trkl",
                     "PcPref": pc_pref,

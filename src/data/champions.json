@@ -7,9 +7,6 @@
     "cheveux": [
       "Noir"
     ],
-    "JeuPref": [
-      "Factorio"
-    ],
     "RelationFamille": "Compliquée",
     "PcPref": [
       "Mag-1"
@@ -19,7 +16,8 @@
     ],
     "neuillitude": "0",
     "RankLol": "silver",
-    "BoissonPref": "Redbull"
+    "BoissonPref": "Redbull",
+    "JeuPrefType": "Gestion"
   },
   {
     "id": 2,
@@ -28,9 +26,6 @@
     "age": "21",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Joue pas"
     ],
     "RelationFamille": "Compliquée",
     "PcPref": [
@@ -41,7 +36,8 @@
     ],
     "neuillitude": "9",
     "RankLol": "joue pas",
-    "BoissonPref": "Redbull"
+    "BoissonPref": "Redbull",
+    "JeuPrefType": "Ne joue pas"
   },
   {
     "id": 3,
@@ -50,9 +46,6 @@
     "age": "21",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Lol"
     ],
     "RelationFamille": "Compliquée",
     "PcPref": [
@@ -63,7 +56,8 @@
     ],
     "neuillitude": "3",
     "RankLol": "joue pas",
-    "BoissonPref": "Ice Tea Green"
+    "BoissonPref": "Ice Tea Green",
+    "JeuPrefType": "MOBA"
   },
   {
     "id": 4,
@@ -72,9 +66,6 @@
     "age": "19",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Path Of Exile"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -85,7 +76,8 @@
     ],
     "neuillitude": "6",
     "RankLol": "plat",
-    "BoissonPref": "Ice Tea Pêche"
+    "BoissonPref": "Ice Tea Pêche",
+    "JeuPrefType": "RPG"
   },
   {
     "id": 5,
@@ -94,9 +86,6 @@
     "age": "19",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Stardew Valley"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -107,7 +96,8 @@
     ],
     "neuillitude": "10",
     "RankLol": "iron",
-    "BoissonPref": "Ice Tea Green"
+    "BoissonPref": "Ice Tea Green",
+    "JeuPrefType": "Gestion"
   },
   {
     "id": 6,
@@ -116,9 +106,6 @@
     "age": "20",
     "cheveux": [
       "Blond"
-    ],
-    "JeuPref": [
-      "Portal"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -129,7 +116,8 @@
     ],
     "neuillitude": "6",
     "RankLol": "joue pas",
-    "BoissonPref": "Rodéo"
+    "BoissonPref": "Rodéo",
+    "JeuPrefType": "Casse tête"
   },
   {
     "id": 7,
@@ -138,9 +126,6 @@
     "age": "21",
     "cheveux": [
       "Roux"
-    ],
-    "JeuPref": [
-      "Disney Dreamlight Valley"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -151,7 +136,8 @@
     ],
     "neuillitude": "7",
     "RankLol": "iron",
-    "BoissonPref": "Redbull"
+    "BoissonPref": "Redbull",
+    "JeuPrefType": "Simulation"
   },
   {
     "id": 8,
@@ -160,9 +146,6 @@
     "age": "22",
     "cheveux": [
       "Noir"
-    ],
-    "JeuPref": [
-      "Movie Star Planet"
     ],
     "RelationFamille": "Nulle",
     "PcPref": [
@@ -173,7 +156,8 @@
     ],
     "neuillitude": "1",
     "RankLol": "iron",
-    "BoissonPref": "Orangeade"
+    "BoissonPref": "Orangeade",
+    "JeuPrefType": "Social Game"
   },
   {
     "id": 9,
@@ -182,9 +166,6 @@
     "age": "21",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Outer Wilds"
     ],
     "RelationFamille": "Compliquée",
     "PcPref": [
@@ -195,7 +176,8 @@
     ],
     "neuillitude": "7",
     "RankLol": "bronze",
-    "BoissonPref": "Coca"
+    "BoissonPref": "Coca",
+    "JeuPrefType": "Aventure"
   },
   {
     "id": 10,
@@ -204,9 +186,6 @@
     "age": "25",
     "cheveux": [
       "Noir"
-    ],
-    "JeuPref": [
-      "Valorant"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -217,7 +196,8 @@
     ],
     "neuillitude": "5",
     "RankLol": "bronze",
-    "BoissonPref": "Ice Tea Green"
+    "BoissonPref": "Ice Tea Green",
+    "JeuPrefType": "FPS"
   },
   {
     "id": 11,
@@ -226,9 +206,6 @@
     "age": "21",
     "cheveux": [
       "Roux"
-    ],
-    "JeuPref": [
-      "Outer Wilds"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -239,7 +216,8 @@
     ],
     "neuillitude": "6",
     "RankLol": "silver",
-    "BoissonPref": "Ice Tea Green"
+    "BoissonPref": "Ice Tea Green",
+    "JeuPrefType": "Aventure"
   },
   {
     "id": 12,
@@ -248,9 +226,6 @@
     "age": "27",
     "cheveux": [
       "Chauve"
-    ],
-    "JeuPref": [
-      "Minecraft"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -261,7 +236,8 @@
     ],
     "neuillitude": "1",
     "RankLol": "emerald",
-    "BoissonPref": "Coca"
+    "BoissonPref": "Coca",
+    "JeuPrefType": "Sandbox"
   },
   {
     "id": 13,
@@ -270,9 +246,6 @@
     "age": "18",
     "cheveux": [
       "Chatain"
-    ],
-    "JeuPref": [
-      "Zelda Wind Waker"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -283,7 +256,8 @@
     ],
     "neuillitude": "6",
     "RankLol": "joue pas",
-    "BoissonPref": "Eau"
+    "BoissonPref": "Eau",
+    "JeuPrefType": "Aventure"
   },
   {
     "id": 14,
@@ -292,9 +266,6 @@
     "age": "22",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Skyrim"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -305,7 +276,8 @@
     ],
     "neuillitude": "4",
     "RankLol": "iron",
-    "BoissonPref": "Ice Tea Pêche"
+    "BoissonPref": "Ice Tea Pêche",
+    "JeuPrefType": "RPG"
   },
   {
     "id": 15,
@@ -314,9 +286,6 @@
     "age": "21",
     "cheveux": [
       "Noir"
-    ],
-    "JeuPref": [
-      "Valorant"
     ],
     "RelationFamille": "Compliquée",
     "PcPref": [
@@ -327,7 +296,8 @@
     ],
     "neuillitude": "10",
     "RankLol": "iron",
-    "BoissonPref": "Ice Tea Pêche"
+    "BoissonPref": "Ice Tea Pêche",
+    "JeuPrefType": "FPS"
   },
   {
     "id": 16,
@@ -336,9 +306,6 @@
     "age": "20",
     "cheveux": [
       "Chatain"
-    ],
-    "JeuPref": [
-      "Sea of Thieves"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -349,7 +316,8 @@
     ],
     "neuillitude": "7",
     "RankLol": "joue pas",
-    "BoissonPref": "Eau"
+    "BoissonPref": "Eau",
+    "JeuPrefType": "Aventure"
   },
   {
     "id": 17,
@@ -358,9 +326,6 @@
     "age": "24",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Cs"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -371,7 +336,8 @@
     ],
     "neuillitude": "1",
     "RankLol": "silver",
-    "BoissonPref": "Coca"
+    "BoissonPref": "Coca",
+    "JeuPrefType": "FPS"
   },
   {
     "id": 18,
@@ -380,9 +346,6 @@
     "age": "24",
     "cheveux": [
       "Noir"
-    ],
-    "JeuPref": [
-      "Mobile"
     ],
     "RelationFamille": "Nulle",
     "PcPref": [
@@ -393,7 +356,8 @@
     ],
     "neuillitude": "1",
     "RankLol": "silver",
-    "BoissonPref": "Ice Tea Pêche"
+    "BoissonPref": "Ice Tea Pêche",
+    "JeuPrefType": "Mobile"
   },
   {
     "id": 19,
@@ -402,9 +366,6 @@
     "age": "19",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Elden Ring"
     ],
     "RelationFamille": "Compliquée",
     "PcPref": [
@@ -415,7 +376,8 @@
     ],
     "neuillitude": "8",
     "RankLol": "gold",
-    "BoissonPref": "Ice Tea Green"
+    "BoissonPref": "Ice Tea Green",
+    "JeuPrefType": "Souls like"
   },
   {
     "id": 20,
@@ -424,9 +386,6 @@
     "age": "25",
     "cheveux": [
       "Noir"
-    ],
-    "JeuPref": [
-      "Pokemon"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -437,7 +396,8 @@
     ],
     "neuillitude": "7",
     "RankLol": "diamond",
-    "BoissonPref": "Bière"
+    "BoissonPref": "Bière",
+    "JeuPrefType": "RPG"
   },
   {
     "id": 21,
@@ -446,9 +406,6 @@
     "age": "20",
     "cheveux": [
       "Roux"
-    ],
-    "JeuPref": [
-      "Souls"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -459,7 +416,8 @@
     ],
     "neuillitude": "7",
     "RankLol": "joue pas",
-    "BoissonPref": "Ice Tea Green"
+    "BoissonPref": "Ice Tea Green",
+    "JeuPrefType": "Souls-like"
   },
   {
     "id": 22,
@@ -468,9 +426,6 @@
     "age": "21",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Révit"
     ],
     "RelationFamille": "Compliquée",
     "PcPref": [
@@ -481,7 +436,8 @@
     ],
     "neuillitude": "5",
     "RankLol": "joue pas",
-    "BoissonPref": "Café"
+    "BoissonPref": "Café",
+    "JeuPrefType": "Révit"
   },
   {
     "id": 23,
@@ -490,9 +446,6 @@
     "age": "20",
     "cheveux": [
       "Noir"
-    ],
-    "JeuPref": [
-      "Jeu d'aventure"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -503,7 +456,8 @@
     ],
     "neuillitude": "4",
     "RankLol": "iron",
-    "BoissonPref": "Eau"
+    "BoissonPref": "Eau",
+    "JeuPrefType": "Aventure"
   },
   {
     "id": 24,
@@ -512,9 +466,6 @@
     "age": "21",
     "cheveux": [
       "Blanc"
-    ],
-    "JeuPref": [
-      "MOBA"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -525,7 +476,8 @@
     ],
     "neuillitude": "3",
     "RankLol": "Master",
-    "BoissonPref": "Eau"
+    "BoissonPref": "Eau",
+    "JeuPrefType": "MOBA"
   },
   {
     "id": 25,
@@ -534,9 +486,6 @@
     "age": "21",
     "cheveux": [
       "Brun"
-    ],
-    "JeuPref": [
-      "Jeu d'aventure"
     ],
     "RelationFamille": "Compliquée",
     "PcPref": [
@@ -547,7 +496,8 @@
     ],
     "neuillitude": "4",
     "RankLol": "joue pas",
-    "BoissonPref": "Orangeade"
+    "BoissonPref": "Orangeade",
+    "JeuPrefType": "Aventure"
   },
   {
     "id": 26,
@@ -556,9 +506,6 @@
     "age": "21",
     "cheveux": [
       "Chatain"
-    ],
-    "JeuPref": [
-      "Jeu d'aventure"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -569,7 +516,8 @@
     ],
     "neuillitude": "5",
     "RankLol": "joue pas",
-    "BoissonPref": "Ice Tea Pêche"
+    "BoissonPref": "Ice Tea Pêche",
+    "JeuPrefType": "Aventure"
   },
   {
     "id": 27,
@@ -578,9 +526,6 @@
     "age": "19",
     "cheveux": [
       "Blond"
-    ],
-    "JeuPref": [
-      "FPS"
     ],
     "RelationFamille": "Trkl",
     "PcPref": [
@@ -591,7 +536,8 @@
     ],
     "neuillitude": "9",
     "RankLol": "joue pas",
-    "BoissonPref": "Redbull"
+    "BoissonPref": "Redbull",
+    "JeuPrefType": "FPS"
   },
   {
     "id": 28,
@@ -600,9 +546,6 @@
     "age": "25",
     "cheveux": [
       "Noir"
-    ],
-    "JeuPref": [
-      "MMO"
     ],
     "RelationFamille": "Compliquée",
     "PcPref": [
@@ -613,7 +556,8 @@
     ],
     "neuillitude": "3",
     "RankLol": "diamond",
-    "BoissonPref": "Bière"
+    "BoissonPref": "Bière",
+    "JeuPrefType": "MMO"
   },
   {
     "id": 29,
@@ -622,9 +566,6 @@
     "age": "25",
     "cheveux": [
       "Chatain"
-    ],
-    "JeuPref": [
-      "RPG"
     ],
     "RelationFamille": "Nulle",
     "PcPref": [
@@ -635,7 +576,8 @@
     ],
     "neuillitude": "3",
     "RankLol": "joue pas",
-    "BoissonPref": "Café"
+    "BoissonPref": "Café",
+    "JeuPrefType": "RPG"
   },
   {
     "id": 30,
@@ -645,15 +587,13 @@
     "cheveux": [
       "Noir"
     ],
-    "JeuPref": [
-      "indie"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-9",
     "régio": "Maroc",
     "neuillitude": "7",
     "RankLol": "joue pas",
-    "BoissonPref": "Coca 0"
+    "BoissonPref": "Coca 0",
+    "JeuPrefType": "Indie"
   },
   {
     "id": 31,
@@ -663,15 +603,13 @@
     "cheveux": [
       "Noir"
     ],
-    "JeuPref": [
-      "RPG"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-1",
     "régio": "Carolo",
     "neuillitude": "1",
     "RankLol": "joue pas",
-    "BoissonPref": "Rodéo"
+    "BoissonPref": "Rodéo",
+    "JeuPrefType": "RPG"
   },
   {
     "id": 32,
@@ -681,15 +619,13 @@
     "cheveux": [
       "Brun"
     ],
-    "JeuPref": [
-      "pfsense"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Pc-200",
     "régio": "Carolo",
     "neuillitude": "1",
     "RankLol": "joue pas",
-    "BoissonPref": "Bière"
+    "BoissonPref": "Bière",
+    "JeuPrefType": "pfsense"
   },
   {
     "id": 33,
@@ -699,15 +635,13 @@
     "cheveux": [
       "Brun"
     ],
-    "JeuPref": [
-      "Moba"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-6",
     "régio": "Carolo",
     "neuillitude": "9",
     "RankLol": "emerald",
-    "BoissonPref": "Ice tea pèche"
+    "BoissonPref": "Ice tea pèche",
+    "JeuPrefType": "MOBA"
   },
   {
     "id": 34,
@@ -717,15 +651,13 @@
     "cheveux": [
       "Chatain"
     ],
-    "JeuPref": [
-      "PVP"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-5",
     "régio": "Centrale",
     "neuillitude": "8",
     "RankLol": "joue pas",
-    "BoissonPref": "Café"
+    "BoissonPref": "Café",
+    "JeuPrefType": "PVP"
   },
   {
     "id": 35,
@@ -735,15 +667,13 @@
     "cheveux": [
       "Blond"
     ],
-    "JeuPref": [
-      "RPG"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-6",
     "régio": "Frontalière",
     "neuillitude": "2",
     "RankLol": "joue pas",
-    "BoissonPref": "Bière"
+    "BoissonPref": "Bière",
+    "JeuPrefType": "RPG"
   },
   {
     "id": 36,
@@ -753,15 +683,13 @@
     "cheveux": [
       "Chatain"
     ],
-    "JeuPref": [
-      "Factory game"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-3",
     "régio": "Centrale",
     "neuillitude": "1",
     "RankLol": "silver",
-    "BoissonPref": "Redbull"
+    "BoissonPref": "Redbull",
+    "JeuPrefType": "Gestion"
   },
   {
     "id": 37,
@@ -771,15 +699,13 @@
     "cheveux": [
       "Brun"
     ],
-    "JeuPref": [
-      "FPS"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-2",
     "régio": "Centrale",
     "neuillitude": "6",
     "RankLol": "joue pas",
-    "BoissonPref": "Redbull"
+    "BoissonPref": "Redbull",
+    "JeuPrefType": "FPS"
   },
   {
     "id": 38,
@@ -789,15 +715,13 @@
     "cheveux": [
       "Brun"
     ],
-    "JeuPref": [
-      "Souls"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-2",
     "régio": "Frontalière",
     "neuillitude": "5",
     "RankLol": "joue pas",
-    "BoissonPref": "Ice tea pèche"
+    "BoissonPref": "Ice tea pèche",
+    "JeuPrefType": "Souls-like"
   },
   {
     "id": 39,
@@ -807,15 +731,13 @@
     "cheveux": [
       "Brun"
     ],
-    "JeuPref": [
-      "Stratégie"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-5",
     "régio": "Centrale",
     "neuillitude": "1",
     "RankLol": "emerald",
-    "BoissonPref": "Ice tea green"
+    "BoissonPref": "Ice tea green",
+    "JeuPrefType": "Stratégie"
   },
   {
     "id": 40,
@@ -825,15 +747,13 @@
     "cheveux": [
       "Noir"
     ],
-    "JeuPref": [
-      "Fps"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-2",
     "régio": "Boraine",
     "neuillitude": "5",
     "RankLol": "joue pas",
-    "BoissonPref": "Rodéo"
+    "BoissonPref": "Rodéo",
+    "JeuPrefType": "FPS"
   },
   {
     "id": 41,
@@ -843,15 +763,13 @@
     "cheveux": [
       "Brun"
     ],
-    "JeuPref": [
-      "Fps"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-1",
     "régio": "Frontalière",
     "neuillitude": "10",
     "RankLol": "silver",
-    "BoissonPref": "Rodéo"
+    "BoissonPref": "Rodéo",
+    "JeuPrefType": "FPS"
   },
   {
     "id": 42,
@@ -861,14 +779,12 @@
     "cheveux": [
       "Brun"
     ],
-    "JeuPref": [
-      "Minecraft"
-    ],
     "RelationFamille": "Trkl",
     "PcPref": "Mag-5",
     "régio": "Centrale",
     "neuillitude": "7",
     "RankLol": "joue pas",
-    "BoissonPref": "Café"
+    "BoissonPref": "Café",
+    "JeuPrefType": "Sandbox"
   }
 ]

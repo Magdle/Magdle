@@ -425,7 +425,7 @@ const sendScore = async (attempts, guessIds) => {
         <div className="min-w-[900px] flex flex-col gap-2">
           {guesses.length > 0 && (
             <div className={`${gridColsClass} px-1 mb-1`}>
-                {['Admin', 'Nom', 'Âge', 'Cheveux', 'Jeu', 'Famille', 'PC', 'Région', 'Neuille', 'Rank', 'Boisson'].map(h => (
+                {['Admin', 'Nom', 'Âge', 'Cheveux', 'Type jeu', 'Famille', 'PC', 'Région', 'Neuille', 'Rank', 'Boisson'].map(h => (
                   <div key={h} className="text-center text-[10px] md:text-sm text-slate-400 uppercase font-bold truncate">{h}</div>
                 ))}
             </div>
@@ -456,7 +456,7 @@ const sendScore = async (attempts, guessIds) => {
               
               <Cell status={getComparisonStatus(guess.cheveux, target.cheveux)} delay={200}>{Array.isArray(guess.cheveux) ? guess.cheveux.join(', ') : guess.cheveux}</Cell>
               
-              <Cell status={getComparisonStatus(guess.JeuPref, target.JeuPref)} delay={300}>{Array.isArray(guess.JeuPref) ? guess.JeuPref.join(', ') : guess.JeuPref}</Cell>
+              <Cell status={getComparisonStatus(guess.JeuPrefType, target.JeuPrefType)} delay={300}>{Array.isArray(guess.JeuPrefType) ? guess.JeuPrefType.join(', ') : guess.JeuPrefType}</Cell>
               
               <Cell status={getComparisonStatus(guess.RelationFamille, target.RelationFamille)} delay={400}>{guess.RelationFamille}</Cell>
               
