@@ -1,22 +1,9 @@
 import type { APIRoute } from "astro";
 import { getRedis } from "../../lib/redis";
 import championsData from "../../data/champions.json";
+import { getParisDateString } from "../../utils";
 
-const getParisDateString = () => {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Europe/Paris",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
 
-  const parts = formatter.formatToParts(new Date());
-  const y = parts.find(p => p.type === "year")!.value;
-  const m = parts.find(p => p.type === "month")!.value;
-  const d = parts.find(p => p.type === "day")!.value;
-
-  return `${y}-${m}-${d}`;
-};
 
 export const GET: APIRoute = async ({ request }) => {
   const redis = await getRedis();
