@@ -56,7 +56,7 @@ export default function PlayerSearch({ onConfirm }) {
     } else if (typeof document !== "undefined") {
       document.cookie = "magde-player=; Max-Age=0; Path=/; SameSite=Lax";
     }
-    onConfirm(selectedPlayerId);
+    onConfirm(selectedPlayerId, rememberMe);
   };
 
   const handleKeyDown = (e) => {

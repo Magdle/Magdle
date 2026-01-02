@@ -83,6 +83,14 @@ const getCookieValue = (name) => {
   return decodeURIComponent(cookie.split("=").slice(1).join("="));
 };
 
+const setCookie = (name, value, options = {}) => {
+  if (typeof document === "undefined") return;
+  const parts = [`${name}=${encodeURIComponent(value)}`];
+  if (options.maxAge !== undefined) parts.push(`Max-Age=${options.maxAge}`);
+  parts.push("Path=/", "SameSite=Lax");
+  document.cookie = parts.join("; ");
+};
+
 const resolveCookiePlayerId = () => {
   const stored = getCookieValue("magde-player");
   if (!stored) return null;
@@ -95,6 +103,13 @@ const resolveCookiePlayerId = () => {
 const clearPlayerCookie = () => {
   if (typeof document === "undefined") return;
   document.cookie = "magde-player=; Max-Age=0; Path=/; SameSite=Lax";
+};
+
+const clearDailyState = () => {
+  if (typeof localStorage !== "undefined") {
+    localStorage.removeItem('magde-daily-state');
+  }
+  setCookie('magde-daily-state', '', { maxAge: 0 });
 };
 
 const getPlayerNameById = (playerId) => {
@@ -167,6 +182,7 @@ export default function Game() {
   const [showDashboardModal, setShowDashboardModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showPlayerModal, setShowPlayerModal] = useState(true);
+  const [persistSession, setPersistSession] = useState(false);
 
   
 useEffect(() => {
@@ -221,23 +237,51 @@ useEffect(() => {
   }, []);
 
 
-// À REMPLACER : Le useEffect qui sauvegarde quand on joue
-useEffect(() => {
-  if (!target) return;
+  // À REMPLACER : Le useEffect qui sauvegarde quand on joue
+  useEffect(() => {
+    if (!target || !persistSession) return;
 
-  if (guesses.length > 0 || isGameOver) {
-    const todayISO = getParisDateString();
-    localStorage.setItem(
-      'magde-daily-state',
-      JSON.stringify({
+    if (guesses.length > 0 || isGameOver) {
+      const todayISO = getParisDateString();
+      const payload = {
         date: todayISO,
-        guesses,
+        guessIds: guesses.map((g) => g.id),
         isGameOver,
+        targetId: target.id,
         targetName: target.name
-      })
-    );
-  }
-}, [guesses, isGameOver, target]);
+      };
+      localStorage.setItem('magde-daily-state', JSON.stringify(payload));
+      setCookie('magde-daily-state', JSON.stringify(payload), { maxAge: 60 * 60 * 48 }); // 48h
+    }
+  }, [guesses, isGameOver, target, persistSession]);
+
+  // Restaurer les guesses depuis cookie/localStorage pour limiter le refresh-cheat
+  useEffect(() => {
+    if (!target || guesses.length > 0 || !persistSession) return;
+    const todayISO = getParisDateString();
+    const rawCookie = getCookieValue('magde-daily-state') || localStorage.getItem('magde-daily-state');
+    if (!rawCookie) return;
+    try {
+      const saved = JSON.parse(rawCookie);
+      const sameDay = saved?.date === todayISO;
+      const targetMatch =
+        saved?.targetId != null
+          ? Number(saved.targetId) === Number(target.id)
+          : saved?.targetName === target.name;
+      if (!sameDay || !targetMatch) return;
+
+      const savedGuesses = Array.isArray(saved.guessIds)
+        ? saved.guessIds
+            .map((id) => championsData.find((c) => c.id === Number(id)))
+            .filter(Boolean)
+        : [];
+
+      if (savedGuesses.length > 0) setGuesses(savedGuesses);
+      if (saved?.isGameOver) setIsGameOver(true);
+    } catch (e) {
+      console.warn('Impossible de restaurer le state quotidien', e);
+    }
+  }, [target, guesses.length, persistSession]);
 
 const filteredChampions = useMemo(() => {
   if (input.length < 1) return [];
@@ -275,6 +319,7 @@ const filteredChampions = useMemo(() => {
     if (playerId != null) {
       setCurrentPlayer(playerId);
       setShowPlayerModal(false);
+      setPersistSession(true);
     } else {
       setCurrentPlayer(null);
       setShowPlayerModal(true);
@@ -395,6 +440,14 @@ const sendScore = async (attempts, guessIds) => {
           type="button"
           onClick={() => {
             clearPlayerCookie();
+            clearDailyState();
+            setGuesses([]);
+            setIsGameOver(false);
+            setShowSuccessModal(false);
+            setShowDashboardModal(false);
+            setInput('');
+            setPersistSession(false);
+            localStorage.removeItem("magde-player");
             setCurrentPlayer(null);
             setShowPlayerModal(true);
           }}
@@ -574,10 +627,17 @@ const sendScore = async (attempts, guessIds) => {
 
     {showPlayerModal && (
       <PlayerSearchModal
-      onConfirm={(playerId) => {
-        setCurrentPlayer(playerId);
-        setShowPlayerModal(false);
-      }}
+        onConfirm={(playerId, rememberMe) => {
+          setCurrentPlayer(playerId);
+          setPersistSession(!!rememberMe);
+          if (!rememberMe) {
+            clearDailyState();
+            localStorage.removeItem("magde-player");
+          } else {
+            localStorage.setItem("magde-player", String(playerId));
+          }
+          setShowPlayerModal(false);
+        }}
       />
     )}
     </>
