@@ -31,6 +31,7 @@ export const GET: APIRoute = async () => {
   const today = getParisDateString();
 
   const dailyHashKey = "daily:targets";
+  const lastPickedHashKey = "daily:lastPicked";
 
   // 1️⃣ Déjà calculé ?
   const existingTarget = await redis.hGet(dailyHashKey, today);
@@ -68,13 +69,34 @@ export const GET: APIRoute = async () => {
     );
   }
 
-  // 2️⃣ Calcul pondéré
+  // 2) Calcul pondéré (lecture des lastPicked en 1 seul hGetAll)
+  let lastPickedHash = await redis.hGetAll(lastPickedHashKey);
+
+  if (Object.keys(lastPickedHash).length === 0) {
+    const legacyKeys = championsData.flatMap((c) => [
+      `daily:lastPicked:${c.id}`,
+      `daily:lastPicked:${c.name}`,
+    ]);
+    const legacyValues = await redis.mGet(legacyKeys);
+    const migrated: Record<string, string> = {};
+    for (let i = 0; i < championsData.length; i++) {
+      const byId = legacyValues[i * 2];
+      const byName = legacyValues[i * 2 + 1];
+      const val = byId ?? byName;
+      if (val) {
+        migrated[String(championsData[i].id)] = val;
+        migrated[championsData[i].name] = val;
+      }
+    }
+    if (Object.keys(migrated).length > 0) {
+      await redis.hSet(lastPickedHashKey, migrated);
+      lastPickedHash = migrated;
+    }
+  }
   const weights = [];
 
   for (const c of championsData) {
-    const last =
-      (await redis.get(`daily:lastPicked:${c.id}`)) ??
-      (await redis.get(`daily:lastPicked:${c.name}`));
+    const last = lastPickedHash[String(c.id)] ?? lastPickedHash[c.name];
     if (!last) {
       weights.push(1);
     } else {
@@ -93,7 +115,10 @@ export const GET: APIRoute = async () => {
   const finalTarget = inserted ? candidate : await redis.hGet(dailyHashKey, today);
   const finalKey = finalTarget ?? candidate;
 
-  await redis.set(`daily:lastPicked:${finalKey}`, today);
+  const targetChampion = championsData.find((c) => String(c.id) === String(finalKey));
+  const lastPickedPayload: Record<string, string> = { [String(finalKey)]: today };
+  if (targetChampion?.name) lastPickedPayload[targetChampion.name] = today;
+  await redis.hSet(lastPickedHashKey, lastPickedPayload);
 
   const finalId = Number(finalTarget);
   const isNumeric = Number.isFinite(finalId) && String(finalId) === finalTarget;
