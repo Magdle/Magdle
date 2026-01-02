@@ -179,12 +179,14 @@ useEffect(() => {
     try {
       const res = await fetch("/api/dailyTarget", { cache: "no-store" });
       console.log("dailyTarget status:", res.status);
-      
+
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const text = await res.text();
       console.log("dailyTarget body:", text);
-      const data = await res.json();
+          
+      const data = text ? JSON.parse(text) : null;
+
 
       const champion =
         data?.id != null
@@ -207,6 +209,7 @@ useEffect(() => {
   };
 
   loadTarget();
+  console.log(target);
   return () => { cancelled = true; };
 }, []);
 
@@ -370,6 +373,7 @@ const sendScore = async (attempts, guessIds) => {
   }
 
   if (!target) {
+    console.log("No target found:", { target });
     return (
       <div className="text-white text-center mt-10">
         {targetError
