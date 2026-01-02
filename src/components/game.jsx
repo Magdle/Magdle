@@ -159,6 +159,8 @@ export default function Game() {
   
   const [guesses, setGuesses] = useState([]);
   const [target, setTarget] = useState(null);
+  const [loadingTarget, setLoadingTarget] = useState(true);
+  const [targetError, setTargetError] = useState(false);
   const [input, setInput] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -167,25 +169,48 @@ export default function Game() {
   const [showPlayerModal, setShowPlayerModal] = useState(true);
 
   
-  useEffect(() => {
-    const loadTarget = async () => {
-      try {
-        const res = await fetch("/api/dailyTarget");
-        const data = await res.json();
+useEffect(() => {
+  let cancelled = false;
 
-        const champion = data?.id != null
+  const loadTarget = async () => {
+    setLoadingTarget(true);
+    setTargetError(false);
+
+    try {
+      const res = await fetch("/api/dailyTarget", { cache: "no-store" });
+      console.log("dailyTarget status:", res.status);
+      
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const text = await res.text();
+      console.log("dailyTarget body:", text);
+      const data = await res.json();
+
+      const champion =
+        data?.id != null
           ? championsData.find(c => c.id === Number(data.id))
           : championsData.find(c => c.name === data?.name);
 
-        setTarget(champion || championsData[0]);
-      } catch (e) {
-        console.error("Erreur chargement admin du jour", e);
-        setTarget(championsData[0]);
+      if (!cancelled) {
+        if (champion) setTarget(champion);
+        else setTarget(null); // pas trouvé => on n'invente rien
       }
-    };
+    } catch (e) {
+      console.error("Erreur chargement admin du jour", e);
+      if (!cancelled) {
+        setTarget(null);       // ✅ pas de fallback champion[0]
+        setTargetError(true);  // pour afficher un message
+      }
+    } finally {
+      if (!cancelled) setLoadingTarget(false);
+    }
+  };
 
-    loadTarget();
-  }, []);
+  loadTarget();
+  return () => { cancelled = true; };
+}, []);
+
+
 
   
   useEffect(() => {
@@ -334,13 +359,26 @@ const sendScore = async (attempts, guessIds) => {
 };
 
 
-
-
-
-
   if (!isMounted) return <div className="min-h-screen bg-slate-900"></div>;
 
-  if (!target) return <div className="text-white text-center mt-10">Chargement...</div>;
+  if (loadingTarget) {
+  return (
+    <div className="text-white text-center mt-10">
+      Chargement de l’admin du jour…
+    </div>
+    );
+  }
+
+  if (!target) {
+    return (
+      <div className="text-white text-center mt-10">
+        {targetError
+          ? "Impossible de charger l’admin du jour. Réessaie."
+          : "Admin du jour introuvable."}
+      </div>
+    );
+  }
+
 
   const gridColsClass = "grid grid-cols-11 gap-1 md:gap-2 w-full";
 
