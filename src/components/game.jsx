@@ -60,6 +60,27 @@ const getNeuillitudeValue = (val) => {
   return 1;
 };
 
+const computeAgeFromBirthDate = (birthDate) => {
+  if (!birthDate) return null;
+  const d = new Date(birthDate);
+  if (Number.isNaN(d.getTime())) return null;
+  const today = new Date();
+  let age = today.getFullYear() - d.getFullYear();
+  const m = today.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
+  return age;
+};
+
+const getAgeValue = (entity) => {
+  if (!entity) return null;
+  if (entity.birthDate) {
+    const computed = computeAgeFromBirthDate(entity.birthDate);
+    if (computed !== null) return computed;
+  }
+  const legacyAge = Number(entity.age);
+  return Number.isFinite(legacyAge) ? legacyAge : null;
+};
+
 const getComparisonStatus = (guessVal, targetVal) => {
   if (!Array.isArray(targetVal)) {
     const cleanGuess = String(guessVal).trim().toLowerCase();
@@ -526,7 +547,15 @@ const sendScore = async (attempts, guessIds) => {
             </div>
           )}
 
-          {guesses.map((guess) => (
+          {guesses.map((guess) => {
+            const guessAge = getAgeValue(guess);
+            const targetAge = getAgeValue(target);
+            const ageStatus =
+              guessAge != null && targetAge != null
+                ? (guessAge === targetAge ? STATUS.CORRECT : STATUS.INCORRECT)
+                : STATUS.INCORRECT;
+            const showAgeArrow = guessAge != null && targetAge != null;
+            return (
             <div key={guess.id} className={`${gridColsClass} animate-slide-up`}>
               {/* Image Sticky */}
               <div className="sticky left-0 z-20 w-full aspect-square border-2 border-slate-600 rounded overflow-hidden relative shadow-lg bg-slate-900">
@@ -541,11 +570,11 @@ const sendScore = async (attempts, guessIds) => {
                 </span>
               </Cell>
               
-              <Cell status={guess.age === target.age ? STATUS.CORRECT : STATUS.INCORRECT} delay={100}>
+              <Cell status={ageStatus} delay={100}>
                   <div className="flex items-center gap-1">
-                  {guess.age}
-                  {Number(guess.age) < Number(target.age) && <ArrowIcon direction="up" />}
-                  {Number(guess.age) > Number(target.age) && <ArrowIcon direction="down" />}
+                  {guessAge ?? '-'}
+                  {showAgeArrow && guessAge < targetAge && <ArrowIcon direction="up" />}
+                  {showAgeArrow && guessAge > targetAge && <ArrowIcon direction="down" />}
                   </div>
               </Cell>
               
@@ -589,7 +618,7 @@ const sendScore = async (attempts, guessIds) => {
 
               <Cell status={getComparisonStatus(guess.BoissonPref, target.BoissonPref)} delay={900}>{Array.isArray(guess.BoissonPref) ? guess.BoissonPref.join(', ') : guess.BoissonPref}</Cell>
             </div>
-          ))}
+          )})}
         </div>
       </div>
 

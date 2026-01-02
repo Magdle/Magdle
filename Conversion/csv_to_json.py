@@ -1,5 +1,6 @@
 import csv
 import json
+import datetime
 # J'assume ici que vous avez corrigé l'import en fonction de votre installation (pip install slugify)
 from slugify import slugify 
 
@@ -76,12 +77,20 @@ def generate_json_data(input_csv_file, output_json_file, delimiter):
                 # Type de jeu préféré (champ texte direct)
                 jeu_pref_type = jeu_pref_raw
 
+                # Date de naissance placeholder dérivée de l'âge saisi
+                try:
+                    age_val = int(age)
+                    birth_year = datetime.date.today().year - age_val
+                    birth_date = f"{birth_year}-07-01"
+                except Exception:
+                    birth_date = "2000-01-01"
+
                 # --- Création de l'Objet Final ---
                 
                 person_data = {
                     "id": id_val,
                     "name": name,
-                    "age": age,
+                    "birthDate": birth_date,
                     "cheveux": cheveux,
                     "JeuPrefType": jeu_pref_type,
                     # Normalisation des valeurs de RelationFamille

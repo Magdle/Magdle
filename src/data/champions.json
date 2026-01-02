@@ -3,7 +3,6 @@
     "id": 1,
     "imageId": "Florian",
     "name": "Florian Lefebvre",
-    "age": "23",
     "cheveux": [
       "Noir"
     ],
@@ -17,13 +16,13 @@
     "neuillitude": "0",
     "RankLol": "silver",
     "BoissonPref": "Redbull",
-    "JeuPrefType": "Gestion"
+    "JeuPrefType": "Gestion",
+    "birthDate": "2002-11-19"
   },
   {
     "id": 2,
     "imageId": "TheauPauwels",
     "name": "Théau Pauwels",
-    "age": "21",
     "cheveux": [
       "Brun"
     ],
@@ -37,13 +36,13 @@
     "neuillitude": "9",
     "RankLol": "joue pas",
     "BoissonPref": "Redbull",
-    "JeuPrefType": "Ne joue pas"
+    "JeuPrefType": "Ne joue pas",
+    "birthDate": "2004-01-03"
   },
   {
     "id": 3,
     "imageId": "Joris",
     "name": "Joris Hindryckx",
-    "age": "21",
     "cheveux": [
       "Brun"
     ],
@@ -57,13 +56,13 @@
     "neuillitude": "3",
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Green",
-    "JeuPrefType": "MOBA"
+    "JeuPrefType": "MOBA",
+    "birthDate": "2004-10-17"
   },
   {
     "id": 4,
     "imageId": "Damien",
     "name": "Damien Callewaert ",
-    "age": "19",
     "cheveux": [
       "Brun"
     ],
@@ -77,13 +76,13 @@
     "neuillitude": "6",
     "RankLol": "plat",
     "BoissonPref": "Ice Tea Pêche",
-    "JeuPrefType": "RPG"
+    "JeuPrefType": "RPG",
+    "birthDate": "2006-07-19"
   },
   {
     "id": 5,
     "imageId": "ArthurJ",
     "name": "Arthur Janssens",
-    "age": "19",
     "cheveux": [
       "Brun"
     ],
@@ -97,13 +96,13 @@
     "neuillitude": "10",
     "RankLol": "iron",
     "BoissonPref": "Ice Tea Green",
-    "JeuPrefType": "Gestion"
+    "JeuPrefType": "Gestion",
+    "birthDate": "2006-05-31"
   },
   {
     "id": 6,
     "imageId": "Antonin",
     "name": "Antonin Meunier",
-    "age": "20",
     "cheveux": [
       "Blond"
     ],
@@ -117,13 +116,13 @@
     "neuillitude": "6",
     "RankLol": "joue pas",
     "BoissonPref": "Rodéo",
-    "JeuPrefType": "Casse tête"
+    "JeuPrefType": "Casse tête",
+    "birthDate": "2005-08-30"
   },
   {
     "id": 7,
     "imageId": "LucyBogaert",
     "name": "Lucy Bogaert",
-    "age": "21",
     "cheveux": [
       "Roux"
     ],
@@ -137,13 +136,13 @@
     "neuillitude": "7",
     "RankLol": "iron",
     "BoissonPref": "Redbull",
-    "JeuPrefType": "Simulation"
+    "JeuPrefType": "Simulation",
+    "birthDate": "2004-01-28"
   },
   {
     "id": 8,
     "imageId": "Celine",
     "name": "Céline Rudodo",
-    "age": "22",
     "cheveux": [
       "Noir"
     ],
@@ -157,13 +156,13 @@
     "neuillitude": "1",
     "RankLol": "iron",
     "BoissonPref": "Orangeade",
-    "JeuPrefType": "Social Game"
+    "JeuPrefType": "Social Game",
+    "birthDate": "2003-06-30"
   },
   {
     "id": 9,
     "imageId": "Mathys",
     "name": "Mathys Rogge",
-    "age": "21",
     "cheveux": [
       "Brun"
     ],
@@ -177,13 +176,13 @@
     "neuillitude": "7",
     "RankLol": "bronze",
     "BoissonPref": "Coca",
-    "JeuPrefType": "Aventure"
+    "JeuPrefType": "Aventure",
+    "birthDate": "2004-05-06"
   },
   {
     "id": 10,
     "imageId": "FlorianMercier",
     "name": "Florian Mercier",
-    "age": "25",
     "cheveux": [
       "Noir"
     ],
@@ -197,13 +196,13 @@
     "neuillitude": "5",
     "RankLol": "bronze",
     "BoissonPref": "Ice Tea Green",
-    "JeuPrefType": "FPS"
+    "JeuPrefType": "FPS",
+    "birthDate": "2000-12-07"
   },
   {
     "id": 11,
     "imageId": "TomBouton",
     "name": "Tom Bouton",
-    "age": "21",
     "cheveux": [
       "Roux"
     ],
@@ -217,13 +216,13 @@
     "neuillitude": "6",
     "RankLol": "silver",
     "BoissonPref": "Ice Tea Green",
-    "JeuPrefType": "Aventure"
+    "JeuPrefType": "Aventure",
+    "birthDate": "2004-07-23"
   },
   {
     "id": 12,
     "imageId": "AlanDenys",
     "name": "Alan Denys",
-    "age": "27",
     "cheveux": [
       "Chauve"
     ],
@@ -237,13 +236,13 @@
     "neuillitude": "1",
     "RankLol": "emerald",
     "BoissonPref": "Coca",
-    "JeuPrefType": "Sandbox"
+    "JeuPrefType": "Sandbox",
+    "birthDate": "1998-07-01"
   },
   {
     "id": 13,
     "imageId": "QuentinDeCroon",
     "name": "Quentin De Croon",
-    "age": "18",
     "cheveux": [
       "Chatain"
     ],
@@ -257,13 +256,13 @@
     "neuillitude": "6",
     "RankLol": "joue pas",
     "BoissonPref": "Eau",
-    "JeuPrefType": "Aventure"
+    "JeuPrefType": "Aventure",
+    "birthDate": "2006-12-27"
   },
   {
     "id": 14,
     "imageId": "ArnoPana",
     "name": "Arno Panarisi",
-    "age": "22",
     "cheveux": [
       "Brun"
     ],
@@ -277,13 +276,13 @@
     "neuillitude": "4",
     "RankLol": "iron",
     "BoissonPref": "Ice Tea Pêche",
-    "JeuPrefType": "RPG"
+    "JeuPrefType": "RPG",
+    "birthDate": "2003-05-28"
   },
   {
     "id": 15,
     "imageId": "Kenro",
     "name": "Valentin Vande Velde",
-    "age": "21",
     "cheveux": [
       "Noir"
     ],
@@ -297,13 +296,13 @@
     "neuillitude": "10",
     "RankLol": "iron",
     "BoissonPref": "Ice Tea Pêche",
-    "JeuPrefType": "FPS"
+    "JeuPrefType": "FPS",
+    "birthDate": "2004-07-01"
   },
   {
     "id": 16,
     "imageId": "AugusteCordier",
     "name": "Auguste Cordier",
-    "age": "20",
     "cheveux": [
       "Chatain"
     ],
@@ -317,13 +316,13 @@
     "neuillitude": "7",
     "RankLol": "joue pas",
     "BoissonPref": "Eau",
-    "JeuPrefType": "Aventure"
+    "JeuPrefType": "Aventure",
+    "birthDate": "2005-11-03"
   },
   {
     "id": 17,
     "imageId": "CyrilGuiot",
     "name": "Cyril Guiot",
-    "age": "24",
     "cheveux": [
       "Brun"
     ],
@@ -337,13 +336,13 @@
     "neuillitude": "1",
     "RankLol": "silver",
     "BoissonPref": "Coca",
-    "JeuPrefType": "FPS"
+    "JeuPrefType": "FPS",
+    "birthDate": "2001-05-15"
   },
   {
     "id": 18,
     "imageId": "LucasLebrun",
     "name": "Lucas Lebrun",
-    "age": "24",
     "cheveux": [
       "Noir"
     ],
@@ -357,13 +356,13 @@
     "neuillitude": "1",
     "RankLol": "silver",
     "BoissonPref": "Ice Tea Pêche",
-    "JeuPrefType": "Mobile"
+    "JeuPrefType": "Mobile",
+    "birthDate": "2001-01-26"
   },
   {
     "id": 19,
     "imageId": "VictorClais",
     "name": "Victor Clais",
-    "age": "19",
     "cheveux": [
       "Brun"
     ],
@@ -377,13 +376,13 @@
     "neuillitude": "8",
     "RankLol": "gold",
     "BoissonPref": "Ice Tea Green",
-    "JeuPrefType": "Souls like"
+    "JeuPrefType": "Souls like",
+    "birthDate": "2006-12-14"
   },
   {
     "id": 20,
     "imageId": "KevinDubrulle",
     "name": "Kevin Dubrulle",
-    "age": "25",
     "cheveux": [
       "Noir"
     ],
@@ -397,13 +396,13 @@
     "neuillitude": "7",
     "RankLol": "diamond",
     "BoissonPref": "Bière",
-    "JeuPrefType": "RPG"
+    "JeuPrefType": "RPG",
+    "birthDate": "2000-04-07"
   },
   {
     "id": 21,
     "imageId": "RaphPH",
     "name": "Raphaël Platteau Holvoet",
-    "age": "20",
     "cheveux": [
       "Roux"
     ],
@@ -417,13 +416,13 @@
     "neuillitude": "7",
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Green",
-    "JeuPrefType": "Souls-like"
+    "JeuPrefType": "Souls-like",
+    "birthDate": "2005-02-25"
   },
   {
     "id": 22,
     "imageId": "Maylis",
     "name": "Maylis Marcipont ",
-    "age": "21",
     "cheveux": [
       "Brun"
     ],
@@ -437,13 +436,13 @@
     "neuillitude": "5",
     "RankLol": "joue pas",
     "BoissonPref": "Café",
-    "JeuPrefType": "Révit"
+    "JeuPrefType": "Révit",
+    "birthDate": "2004-11-20"
   },
   {
     "id": 23,
     "imageId": "Melike",
     "name": "Melike Albain",
-    "age": "20",
     "cheveux": [
       "Noir"
     ],
@@ -457,13 +456,13 @@
     "neuillitude": "4",
     "RankLol": "iron",
     "BoissonPref": "Eau",
-    "JeuPrefType": "Aventure"
+    "JeuPrefType": "Aventure",
+    "birthDate": "2005-05-17"
   },
   {
     "id": 24,
     "imageId": "Andrea",
     "name": "Andréa Paciorkowski",
-    "age": "21",
     "cheveux": [
       "Blanc"
     ],
@@ -477,13 +476,13 @@
     "neuillitude": "3",
     "RankLol": "Master",
     "BoissonPref": "Eau",
-    "JeuPrefType": "MOBA"
+    "JeuPrefType": "MOBA",
+    "birthDate": "2004-02-10"
   },
   {
     "id": 25,
     "imageId": "TheoLebrun",
     "name": "Théo Lebrun",
-    "age": "21",
     "cheveux": [
       "Brun"
     ],
@@ -497,13 +496,13 @@
     "neuillitude": "4",
     "RankLol": "joue pas",
     "BoissonPref": "Orangeade",
-    "JeuPrefType": "Aventure"
+    "JeuPrefType": "Aventure",
+    "birthDate": "2004-02-14"
   },
   {
     "id": 26,
     "imageId": "MartinVle",
     "name": "Martin Vleminck",
-    "age": "21",
     "cheveux": [
       "Chatain"
     ],
@@ -517,13 +516,13 @@
     "neuillitude": "5",
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Pêche",
-    "JeuPrefType": "Aventure"
+    "JeuPrefType": "Aventure",
+    "birthDate": "2004-12-31"
   },
   {
     "id": 27,
     "imageId": "LeonLahaye",
     "name": "Leon Lahaye",
-    "age": "19",
     "cheveux": [
       "Blond"
     ],
@@ -537,13 +536,13 @@
     "neuillitude": "9",
     "RankLol": "joue pas",
     "BoissonPref": "Redbull",
-    "JeuPrefType": "FPS"
+    "JeuPrefType": "FPS",
+    "birthDate": "2006-08-21"
   },
   {
     "id": 28,
     "imageId": "Yaya",
     "name": "Yannick Basesayabo",
-    "age": "25",
     "cheveux": [
       "Noir"
     ],
@@ -557,13 +556,13 @@
     "neuillitude": "3",
     "RankLol": "diamond",
     "BoissonPref": "Bière",
-    "JeuPrefType": "MMO"
+    "JeuPrefType": "MMO",
+    "birthDate": "2000-01-05"
   },
   {
     "id": 29,
     "imageId": "Raphbg",
     "name": "Raphaël Delens",
-    "age": "25",
     "cheveux": [
       "Chatain"
     ],
@@ -577,13 +576,13 @@
     "neuillitude": "3",
     "RankLol": "joue pas",
     "BoissonPref": "Café",
-    "JeuPrefType": "RPG"
+    "JeuPrefType": "RPG",
+    "birthDate": "2000-12-05"
   },
   {
     "id": 30,
     "imageId": "aminelameti",
     "name": "Amine Lameti",
-    "age": "22",
     "cheveux": [
       "Noir"
     ],
@@ -593,13 +592,13 @@
     "neuillitude": "7",
     "RankLol": "joue pas",
     "BoissonPref": "Coca 0",
-    "JeuPrefType": "Indie"
+    "JeuPrefType": "Indie",
+    "birthDate": "2003-01-13"
   },
   {
     "id": 31,
     "imageId": "samyennahou",
     "name": "Samy Ennahou",
-    "age": "24",
     "cheveux": [
       "Noir"
     ],
@@ -609,13 +608,13 @@
     "neuillitude": "1",
     "RankLol": "joue pas",
     "BoissonPref": "Rodéo",
-    "JeuPrefType": "RPG"
+    "JeuPrefType": "RPG",
+    "birthDate": "2001-09-05"
   },
   {
     "id": 32,
     "imageId": "hugolorenzoni",
     "name": "Hugo Lorenzoni",
-    "age": "24",
     "cheveux": [
       "Brun"
     ],
@@ -625,13 +624,13 @@
     "neuillitude": "1",
     "RankLol": "joue pas",
     "BoissonPref": "Bière",
-    "JeuPrefType": "pfsense"
+    "JeuPrefType": "pfsense",
+    "birthDate": "2001-05-13"
   },
   {
     "id": 33,
     "imageId": "romainmestre",
     "name": "Romain Mestré",
-    "age": "20",
     "cheveux": [
       "Brun"
     ],
@@ -641,13 +640,13 @@
     "neuillitude": "9",
     "RankLol": "emerald",
     "BoissonPref": "Ice tea pèche",
-    "JeuPrefType": "MOBA"
+    "JeuPrefType": "MOBA",
+    "birthDate": "2005-10-30"
   },
   {
     "id": 34,
     "imageId": "lisacardillo",
     "name": "Lisa Cardillo",
-    "age": "18",
     "cheveux": [
       "Chatain"
     ],
@@ -657,13 +656,13 @@
     "neuillitude": "8",
     "RankLol": "joue pas",
     "BoissonPref": "Café",
-    "JeuPrefType": "PVP"
+    "JeuPrefType": "PVP",
+    "birthDate": "2007-02-24"
   },
   {
     "id": 35,
     "imageId": "justinbataille",
     "name": "Justin Bataille",
-    "age": "24",
     "cheveux": [
       "Blond"
     ],
@@ -673,13 +672,13 @@
     "neuillitude": "2",
     "RankLol": "joue pas",
     "BoissonPref": "Bière",
-    "JeuPrefType": "RPG"
+    "JeuPrefType": "RPG",
+    "birthDate": "2001-05-09"
   },
   {
     "id": 36,
     "imageId": "remylefevre",
     "name": "Rémy Lefèvre",
-    "age": "26",
     "cheveux": [
       "Chatain"
     ],
@@ -689,13 +688,13 @@
     "neuillitude": "1",
     "RankLol": "silver",
     "BoissonPref": "Redbull",
-    "JeuPrefType": "Gestion"
+    "JeuPrefType": "Gestion",
+    "birthDate": "1999-04-12"
   },
   {
     "id": 37,
     "imageId": "achilletonthat",
     "name": "Achille Ton-That",
-    "age": "19",
     "cheveux": [
       "Brun"
     ],
@@ -705,13 +704,13 @@
     "neuillitude": "6",
     "RankLol": "joue pas",
     "BoissonPref": "Redbull",
-    "JeuPrefType": "FPS"
+    "JeuPrefType": "FPS",
+    "birthDate": "2006-09-07"
   },
   {
     "id": 38,
     "imageId": "alexpluquet",
     "name": "Alex Pluquet",
-    "age": "19",
     "cheveux": [
       "Brun"
     ],
@@ -721,13 +720,13 @@
     "neuillitude": "5",
     "RankLol": "joue pas",
     "BoissonPref": "Ice tea pèche",
-    "JeuPrefType": "Souls-like"
+    "JeuPrefType": "Souls-like",
+    "birthDate": "2006-08-04"
   },
   {
     "id": 39,
     "imageId": "liampenninckx",
     "name": "Liam Penninckx",
-    "age": "25",
     "cheveux": [
       "Brun"
     ],
@@ -737,13 +736,13 @@
     "neuillitude": "1",
     "RankLol": "emerald",
     "BoissonPref": "Ice tea green",
-    "JeuPrefType": "Stratégie"
+    "JeuPrefType": "Stratégie",
+    "birthDate": "2000-09-21"
   },
   {
     "id": 40,
     "imageId": "noahchiacchia",
     "name": "Noah Chiacchia",
-    "age": "20",
     "cheveux": [
       "Noir"
     ],
@@ -753,13 +752,13 @@
     "neuillitude": "5",
     "RankLol": "joue pas",
     "BoissonPref": "Rodéo",
-    "JeuPrefType": "FPS"
+    "JeuPrefType": "FPS",
+    "birthDate": "2005-05-30"
   },
   {
     "id": 41,
     "imageId": "mayviesanches",
     "name": "Mayvie Sanches",
-    "age": "19",
     "cheveux": [
       "Brun"
     ],
@@ -769,13 +768,13 @@
     "neuillitude": "10",
     "RankLol": "silver",
     "BoissonPref": "Rodéo",
-    "JeuPrefType": "FPS"
+    "JeuPrefType": "FPS",
+    "birthDate": "2006-10-02"
   },
   {
     "id": 42,
     "imageId": "gaultiersaussez",
     "name": "Gaultier Saussez",
-    "age": "19",
     "cheveux": [
       "Brun"
     ],
@@ -785,6 +784,7 @@
     "neuillitude": "7",
     "RankLol": "joue pas",
     "BoissonPref": "Café",
-    "JeuPrefType": "Sandbox"
+    "JeuPrefType": "Sandbox",
+    "birthDate": "2006-03-03"
   }
 ]
