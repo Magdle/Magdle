@@ -24,8 +24,6 @@ function pickWeighted(
   return champions[champions.length - 1];
 }
 
-
-
 export const GET: APIRoute = async () => {
   const redis = await getRedis();
   const today = getParisDateString();
@@ -33,7 +31,6 @@ export const GET: APIRoute = async () => {
   const dailyHashKey = "daily:targets";
   const lastPickedHashKey = "daily:lastPicked";
 
-  // 1️⃣ Déjà calculé ?
   const existingTarget = await redis.hGet(dailyHashKey, today);
   if (existingTarget) {
     const existingId = Number(existingTarget);
@@ -44,55 +41,7 @@ export const GET: APIRoute = async () => {
     );
   }
 
-  const legacyHash = await redis.hGetAll(dailyHashKey);
-  const legacyEntry = Object.entries(legacyHash)
-    .find(([, date]) => date === today);
-  if (legacyEntry) {
-    const [legacyTarget] = legacyEntry;
-    await redis.hSet(dailyHashKey, today, legacyTarget);
-    const legacyId = Number(legacyTarget);
-    const isNumericId = Number.isFinite(legacyId) && String(legacyId) === legacyTarget;
-    return new Response(
-      JSON.stringify(isNumericId ? { id: legacyId } : { name: legacyTarget }),
-      { headers: { "Content-Type": "application/json" } }
-    );
-  }
-
-  const legacyTarget = await redis.get(`daily:target:${today}`);
-  if (legacyTarget) {
-    await redis.hSet(dailyHashKey, today, legacyTarget);
-    const legacyId = Number(legacyTarget);
-    const isNumericId = Number.isFinite(legacyId) && String(legacyId) === legacyTarget;
-    return new Response(
-      JSON.stringify(isNumericId ? { id: legacyId } : { name: legacyTarget }),
-      { headers: { "Content-Type": "application/json" } }
-    );
-  }
-
-  // 2) Calcul pondéré (lecture des lastPicked en 1 seul hGetAll)
-  let lastPickedHash = await redis.hGetAll(lastPickedHashKey);
-
-  if (Object.keys(lastPickedHash).length === 0) {
-    const legacyKeys = championsData.flatMap((c) => [
-      `daily:lastPicked:${c.id}`,
-      `daily:lastPicked:${c.name}`,
-    ]);
-    const legacyValues = await redis.mGet(legacyKeys);
-    const migrated: Record<string, string> = {};
-    for (let i = 0; i < championsData.length; i++) {
-      const byId = legacyValues[i * 2];
-      const byName = legacyValues[i * 2 + 1];
-      const val = byId ?? byName;
-      if (val) {
-        migrated[String(championsData[i].id)] = val;
-        migrated[championsData[i].name] = val;
-      }
-    }
-    if (Object.keys(migrated).length > 0) {
-      await redis.hSet(lastPickedHashKey, migrated);
-      lastPickedHash = migrated;
-    }
-  }
+  const lastPickedHash = await redis.hGetAll(lastPickedHashKey);
   const weights = [];
 
   for (const c of championsData) {
