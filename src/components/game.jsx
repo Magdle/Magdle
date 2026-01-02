@@ -247,20 +247,20 @@ const filteredChampions = useMemo(() => {
   return championsData
     .filter(c => {
       const normalizedName = normalize(c.name);
-
-      console.log(
-        "Comparing:",
-        normalizedName,
-        "with input:",
-        normalizedInput
-      );
-
       return (
         normalizedName.includes(normalizedInput) &&
         !guesses.some(g => g.id === c.id)
       );
     })
-    .slice(0, 5);
+    .sort((a, b) => {
+      const aName = normalize(a.name);
+      const bName = normalize(b.name);
+      const aStarts = aName.startsWith(normalizedInput);
+      const bStarts = bName.startsWith(normalizedInput);
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+      return a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' });
+    });
 }, [input, guesses]);
 
 
@@ -446,7 +446,7 @@ const sendScore = async (attempts, guessIds) => {
         </div>
         
         {filteredChampions.length > 0 && !isGameOver && (
-          <div className="absolute top-full left-0 w-full mt-2 bg-slate-800 border border-slate-600 rounded-lg shadow-xl overflow-hidden animate-fade-in">
+          <div className="absolute top-full left-0 w-full mt-2 bg-slate-800 border border-slate-600 rounded-lg shadow-xl animate-fade-in max-h-64 overflow-y-auto">
             {filteredChampions.map((c, idx) => (
               <div
                 key={c.id}

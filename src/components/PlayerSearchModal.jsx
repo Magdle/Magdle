@@ -23,9 +23,18 @@ export default function PlayerSearch({ onConfirm }) {
 
   const filteredChampions = useMemo(() => {
     if (!input) return [];
+    const normalizedInput = input.toLowerCase();
     return championsData
-      .filter(c => normalize(c.name).includes(input.toLowerCase()))
-      .slice(0, 5);
+      .filter(c => normalize(c.name).includes(normalizedInput))
+      .sort((a, b) => {
+        const aName = normalize(a.name);
+        const bName = normalize(b.name);
+        const aStarts = aName.startsWith(normalizedInput);
+        const bStarts = bName.startsWith(normalizedInput);
+        if (aStarts && !bStarts) return -1;
+        if (!aStarts && bStarts) return 1;
+        return a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' });
+      });
   }, [input]);
 
   useEffect(() => {
@@ -104,7 +113,7 @@ export default function PlayerSearch({ onConfirm }) {
 
           {/* AUTOCOMPLETE */}
           {filteredChampions.length > 0 && !selectedPlayerId && (
-            <div className="absolute top-full left-0 w-full mt-2 bg-slate-800 border border-slate-600 rounded-lg overflow-hidden z-50">
+            <div className="absolute top-full left-0 w-full mt-2 bg-slate-800 border border-slate-600 rounded-lg overflow-hidden z-50 max-h-64 overflow-y-auto">
               {filteredChampions.map((c, i) => (
                 <div
                   key={c.id}
