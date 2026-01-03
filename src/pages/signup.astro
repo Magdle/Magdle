@@ -1,0 +1,198 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const cheveuxOptions = ["Noir", "Brun", "Blond", "Chatain", "Roux", "Chauve", "Blanc"].sort((a, b) =>
+  a.localeCompare(b, "fr", { sensitivity: "base" })
+);
+
+const relationFamilleOptions = ["Trkl", "Compliquée", "Nulle"].sort((a, b) =>
+  a.localeCompare(b, "fr", { sensitivity: "base" })
+);
+
+const pcPrefOptions = Array.from({ length: 9 }, (_, i) => `Mag-${i + 1}`);
+
+const regionOptions = ["Carolo", "Frontalière", "Centrale", "Boraine"].sort((a, b) =>
+  a.localeCompare(b, "fr", { sensitivity: "base" })
+);
+
+const neuillitudeOptions = Array.from({ length: 10 }, (_, i) => String(i));
+
+const rankOrder = ["unrank", "joue pas", "iron", "bronze", "silver", "gold", "plat", "emerald", "diamond", "master", "grandmaster", "challenger"];
+const rankLolOptions = [...rankOrder];
+
+const boissonPrefOptions = ["Redbull", "Rodéo", "Orangeade", "Coca", "Coca 0", "Eau", "Ice Tea Green", "Ice Tea Pêche", "Café", "Bière"].sort((a, b) =>
+  a.localeCompare(b, "fr", { sensitivity: "base" })
+);
+
+const jeuPrefTypeOptions = ["Ne joue pas", "FPS", "RPG", "MOBA", "Sandbox", "Simulation", "Gestion", "Aventure", "Souls-like", "MMO", "PVP", "Mobile", "Stratégie", "Indie", "Casse tête", "Social Game", "Autre"];
+---
+
+<Layout title="Inscription - Magdle">
+  <main class="max-w-3xl mx-auto px-4 py-10 space-y-4">
+    <div class="flex items-center justify-between">
+      <h1 class="text-3xl font-extrabold">Demande d'inscription</h1>
+      <a href="/" class="text-amber-400 hover:text-amber-300 text-sm underline underline-offset-4">← Retour au jeu</a>
+    </div>
+    <p class="text-slate-300">
+      Remplis les champs ci-dessous. Un admin validera ta demande avant l'ajout dans le jeu.
+    </p>
+
+    <form id="signup-form" class="space-y-4 bg-slate-900/70 border border-slate-700 rounded-xl p-6 shadow-lg">
+      <div>
+        <label class="block text-sm font-semibold mb-1" for="name">Nom complet</label>
+        <input id="name" name="name" placeholder="ex : Raphaël Delens" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500" />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="birthDate">Date de naissance</label>
+          <input id="birthDate" name="birthDate" type="date" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="cheveux">Cheveux</label>
+          <select id="cheveux" name="cheveux" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+            <option value="">Choisir...</option>
+            {cheveuxOptions.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="relationFamille">Relation famille</label>
+          <select id="relationFamille" name="relationFamille" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+            <option value="">Choisir...</option>
+            {relationFamilleOptions.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="pcPref">PC préféré</label>
+          <select id="pcPref" name="pcPref" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+            <option value="">Choisir...</option>
+            {pcPrefOptions.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="region">Région</label>
+          <select id="region" name="region" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+            <option value="">Choisir...</option>
+            {regionOptions.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="neuillitude">Neuillitude</label>
+          <select id="neuillitude" name="neuillitude" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+            <option value="">Choisir...</option>
+            {neuillitudeOptions.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="rankLol">Rank LoL</label>
+          <select id="rankLol" name="rankLol" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+            <option value="">Choisir...</option>
+            {rankLolOptions.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1" for="boissonPref">Boisson préférée</label>
+          <select id="boissonPref" name="boissonPref" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+            <option value="">Choisir...</option>
+            {boissonPrefOptions.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1" for="jeuPrefType">Type de jeu préféré</label>
+        <select id="jeuPrefType" name="jeuPrefType" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+          <option value="">Choisir...</option>
+          {jeuPrefTypeOptions.map((opt) => <option value={opt}>{opt}</option>)}
+        </select>
+        <input
+          id="jeuPrefTypeCustom"
+          name="jeuPrefTypeCustom"
+          class="mt-2 w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500 hidden"
+          placeholder="Saisis ton type de jeu"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold uppercase tracking-wide py-3 px-6 rounded-lg transition-all duration-200 shadow-[0_0_15px_rgba(245,158,11,0.4)] hover:shadow-[0_0_25px_rgba(245,158,11,0.7)] active:scale-95"
+      >
+        Envoyer ma demande
+      </button>
+
+      <p id="status" class="text-sm mt-2 text-slate-300"></p>
+    </form>
+  </main>
+</Layout>
+
+<script type="module">
+  const form = document.getElementById("signup-form");
+  const status = document.getElementById("status");
+  const jeuSelect = document.getElementById("jeuPrefType");
+  const jeuCustom = document.getElementById("jeuPrefTypeCustom");
+
+  if (jeuSelect && jeuCustom) {
+    const update = () => {
+      const useCustom = (jeuSelect.value || "").toLowerCase() === "autre";
+      jeuCustom.classList.toggle("hidden", !useCustom);
+      if (!useCustom) {
+        jeuCustom.value = "";
+      }
+    };
+    update();
+    jeuSelect.addEventListener("change", update);
+  }
+
+  const setStatus = (msg, isError = false) => {
+    if (!status) return;
+    status.textContent = msg;
+    status.className = `text-sm mt-2 ${isError ? "text-red-400" : "text-emerald-400"}`;
+  };
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    setStatus("Envoi en cours...");
+    const formData = new FormData(form);
+    const selectVal = (formData.get("jeuPrefType") || "").toString().trim();
+    const customVal = (formData.get("jeuPrefTypeCustom") || "").toString().trim();
+    const payload = {
+      name: (formData.get("name") || "").toString().trim(),
+      birthDate: (formData.get("birthDate") || "").toString().trim(),
+      cheveux: (formData.get("cheveux") || "").toString().trim(),
+      relationFamille: (formData.get("relationFamille") || "").toString().trim(),
+      pcPref: (formData.get("pcPref") || "").toString().trim(),
+      region: (formData.get("region") || "").toString().trim(),
+      neuillitude: (formData.get("neuillitude") || "").toString().trim(),
+      rankLol: (formData.get("rankLol") || "").toString().trim(),
+      boissonPref: (formData.get("boissonPref") || "").toString().trim(),
+      jeuPrefType: selectVal.toLowerCase() === "autre" ? customVal : selectVal,
+    };
+
+    try {
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || `HTTP ${res.status}`);
+      }
+      setStatus("Demande envoyée ! Elle sera validée par un admin.", false);
+      form.reset();
+      if (jeuCustom) jeuCustom.classList.add("hidden");
+    } catch (err) {
+      console.error(err);
+      setStatus("Impossible d'envoyer la demande. Réessaie plus tard.", true);
+    }
+  });
+</script>

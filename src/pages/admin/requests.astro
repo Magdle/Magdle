@@ -1,0 +1,140 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Admin - Demandes d'inscription">
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-6">
+    <div class="flex items-center justify-between">
+      <h1 class="text-3xl font-extrabold">Demandes d'inscription</h1>
+      <a href="/" class="text-amber-400 hover:text-amber-300 text-sm underline underline-offset-4">← Retour au jeu</a>
+    </div>
+
+    <div class="bg-slate-900/70 border border-slate-700 rounded-xl p-4 space-y-3">
+      <label class="block text-sm font-semibold">Token admin</label>
+      <input id="admin-token" type="password" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500" />
+      <div class="flex gap-2">
+        <button id="save-token" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2 rounded">Enregistrer</button>
+        <button id="load-requests" class="bg-slate-700 hover:bg-slate-600 text-white font-bold px-4 py-2 rounded">Rafraîchir</button>
+        <span id="status" class="text-sm text-slate-300"></span>
+      </div>
+    </div>
+
+    <div class="bg-slate-900/70 border border-slate-700 rounded-xl p-4">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="text-left text-slate-300">
+            <tr>
+              <th class="p-2">Nom</th>
+              <th class="p-2">Créé</th>
+              <th class="p-2">Champs</th>
+              <th class="p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="requests-body" class="divide-y divide-slate-800"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script type="module">
+  const tokenInput = document.getElementById("admin-token");
+  const status = document.getElementById("status");
+  const bodyEl = document.getElementById("requests-body");
+  const saveBtn = document.getElementById("save-token");
+  const loadBtn = document.getElementById("load-requests");
+
+  const setStatus = (msg, isError = false) => {
+    if (!status) return;
+    status.textContent = msg;
+    status.className = `text-sm ${isError ? "text-red-400" : "text-emerald-400"}`;
+  };
+
+  const getToken = () => localStorage.getItem("admin-token") || tokenInput?.value || "";
+
+  saveBtn?.addEventListener("click", () => {
+    const tok = tokenInput?.value?.trim();
+    if (tok) {
+      localStorage.setItem("admin-token", tok);
+      setStatus("Token enregistré");
+    }
+  });
+
+  const render = (items) => {
+    if (!bodyEl) return;
+    bodyEl.innerHTML = "";
+    if (!items.length) {
+      bodyEl.innerHTML = '<tr><td colspan="4" class="p-4 text-slate-400">Aucune demande</td></tr>';
+      return;
+    }
+    for (const item of items) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="p-2 font-bold">${item.name || "?"}</td>
+        <td class="p-2 text-slate-400">${item.createdAt ? new Date(item.createdAt).toLocaleString() : "-"}</td>
+        <td class="p-2 text-slate-300 whitespace-pre-wrap text-xs">${JSON.stringify(item.fields || {}, null, 2)}</td>
+        <td class="p-2 flex gap-2">
+          <button data-action="approve" data-id="${item.id}" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded text-xs">Approve</button>
+          <button data-action="reject" data-id="${item.id}" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-xs">Reject</button>
+        </td>
+      `;
+      bodyEl.appendChild(tr);
+    }
+  };
+
+  const fetchRequests = async () => {
+    const token = getToken();
+    if (!token) return setStatus("Token requis", true);
+    setStatus("Chargement...");
+    try {
+      const res = await fetch("/api/requests", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || `HTTP ${res.status}`);
+      }
+      const data = await res.json();
+      render(data);
+      setStatus("OK");
+    } catch (e) {
+      console.error(e);
+      setStatus(e?.message || "Erreur chargement", true);
+    }
+  };
+
+  bodyEl?.addEventListener("click", async (e) => {
+    const target = e.target;
+    if (!(target instanceof HTMLElement)) return;
+    const action = target.dataset.action;
+    const id = target.dataset.id;
+    if (!action || !id) return;
+
+    const token = getToken();
+    if (!token) return setStatus("Token requis", true);
+    const url = action === "approve" ? "/api/approve" : "/api/reject";
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ requestId: id }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setStatus(`${action} OK`);
+      fetchRequests();
+    } catch (err) {
+      console.error(err);
+      setStatus(`${action} échoué`, true);
+    }
+  });
+
+  loadBtn?.addEventListener("click", fetchRequests);
+
+  // init token
+  const saved = localStorage.getItem("admin-token");
+  if (saved && tokenInput) tokenInput.value = saved;
+  fetchRequests();
+</script>
