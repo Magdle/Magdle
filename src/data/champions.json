@@ -786,5 +786,24 @@
     "BoissonPref": "Café",
     "JeuPrefType": "Sandbox",
     "birthDate": "2006-03-03"
+  },
+  {
+    "id": 43,
+    "name": "ar",
+    "birthDate": "2026-01-04",
+    "cheveux": [
+      "Blanc"
+    ],
+    "RelationFamille": "Compliquée",
+    "PcPref": [
+      "Mag-2"
+    ],
+    "régio": [
+      "Boraine"
+    ],
+    "neuillitude": "8",
+    "RankLol": "challenger",
+    "BoissonPref": "Rodéo",
+    "JeuPrefType": "Social Game"
   }
 ]
