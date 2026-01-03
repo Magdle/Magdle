@@ -41,11 +41,37 @@ export const GET: APIRoute = async () => {
     );
   }
 
-  const lastPickedHash = await redis.hGetAll(lastPickedHashKey);
+  const rawLastPickedHash = await redis.hGetAll(lastPickedHashKey);
+  const normalizedLastPicked: Record<string, string> = { ...rawLastPickedHash };
+  const migrateSet: Record<string, string> = {};
+  const migrateDel: string[] = [];
+
+  for (const [key, val] of Object.entries(rawLastPickedHash)) {
+    const numericKey = Number(key);
+    const isNumericKey = Number.isInteger(numericKey) && String(numericKey) === key;
+    if (isNumericKey) continue;
+
+    const matchByName = championsData.find((c) => c.name === key);
+    if (matchByName) {
+      const idKey = String(matchByName.id);
+      normalizedLastPicked[idKey] = val;
+      migrateSet[idKey] = val;
+    }
+    migrateDel.push(key);
+  }
+
+  if (Object.keys(migrateSet).length > 0) {
+    await redis.hSet(lastPickedHashKey, migrateSet);
+  }
+  if (migrateDel.length > 0) {
+    await redis.hDel(lastPickedHashKey, migrateDel);
+  }
+
+  const lastPickedHash = normalizedLastPicked;
   const weights = [];
 
   for (const c of championsData) {
-    const last = lastPickedHash[String(c.id)] ?? lastPickedHash[c.name];
+    const last = lastPickedHash[String(c.id)];
     if (!last) {
       weights.push(1);
     } else {
@@ -64,9 +90,7 @@ export const GET: APIRoute = async () => {
   const finalTarget = inserted ? candidate : await redis.hGet(dailyHashKey, today);
   const finalKey = finalTarget ?? candidate;
 
-  const targetChampion = championsData.find((c) => String(c.id) === String(finalKey));
   const lastPickedPayload: Record<string, string> = { [String(finalKey)]: today };
-  if (targetChampion?.name) lastPickedPayload[targetChampion.name] = today;
   await redis.hSet(lastPickedHashKey, lastPickedPayload);
 
   const finalId = Number(finalTarget);
