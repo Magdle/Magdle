@@ -786,5 +786,43 @@
     "BoissonPref": "Café",
     "JeuPrefType": "Sandbox",
     "birthDate": "2006-03-03"
-  }
+  },
+
+  {
+    "id": 44,
+    "imageId": "emiledesmet",
+    "name": "Emile Desmet",
+  "birthDate": "2006-08-03",
+  "cheveux": [
+    "Blond"
+  ],
+  "RelationFamille": "Trkl",
+  "PcPref": [
+    "Mag-8"
+  ],
+  "régio": [
+    "Centrale"
+  ],
+  "neuillitude": "4",
+  "RankLol": "silver",
+  "BoissonPref": "Coca",
+  "JeuPrefType": "RPG"
+},
+{
+    "id": 43,
+    "imageId": "evakabelis",
+    "name": "Eva Kabelis",
+  "birthDate": "2005-02-22",
+  "cheveux": [
+    "Brun"
+  ],
+  "RelationFamille": "Trkl",
+  "régio": [
+    "Centrale"
+  ],
+  "neuillitude": "6",
+  "RankLol": "joue pas",
+  "BoissonPref": "Ice Tea Pêche",
+  "JeuPrefType": "RPG"
+}
 ]
