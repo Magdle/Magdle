@@ -52,10 +52,22 @@ export const POST: APIRoute = async ({ request }) => {
   const fileRes = await fetch(`${GH}/repos/${owner}/${repo}/contents/${filePath}?ref=${base}`, {
     headers: ghHeaders(token),
   });
+  if (!fileRes.ok) {
+    const txt = await fileRes.text();
+    return new Response(txt || `Failed to load ${filePath}`, { status: 500 });
+  }
   const fileJson = await fileRes.json();
   const fileSha = fileJson.sha;
-  const contentStr = Buffer.from(fileJson.content, "base64").toString("utf-8");
-  const champions = JSON.parse(contentStr);
+  const contentStr = Buffer.from(fileJson.content ?? "", "base64")
+    .toString("utf-8")
+    .replace(/^\uFEFF/, ""); // strip potential BOM (UTF-8 with BOM)
+  let champions;
+  try {
+    champions = JSON.parse(contentStr);
+  } catch (err) {
+    console.error("Invalid champions.json content", err);
+    return new Response("Invalid champions.json", { status: 500 });
+  }
 
   // 4) dédupe + ajout
   const exists = champions.some((c: any) => String(c.name).toLowerCase() === name.toLowerCase());
