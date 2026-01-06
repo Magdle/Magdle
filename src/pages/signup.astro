@@ -122,6 +122,17 @@ const jeuPrefTypeOptions = ["Ne joue pas", "FPS", "RPG", "MOBA", "Sandbox", "Sim
         />
       </div>
 
+      <div>
+        <label class="block text-sm font-semibold mb-1" for="comment">Commentaire pour les admins</label>
+        <textarea
+          id="comment"
+          name="comment"
+          rows="3"
+          class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500"
+          placeholder="Message (optionnel)"
+        ></textarea>
+      </div>
+
       <button
         type="submit"
         class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold uppercase tracking-wide py-3 px-6 rounded-lg transition-all duration-200 shadow-[0_0_15px_rgba(245,158,11,0.4)] hover:shadow-[0_0_25px_rgba(245,158,11,0.7)] active:scale-95"
@@ -175,7 +186,14 @@ const jeuPrefTypeOptions = ["Ne joue pas", "FPS", "RPG", "MOBA", "Sandbox", "Sim
       rankLol: (formData.get("rankLol") || "").toString().trim(),
       boissonPref: (formData.get("boissonPref") || "").toString().trim(),
       jeuPrefType: selectVal.toLowerCase() === "autre" ? customVal : selectVal,
+      comment: (formData.get("comment") || "").toString().trim(),
     };
+    const requiredKeys = ["name", "birthDate", "cheveux", "relationFamille", "pcPref", "region", "neuillitude", "rankLol", "boissonPref", "jeuPrefType"];
+    const missing = requiredKeys.filter((k) => !payload[k]);
+    if (missing.length) {
+      setStatus("Merci de remplir tous les champs pour envoyer la demande.", true);
+      return;
+    }
 
     try {
       const res = await fetch("/api/signup", {

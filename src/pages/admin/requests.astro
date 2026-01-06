@@ -27,6 +27,7 @@ import Layout from "../../layouts/Layout.astro";
               <th class="p-2">Nom</th>
               <th class="p-2">Créé</th>
               <th class="p-2">Champs</th>
+              <th class="p-2">Commentaire</th>
               <th class="p-2">Actions</th>
             </tr>
           </thead>
@@ -73,6 +74,7 @@ import Layout from "../../layouts/Layout.astro";
         <td class="p-2 font-bold">${item.name || "?"}</td>
         <td class="p-2 text-slate-400">${item.createdAt ? new Date(item.createdAt).toLocaleString() : "-"}</td>
         <td class="p-2 text-slate-300 whitespace-pre-wrap text-xs">${JSON.stringify(item.fields || {}, null, 2)}</td>
+        <td class="p-2 text-slate-300 whitespace-pre-wrap text-xs">${item.comment ? String(item.comment) : "-"}</td>
         <td class="p-2 flex gap-2">
           <button data-action="approve" data-id="${item.id}" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded text-xs">Approve</button>
           <button data-action="reject" data-id="${item.id}" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-xs">Reject</button>

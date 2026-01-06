@@ -12,6 +12,15 @@ function ghHeaders(token: string) {
   };
 }
 
+function toImageId(name: string) {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "")
+    .slice(0, 50) || "player";
+}
+
 export const POST: APIRoute = async ({ request }) => {
   const unauthorized = requireAdmin(request);
   if (unauthorized) return unauthorized;
@@ -73,8 +82,22 @@ export const POST: APIRoute = async ({ request }) => {
   const exists = champions.some((c: any) => String(c.name).toLowerCase() === name.toLowerCase());
   if (exists) return new Response("Already exists", { status: 409 });
 
+  const normalizeFields = (fields: Record<string, any> = {}) =>
+    Object.fromEntries(
+      Object.entries(fields).map(([k, v]) => {
+        const key = k === "rǸgio" || k === "rゼgio" ? "régio" : k;
+        const value = Array.isArray(v) ? v.join(", ") : v;
+        return [key, value];
+      })
+    );
+
   const maxId = champions.reduce((m: number, c: any) => Math.max(m, Number(c.id) || 0), 0);
-  const newEntry = { id: maxId + 1, name, ...pending.fields };
+  const newEntry = {
+    id: maxId + 1,
+    imageId: toImageId(name),
+    name,
+    ...normalizeFields(pending.fields),
+  };
   champions.push(newEntry);
 
   const newStr = JSON.stringify(champions, null, 2) + "\n";

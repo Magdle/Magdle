@@ -5,11 +5,13 @@ function cleanString(v: unknown, max = 80) {
   return String(v ?? "").trim().slice(0, max);
 }
 
-const parseList = (v: unknown) =>
-  String(v ?? "")
+const parseListToString = (v: unknown) => {
+  const parts = String(v ?? "")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
+  return parts.join(", ");
+};
 
 export const POST: APIRoute = async ({ request }) => {
   const redis = await getRedis();
@@ -20,26 +22,45 @@ export const POST: APIRoute = async ({ request }) => {
   const name = cleanString(body.name, 80);
   if (name.length < 2) return new Response("Name too short", { status: 400 });
 
-  const birthDate = cleanString(body.birthDate, 20) || null;
-  const cheveux = parseList(body.cheveux);
-  const relationFamille = cleanString(body.relationFamille, 40) || "";
-  const pcPref = parseList(body.pcPref);
-  const region = parseList(body.region);
-  const neuillitude = cleanString(body.neuillitude, 10) || "";
-  const rankLol = cleanString(body.rankLol, 40) || "";
-  const boissonPref = cleanString(body.boissonPref, 80) || "";
-  const jeuPrefType = cleanString(body.jeuPrefType, 40) || "";
+  const birthDate = cleanString(body.birthDate, 20);
+  const cheveux = parseListToString(body.cheveux);
+  const relationFamille = cleanString(body.relationFamille, 40);
+  const pcPref = parseListToString(body.pcPref);
+  const region = parseListToString(body.region);
+  const neuillitude = cleanString(body.neuillitude, 10);
+  const rankLol = cleanString(body.rankLol, 40);
+  const boissonPref = cleanString(body.boissonPref, 80);
+  const jeuPrefType = cleanString(body.jeuPrefType, 40);
+  const comment = cleanString(body.comment, 400);
+
+  const required = {
+    birthDate,
+    cheveux,
+    relationFamille,
+    pcPref,
+    region,
+    neuillitude,
+    rankLol,
+    boissonPref,
+    jeuPrefType,
+  };
+  const missing = Object.entries(required)
+    .filter(([, v]) => !v || !String(v).trim())
+    .map(([k]) => k);
+  if (missing.length) {
+    return new Response(`Missing fields: ${missing.join(", ")}`, { status: 400 });
+  }
 
   const fields = {
-    birthDate: birthDate || undefined,
-    cheveux: cheveux.length ? cheveux : undefined,
-    RelationFamille: relationFamille || undefined,
-    PcPref: pcPref.length ? pcPref : undefined,
-    régio: region.length ? region : undefined,
-    neuillitude: neuillitude || undefined,
-    RankLol: rankLol || undefined,
-    BoissonPref: boissonPref || undefined,
-    JeuPrefType: jeuPrefType || undefined,
+    birthDate,
+    cheveux,
+    RelationFamille: relationFamille,
+    PcPref: pcPref,
+    régio: region,
+    neuillitude,
+    RankLol: rankLol,
+    BoissonPref: boissonPref,
+    JeuPrefType: jeuPrefType,
   };
 
   const id = `req_${Date.now()}_${Math.random().toString(16).slice(2)}`;
@@ -47,6 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
   const payload = {
     id,
     name,
+    comment: comment || undefined,
     fields,
     createdAt: new Date().toISOString(),
     status: "pending",
