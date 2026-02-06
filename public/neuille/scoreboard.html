@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Classement de Neuillitude</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Neuillitude</th>
+            <th>Elo</th>
+        </tr>
+    </thead>
+    <tbody id="scoreBody"></tbody>
+</table>
+
+<div class="back">
+    <button onclick="window.location.href='index.html'">
+        ⬅ Retour
+    </button>
+</div>
+
+</body>
+
+<script>
+    const DB_URL = 'db.json';
+    const STORAGE_KEY = 'neuille-elo-v1';
+
+    function loadLocalElo() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            return raw ? JSON.parse(raw) : {};
+        } catch {
+            return {};
+        }
+    }
+
+    function applyLocalElo(items) {
+        const local = loadLocalElo();
+        for (const item of items) {
+            if (local[item.id] !== undefined) {
+                item.elo = local[item.id];
+            } else if (item.elo === undefined) {
+                item.elo = 1000;
+            }
+        }
+    }
+
+    function renderTable(items) {
+        const tbody = document.getElementById('scoreBody');
+        tbody.innerHTML = '';
+
+        items.forEach((item, index) => {
+            const rank = index + 1;
+            const tr = document.createElement('tr');
+
+            if (rank === 1) tr.className = 'rank-1';
+            else if (rank === 2) tr.className = 'rank-2';
+            else if (rank === 3) tr.className = 'rank-3';
+
+            tr.innerHTML = `
+                <td>${rank}</td>
+                <td>${item.name}</td>
+                <td>${item.neuillitude}</td>
+                <td>${item.elo}</td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function init() {
+        const response = await fetch(DB_URL, { cache: 'no-cache' });
+        const data = await response.json();
+        applyLocalElo(data);
+
+        data.sort((a, b) => (b.elo ?? 1000) - (a.elo ?? 1000));
+        renderTable(data);
+    }
+
+    init().catch(err => {
+        console.error(err);
+        alert('Erreur de chargement des donnees.');
+    });
+</script>
+
+</html>

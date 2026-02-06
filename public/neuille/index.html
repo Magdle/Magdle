@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Neuille VS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Qui est le plus neuille ?</h1>
+
+<div class="container">
+    <button id="btn1">
+        <img id="img1" alt="Portrait 1">
+        <div id="name1" class="name"></div>
+    </button>
+
+    <button id="btn2">
+        <img id="img2" alt="Portrait 2">
+        <div id="name2" class="name"></div>
+    </button>
+</div>
+
+<div class="container">
+    <div class="actions">
+        <button id="btnDraw" class="secondary draw">
+            Égalité
+        </button>
+
+        <button id="btnReroll" class="secondary">
+            Sans avis
+        </button>
+    </div>
+</div>
+<div class="container">
+    <button class="secondary" onclick="window.location.href='scoreboard.html'">
+        Classement
+    </button>
+</div>
+
+</body>
+
+<script>
+    const DB_URL = 'db.json';
+    const STORAGE_KEY = 'neuille-elo-v1';
+    const K = 32;
+
+    let data = [];
+    let currentPair = null;
+
+    function loadLocalElo() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            return raw ? JSON.parse(raw) : {};
+        } catch {
+            return {};
+        }
+    }
+
+    function saveLocalElo(eloById) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(eloById));
+    }
+
+    function applyLocalElo(items) {
+        const local = loadLocalElo();
+        for (const item of items) {
+            if (local[item.id] !== undefined) {
+                item.elo = local[item.id];
+            } else if (item.elo === undefined) {
+                item.elo = 1000;
+            }
+        }
+    }
+
+    function setImage(imgEl, imageId) {
+        imgEl.dataset.fallback = '';
+        imgEl.onerror = () => {
+            if (!imgEl.dataset.fallback) {
+                imgEl.dataset.fallback = '1';
+                imgEl.src = `images/${imageId}.png`;
+            }
+        };
+        imgEl.src = `images/${imageId}.jpg`;
+    }
+
+    function pickTwo(items, lastPair) {
+        if (items.length < 2) return null;
+        let attempt = 0;
+        let item1, item2;
+        do {
+            const idx1 = Math.floor(Math.random() * items.length);
+            let idx2 = Math.floor(Math.random() * items.length);
+            while (idx2 === idx1) {
+                idx2 = Math.floor(Math.random() * items.length);
+            }
+            item1 = items[idx1];
+            item2 = items[idx2];
+            attempt++;
+        } while (
+            lastPair &&
+            ((item1.id === lastPair[0].id && item2.id === lastPair[1].id) ||
+             (item1.id === lastPair[1].id && item2.id === lastPair[0].id)) &&
+            attempt < 10
+        );
+        return [item1, item2];
+    }
+
+    function renderPair(pair) {
+        if (!pair) return;
+        currentPair = pair;
+
+        const [item1, item2] = pair;
+        const img1 = document.getElementById('img1');
+        const img2 = document.getElementById('img2');
+
+        setImage(img1, item1.imageId);
+        setImage(img2, item2.imageId);
+
+        document.getElementById('name1').innerText = item1.name;
+        document.getElementById('name2').innerText = item2.name;
+
+        document.getElementById('btn1').onclick = () => vote(item1.id, item2.id, false);
+        document.getElementById('btn2').onclick = () => vote(item2.id, item1.id, false);
+        document.getElementById('btnDraw').onclick = () => vote(item1.id, item2.id, true);
+    }
+
+    function updateElo(winnerId, loserId, isDraw) {
+        const winner = data.find(item => item.id === winnerId);
+        const loser = data.find(item => item.id === loserId);
+        if (!winner || !loser) return;
+
+        if (winner.elo === undefined) winner.elo = 1000;
+        if (loser.elo === undefined) loser.elo = 1000;
+
+        const expectedWinner = 1 / (1 + Math.pow(10, (loser.elo - winner.elo) / 400));
+        const expectedLoser = 1 / (1 + Math.pow(10, (winner.elo - loser.elo) / 400));
+
+        const scoreWinner = isDraw ? 0.5 : 1;
+        const scoreLoser = isDraw ? 0.5 : 0;
+
+        winner.elo = Math.round(winner.elo + K * (scoreWinner - expectedWinner));
+        loser.elo = Math.round(loser.elo + K * (scoreLoser - expectedLoser));
+
+        const local = loadLocalElo();
+        local[winner.id] = winner.elo;
+        local[loser.id] = loser.elo;
+        saveLocalElo(local);
+    }
+
+    function vote(idClicked, idOther, isDraw) {
+        updateElo(idClicked, idOther, isDraw);
+        reroll();
+    }
+
+    function reroll() {
+        const pair = pickTwo(data, currentPair);
+        renderPair(pair);
+    }
+
+    async function init() {
+        const response = await fetch(DB_URL, { cache: 'no-cache' });
+        data = await response.json();
+        applyLocalElo(data);
+        reroll();
+
+        document.getElementById('btnReroll').onclick = () => reroll();
+    }
+
+    init().catch(err => {
+        console.error(err);
+        alert('Erreur de chargement des donnees.');
+    });
+</script>
+
+</html>
