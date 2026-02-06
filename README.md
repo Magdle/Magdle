@@ -38,6 +38,20 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
+## 🐘 PHP (Neuille Elo)
+
+Le projet PHP est intégré dans `public/neuille`.
+
+Pour le tester en local avec le serveur PHP intégré :
+
+```sh
+php -S localhost:8001 -t public/neuille
+```
+
+Puis ouvrir `http://localhost:8001/index.php`.
+
+Note : le serveur de dev Astro ne peut pas exécuter du PHP. En production, il faut un serveur web (Apache/Nginx) avec PHP pour servir `public/neuille` (et les fichiers générés par Astro).
+
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

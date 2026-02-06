@@ -9,10 +9,19 @@ import Game from '../components/game.jsx';
 		<h1 class="text-4xl md:text-5xl text-center text-slate-100 font-extrabold pt-10 tracking-tighter">
 			Magdle
 		</h1>
-        	<h2 class="text-xl md:text-2xl font-normal text-center text-slate-400 mb-10">
+		<h2 class="text-xl md:text-2xl font-normal text-center text-slate-400 mb-10">
 				Devinez l'admin du jour !
 			</h2>
         <Game client:load />
+
+		<div class="mt-10 text-center">
+			<a
+				href="/neuille/index.php"
+				class="inline-flex items-center justify-center rounded-full bg-slate-100 px-6 py-3 text-slate-900 font-semibold hover:bg-white transition"
+			>
+				Accéder au classement Neuille
+			</a>
+		</div>
         
 	</main>
 </Layout>
