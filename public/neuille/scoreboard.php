@@ -36,6 +36,10 @@ usort($data, function($a, $b) {
 
 <body>
 
+<div class="top-nav">
+    <a class="home-link" href="/">← Retour à Magdle</a>
+</div>
+
 <h1>Classement de Neuillitude</h1>
 
 <table>

@@ -7,6 +7,30 @@ body {
     color: #fff;
 }
 
+.top-nav {
+    padding: 18px 20px 0;
+}
+
+.home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #111827;
+    border: 1px solid #fbbf24;
+    color: #fde68a;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 10px 16px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.home-link:hover {
+    background: #1f2937;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(251, 191, 36, 0.28);
+}
+
 h1 {
     text-align: center;
     margin-top: 40px;

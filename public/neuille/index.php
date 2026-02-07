@@ -70,6 +70,10 @@ function rerollImages($data, $excludeIds = []) {
 </head>
 <body>
 
+<div class="top-nav">
+    <a class="home-link" href="/">← Retour à Magdle</a>
+</div>
+
 <h1>Qui est le plus neuille ?</h1>
 
 <div class="container">
