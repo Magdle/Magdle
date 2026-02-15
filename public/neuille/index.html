@@ -45,36 +45,11 @@
 </body>
 
 <script>
-    const DB_URL = 'db.json';
-    const STORAGE_KEY = 'neuille-elo-v1';
-    const K = 32;
+    const PLAYERS_API_URL = '/api/neuille/players';
+    const VOTE_API_URL = '/api/neuille/vote';
 
     let data = [];
     let currentPair = null;
-
-    function loadLocalElo() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : {};
-        } catch {
-            return {};
-        }
-    }
-
-    function saveLocalElo(eloById) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(eloById));
-    }
-
-    function applyLocalElo(items) {
-        const local = loadLocalElo();
-        for (const item of items) {
-            if (local[item.id] !== undefined) {
-                item.elo = local[item.id];
-            } else if (item.elo === undefined) {
-                item.elo = 1000;
-            }
-        }
-    }
 
     function setImage(imgEl, imageId) {
         imgEl.dataset.fallback = '';
@@ -123,36 +98,46 @@
         document.getElementById('name1').innerText = item1.name;
         document.getElementById('name2').innerText = item2.name;
 
-        document.getElementById('btn1').onclick = () => vote(item1.id, item2.id, false);
-        document.getElementById('btn2').onclick = () => vote(item2.id, item1.id, false);
-        document.getElementById('btnDraw').onclick = () => vote(item1.id, item2.id, true);
+        document.getElementById('btn1').onclick = () => vote(item1.id, item2.id, false).catch(handleVoteError);
+        document.getElementById('btn2').onclick = () => vote(item2.id, item1.id, false).catch(handleVoteError);
+        document.getElementById('btnDraw').onclick = () => vote(item1.id, item2.id, true).catch(handleVoteError);
     }
 
-    function updateElo(winnerId, loserId, isDraw) {
-        const winner = data.find(item => item.id === winnerId);
-        const loser = data.find(item => item.id === loserId);
-        if (!winner || !loser) return;
-
-        if (winner.elo === undefined) winner.elo = 1000;
-        if (loser.elo === undefined) loser.elo = 1000;
-
-        const expectedWinner = 1 / (1 + Math.pow(10, (loser.elo - winner.elo) / 400));
-        const expectedLoser = 1 / (1 + Math.pow(10, (winner.elo - loser.elo) / 400));
-
-        const scoreWinner = isDraw ? 0.5 : 1;
-        const scoreLoser = isDraw ? 0.5 : 0;
-
-        winner.elo = Math.round(winner.elo + K * (scoreWinner - expectedWinner));
-        loser.elo = Math.round(loser.elo + K * (scoreLoser - expectedLoser));
-
-        const local = loadLocalElo();
-        local[winner.id] = winner.elo;
-        local[loser.id] = loser.elo;
-        saveLocalElo(local);
+    function handleVoteError(err) {
+        console.error(err);
+        alert('Erreur lors du vote.');
     }
 
-    function vote(idClicked, idOther, isDraw) {
-        updateElo(idClicked, idOther, isDraw);
+    function applyVoteResult(eloData) {
+        const winner = data.find(item => item.id === eloData?.winner?.id);
+        const loser = data.find(item => item.id === eloData?.loser?.id);
+        if (winner && typeof eloData?.winner?.new_elo === 'number') {
+            winner.elo = eloData.winner.new_elo;
+        }
+        if (loser && typeof eloData?.loser?.new_elo === 'number') {
+            loser.elo = eloData.loser.new_elo;
+        }
+    }
+
+    async function vote(idClicked, idOther, isDraw) {
+        const response = await fetch(VOTE_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                idClicked,
+                idOther,
+                draw: isDraw
+            })
+        });
+
+        const eloData = await response.json();
+        if (!response.ok || eloData?.error) {
+            throw new Error(eloData?.error || 'Erreur vote');
+        }
+
+        applyVoteResult(eloData);
         reroll();
     }
 
@@ -162,9 +147,11 @@
     }
 
     async function init() {
-        const response = await fetch(DB_URL, { cache: 'no-cache' });
+        const response = await fetch(PLAYERS_API_URL, { cache: 'no-store' });
+        if (!response.ok) {
+            throw new Error('Erreur API joueurs');
+        }
         data = await response.json();
-        applyLocalElo(data);
         reroll();
 
         document.getElementById('btnReroll').onclick = () => reroll();

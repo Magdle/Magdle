@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "id": 1,
     "imageId": "Florian",
@@ -11,7 +11,8 @@
     "RankLol": "silver",
     "BoissonPref": "Redbull",
     "JeuPrefType": "Gestion",
-    "birthDate": "2002-11-19"
+    "birthDate": "2002-11-19",
+    "elo": 1022
   },
   {
     "id": 2,
@@ -25,7 +26,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Redbull",
     "JeuPrefType": "Ne joue pas",
-    "birthDate": "2004-01-03"
+    "birthDate": "2004-01-03",
+    "elo": 1049
   },
   {
     "id": 3,
@@ -39,7 +41,8 @@
     "RankLol": "silver",
     "BoissonPref": "Bière",
     "JeuPrefType": "FPS",
-    "birthDate": "2004-10-17"
+    "birthDate": "2004-10-17",
+    "elo": 935
   },
   {
     "id": 4,
@@ -53,7 +56,8 @@
     "RankLol": "plat",
     "BoissonPref": "Ice Tea Pêche",
     "JeuPrefType": "RPG",
-    "birthDate": "2006-07-19"
+    "birthDate": "2006-07-19",
+    "elo": 998
   },
   {
     "id": 5,
@@ -67,7 +71,8 @@
     "RankLol": "iron",
     "BoissonPref": "Ice Tea Green",
     "JeuPrefType": "Gestion",
-    "birthDate": "2006-05-31"
+    "birthDate": "2006-05-31",
+    "elo": 1044
   },
   {
     "id": 6,
@@ -81,7 +86,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Rodéo",
     "JeuPrefType": "Casse tête",
-    "birthDate": "2005-08-30"
+    "birthDate": "2005-08-30",
+    "elo": 899
   },
   {
     "id": 7,
@@ -95,7 +101,8 @@
     "RankLol": "iron",
     "BoissonPref": "Redbull",
     "JeuPrefType": "Simulation",
-    "birthDate": "2004-01-28"
+    "birthDate": "2004-01-28",
+    "elo": 1003
   },
   {
     "id": 8,
@@ -109,7 +116,8 @@
     "RankLol": "iron",
     "BoissonPref": "Orangeade",
     "JeuPrefType": "Social Game",
-    "birthDate": "2003-06-30"
+    "birthDate": "2003-06-30",
+    "elo": 933
   },
   {
     "id": 9,
@@ -123,7 +131,8 @@
     "RankLol": "bronze",
     "BoissonPref": "Coca",
     "JeuPrefType": "Aventure",
-    "birthDate": "2004-05-06"
+    "birthDate": "2004-05-06",
+    "elo": 1083
   },
   {
     "id": 10,
@@ -137,7 +146,8 @@
     "RankLol": "bronze",
     "BoissonPref": "Ice Tea Green",
     "JeuPrefType": "FPS",
-    "birthDate": "2000-12-07"
+    "birthDate": "2000-12-07",
+    "elo": 1077
   },
   {
     "id": 11,
@@ -151,7 +161,8 @@
     "RankLol": "silver",
     "BoissonPref": "Ice Tea Green",
     "JeuPrefType": "Aventure",
-    "birthDate": "2004-07-23"
+    "birthDate": "2004-07-23",
+    "elo": 1060
   },
   {
     "id": 12,
@@ -165,7 +176,8 @@
     "RankLol": "emerald",
     "BoissonPref": "Coca",
     "JeuPrefType": "Sandbox",
-    "birthDate": "1998-07-01"
+    "birthDate": "1998-07-01",
+    "elo": 983
   },
   {
     "id": 13,
@@ -179,7 +191,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Eau",
     "JeuPrefType": "Aventure",
-    "birthDate": "2006-12-27"
+    "birthDate": "2006-12-27",
+    "elo": 1006
   },
   {
     "id": 14,
@@ -193,7 +206,8 @@
     "RankLol": "iron",
     "BoissonPref": "Ice Tea Pêche",
     "JeuPrefType": "RPG",
-    "birthDate": "2003-05-28"
+    "birthDate": "2003-05-28",
+    "elo": 983
   },
   {
     "id": 15,
@@ -207,7 +221,8 @@
     "RankLol": "iron",
     "BoissonPref": "Ice Tea Pêche",
     "JeuPrefType": "FPS",
-    "birthDate": "2004-02-14"
+    "birthDate": "2004-02-14",
+    "elo": 1053
   },
   {
     "id": 16,
@@ -221,7 +236,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Eau",
     "JeuPrefType": "Aventure",
-    "birthDate": "2005-11-03"
+    "birthDate": "2005-11-03",
+    "elo": 969
   },
   {
     "id": 17,
@@ -235,7 +251,8 @@
     "RankLol": "silver",
     "BoissonPref": "Coca",
     "JeuPrefType": "FPS",
-    "birthDate": "2001-05-15"
+    "birthDate": "2001-05-15",
+    "elo": 980
   },
   {
     "id": 18,
@@ -249,7 +266,8 @@
     "RankLol": "silver",
     "BoissonPref": "Ice Tea Pêche",
     "JeuPrefType": "Mobile",
-    "birthDate": "2001-01-26"
+    "birthDate": "2001-01-26",
+    "elo": 958
   },
   {
     "id": 19,
@@ -263,7 +281,8 @@
     "RankLol": "gold",
     "BoissonPref": "Ice Tea Green",
     "JeuPrefType": "Souls like",
-    "birthDate": "2006-12-14"
+    "birthDate": "2006-12-14",
+    "elo": 916
   },
   {
     "id": 20,
@@ -277,7 +296,8 @@
     "RankLol": "diamond",
     "BoissonPref": "Bière",
     "JeuPrefType": "RPG",
-    "birthDate": "2000-04-07"
+    "birthDate": "2000-04-07",
+    "elo": 986
   },
   {
     "id": 21,
@@ -291,7 +311,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Green",
     "JeuPrefType": "Souls-like",
-    "birthDate": "2005-02-25"
+    "birthDate": "2005-02-25",
+    "elo": 955
   },
   {
     "id": 22,
@@ -305,7 +326,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Café",
     "JeuPrefType": "Révit",
-    "birthDate": "2004-11-20"
+    "birthDate": "2004-11-20",
+    "elo": 961
   },
   {
     "id": 23,
@@ -319,7 +341,8 @@
     "RankLol": "iron",
     "BoissonPref": "Eau",
     "JeuPrefType": "Aventure",
-    "birthDate": "2005-05-17"
+    "birthDate": "2005-05-17",
+    "elo": 1081
   },
   {
     "id": 24,
@@ -333,7 +356,8 @@
     "RankLol": "Master",
     "BoissonPref": "Eau",
     "JeuPrefType": "MOBA",
-    "birthDate": "2004-02-10"
+    "birthDate": "2004-02-10",
+    "elo": 974
   },
   {
     "id": 25,
@@ -347,7 +371,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Orangeade",
     "JeuPrefType": "Aventure",
-    "birthDate": "2004-02-14"
+    "birthDate": "2004-02-14",
+    "elo": 1035
   },
   {
     "id": 26,
@@ -361,7 +386,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Pêche",
     "JeuPrefType": "Aventure",
-    "birthDate": "2003-12-31"
+    "birthDate": "2003-12-31",
+    "elo": 1000
   },
   {
     "id": 27,
@@ -375,7 +401,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Redbull",
     "JeuPrefType": "FPS",
-    "birthDate": "2006-08-21"
+    "birthDate": "2006-08-21",
+    "elo": 1020
   },
   {
     "id": 28,
@@ -389,7 +416,8 @@
     "RankLol": "diamond",
     "BoissonPref": "Bière",
     "JeuPrefType": "MMO",
-    "birthDate": "2000-01-05"
+    "birthDate": "2000-01-05",
+    "elo": 1038
   },
   {
     "id": 29,
@@ -403,7 +431,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Café",
     "JeuPrefType": "RPG",
-    "birthDate": "2000-12-05"
+    "birthDate": "2000-12-05",
+    "elo": 999
   },
   {
     "id": 30,
@@ -417,7 +446,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Coca 0",
     "JeuPrefType": "Indie",
-    "birthDate": "2003-01-13"
+    "birthDate": "2003-01-13",
+    "elo": 1013
   },
   {
     "id": 31,
@@ -431,7 +461,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Rodéo",
     "JeuPrefType": "RPG",
-    "birthDate": "2001-09-05"
+    "birthDate": "2001-09-05",
+    "elo": 987
   },
   {
     "id": 32,
@@ -445,7 +476,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Bière",
     "JeuPrefType": "pfsense",
-    "birthDate": "2001-05-13"
+    "birthDate": "2001-05-13",
+    "elo": 941
   },
   {
     "id": 33,
@@ -459,7 +491,8 @@
     "RankLol": "emerald",
     "BoissonPref": "Ice Tea Pêche",
     "JeuPrefType": "MOBA",
-    "birthDate": "2005-10-30"
+    "birthDate": "2005-10-30",
+    "elo": 1002
   },
   {
     "id": 34,
@@ -473,7 +506,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Café",
     "JeuPrefType": "PVP",
-    "birthDate": "2007-02-24"
+    "birthDate": "2007-02-24",
+    "elo": 1002
   },
   {
     "id": 35,
@@ -487,7 +521,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Bière",
     "JeuPrefType": "RPG",
-    "birthDate": "2001-05-09"
+    "birthDate": "2001-05-09",
+    "elo": 973
   },
   {
     "id": 36,
@@ -501,7 +536,8 @@
     "RankLol": "silver",
     "BoissonPref": "Redbull",
     "JeuPrefType": "Gestion",
-    "birthDate": "1999-04-12"
+    "birthDate": "1999-04-12",
+    "elo": 960
   },
   {
     "id": 37,
@@ -515,7 +551,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Redbull",
     "JeuPrefType": "FPS",
-    "birthDate": "2006-09-07"
+    "birthDate": "2006-09-07",
+    "elo": 1063
   },
   {
     "id": 38,
@@ -529,7 +566,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Pêche",
     "JeuPrefType": "Souls-like",
-    "birthDate": "2006-08-04"
+    "birthDate": "2006-08-04",
+    "elo": 989
   },
   {
     "id": 39,
@@ -543,7 +581,8 @@
     "RankLol": "emerald",
     "BoissonPref": "Ice Tea Green",
     "JeuPrefType": "Stratégie",
-    "birthDate": "2000-09-21"
+    "birthDate": "2000-09-21",
+    "elo": 985
   },
   {
     "id": 40,
@@ -557,7 +596,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Rodéo",
     "JeuPrefType": "FPS",
-    "birthDate": "2005-05-30"
+    "birthDate": "2005-05-30",
+    "elo": 982
   },
   {
     "id": 41,
@@ -571,7 +611,8 @@
     "RankLol": "silver",
     "BoissonPref": "Rodéo",
     "JeuPrefType": "FPS",
-    "birthDate": "2006-10-02"
+    "birthDate": "2006-10-02",
+    "elo": 1001
   },
   {
     "id": 42,
@@ -585,7 +626,8 @@
     "RankLol": "joue pas",
     "BoissonPref": "Café",
     "JeuPrefType": "Sandbox",
-    "birthDate": "2006-03-03"
+    "birthDate": "2006-03-03",
+    "elo": 1041
   },
   {
     "id": 43,
@@ -599,7 +641,8 @@
     "neuillitude": "3",
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Pêche",
-    "JeuPrefType": "RPG"
+    "JeuPrefType": "RPG",
+    "elo": 1048
   },
   {
     "id": 44,
@@ -613,7 +656,8 @@
     "neuillitude": "10",
     "RankLol": "silver",
     "BoissonPref": "Coca",
-    "JeuPrefType": "RPG"
+    "JeuPrefType": "RPG",
+    "elo": 1013
   },
   {
     "id": 45,
@@ -627,6 +671,7 @@
     "neuillitude": "4",
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Green",
-    "JeuPrefType": "FPS"
+    "JeuPrefType": "FPS",
+    "elo": 1000
   }
 ]

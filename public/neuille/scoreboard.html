@@ -34,28 +34,7 @@
 </body>
 
 <script>
-    const DB_URL = 'db.json';
-    const STORAGE_KEY = 'neuille-elo-v1';
-
-    function loadLocalElo() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : {};
-        } catch {
-            return {};
-        }
-    }
-
-    function applyLocalElo(items) {
-        const local = loadLocalElo();
-        for (const item of items) {
-            if (local[item.id] !== undefined) {
-                item.elo = local[item.id];
-            } else if (item.elo === undefined) {
-                item.elo = 1000;
-            }
-        }
-    }
+    const SCOREBOARD_API_URL = '/api/neuille/scoreboard';
 
     function renderTable(items) {
         const tbody = document.getElementById('scoreBody');
@@ -81,11 +60,11 @@
     }
 
     async function init() {
-        const response = await fetch(DB_URL, { cache: 'no-cache' });
+        const response = await fetch(SCOREBOARD_API_URL, { cache: 'no-store' });
+        if (!response.ok) {
+            throw new Error('Erreur API joueurs');
+        }
         const data = await response.json();
-        applyLocalElo(data);
-
-        data.sort((a, b) => (b.elo ?? 1000) - (a.elo ?? 1000));
         renderTable(data);
     }
 
