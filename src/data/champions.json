@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "id": 1,
     "imageId": "Florian",
@@ -628,5 +628,19 @@
     "RankLol": "joue pas",
     "BoissonPref": "Ice Tea Green",
     "JeuPrefType": "FPS"
+  },
+  {
+    "id": 46,
+    "imageId": "lucienmarchetti",
+    "name": "Lucien Marchetti",
+    "birthDate": "2006-10-17",
+    "cheveux": "Brun",
+    "RelationFamille": "Trkl",
+    "PcPref": "Mag-1",
+    "régio": "Centrale",
+    "neuillitude": "5",
+    "RankLol": "joue pas",
+    "BoissonPref": "Redbull",
+    "JeuPrefType": "Sandbox"
   }
 ]
